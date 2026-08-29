@@ -185,7 +185,7 @@ export const Footer: React.FC = () => {
         {/* Ambient Glow Branding Banner */}
         <div className="relative mt-8 select-none">
           <div className="absolute inset-x-0 bottom-0 mx-auto w-full max-w-3xl h-full max-h-64 bg-white/5 rounded-full blur-[100px] pointer-events-none" />
-          <h3 className="text-center font-extrabold leading-[0.7] text-transparent text-[clamp(2rem,10vw,7.5rem)] [-webkit-text-stroke:1px_rgba(221,2,0,0.12)] mt-6 uppercase tracking-wider font-mono">
+          <h3 className="text-center font-extrabold leading-[0.7] text-transparent text-[clamp(2rem,10vw,7.5rem)] [-webkit-text-stroke:1px_rgba(255,255,255,0.15)] mt-6 uppercase tracking-wider font-mono">
             DR. Q.H. KHAN
           </h3>
         </div>
