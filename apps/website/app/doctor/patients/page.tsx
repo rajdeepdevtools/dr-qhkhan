@@ -34,7 +34,15 @@ export default function DoctorPatientsPage() {
                   {p.gender}, {p.age} Yrs
                 </span>
               </div>
-              <p className="text-slate-600">Phone: {p.phone} • Email: {p.email}</p>
+              <p className="text-slate-600 font-medium">Phone: {p.phone} • Email: {p.email}</p>
+              {p.bloodGroup && (
+                <p className="text-slate-600 font-medium">
+                  Blood Group:{' '}
+                  <span className="px-2 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-100 font-bold">
+                    {p.bloodGroup}
+                  </span>
+                </p>
+              )}
               {p.address && <p className="text-slate-500">Address: {p.address}</p>}
             </div>
           ))}
