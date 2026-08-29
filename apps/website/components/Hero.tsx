@@ -157,9 +157,9 @@ export const Hero: React.FC = () => {
 
             {/* Headers */}
             <div className="space-y-3 animate-fade-in-up-delay-1">
-              <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-slate-900 leading-none">
+              <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-[#1A0706] leading-none">
                 {lang === 'hi' ? 'डॉ. क्यू. एच. खान' : 'DR. Q.H. KHAN'}
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-clinic-indigo via-rose-800 to-clinic-crimson text-2xl sm:text-3.5xl font-extrabold mt-2 tracking-wide">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#55100D] to-[#DD0200] text-2xl sm:text-3.5xl font-extrabold mt-2 tracking-wide">
                   {lang === 'hi' ? 'क्लासिकल होम्योपैथिक क्लिनिक' : 'CLASSICAL HOMOEOPATHIC CLINIC'}
                 </span>
               </h1>

@@ -19,6 +19,7 @@ import {
   Youtube,
   QrCode,
   Receipt,
+  HelpCircle,
 } from 'lucide-react';
 import { useAdminAuth } from '../lib/admin-auth';
 
@@ -38,6 +39,7 @@ export const AdminSidebar: React.FC = () => {
     { label: 'Medical Camps (Shivir)', href: '/camps', icon: MapPin },
     { label: 'YouTube Videos', href: '/videos', icon: Youtube },
     { label: 'Feedback Moderation', href: '/feedback', icon: MessageSquare },
+    { label: 'Patient Inquiries', href: '/inquiries', icon: HelpCircle },
     { label: 'Feedback QR Code', href: '/qr-code', icon: QrCode },
     { label: 'Clinic Settings', href: '/settings', icon: Settings },
     { label: 'Security Audit Logs', href: '/audit-logs', icon: ShieldCheck },

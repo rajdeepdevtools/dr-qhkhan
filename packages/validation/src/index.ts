@@ -104,6 +104,13 @@ export const feedbackSchema = z.object({
   appointmentRef: z.string().optional(),
 });
 
+export const inquirySchema = z.object({
+  name: z.string().min(2, 'Name required'),
+  phone: z.string().min(10, 'Valid 10-digit phone number required'),
+  subject: z.string().min(3, 'Subject required'),
+  message: z.string().min(5, 'Message required'),
+});
+
 export const clinicSettingsSchema = z.object({
   clinicName: z.string().min(2),
   establishedYear: z.number().int(),

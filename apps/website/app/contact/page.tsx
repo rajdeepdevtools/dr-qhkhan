@@ -5,21 +5,35 @@ import Link from 'next/link';
 import { MapPin, Phone, MessageSquare, Calendar, Navigation, Clock, Send, CheckCircle2, ShieldAlert, Train, Plane, HelpCircle, PhoneCall } from 'lucide-react';
 import { clinicConfig } from '../../lib/clinicConfig';
 import { useLanguage } from '../../lib/language-context';
+import { apiClient } from '../../lib/api-client';
 
 export default function ContactPage() {
   const { lang } = useLanguage();
   const [form, setForm] = useState({ name: '', phone: '', subject: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    setTimeout(() => {
+    setErrorMsg('');
+    try {
+      const res = await apiClient('/inquiries', {
+        method: 'POST',
+        body: JSON.stringify(form),
+      });
+      if (res.success) {
+        setSubmitted(true);
+        setForm({ name: '', phone: '', subject: '', message: '' });
+      } else {
+        setErrorMsg(res.message || 'Failed to submit inquiry. Please try again.');
+      }
+    } catch (err: any) {
+      setErrorMsg('Network error. Please try again later.');
+    } finally {
       setSubmitting(false);
-      setSubmitted(true);
-      setForm({ name: '', phone: '', subject: '', message: '' });
-    }, 1000);
+    }
   };
 
   const faqItems = [
@@ -58,10 +72,13 @@ export default function ContactPage() {
           <MapPin className="w-3.5 h-3.5" />
           {lang === 'hi' ? 'संपर्क एवं क्लिनिक स्थान' : 'CLINIC LOCATION & CONTACT'}
         </span>
-        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 leading-none tracking-tight">
-          {lang === 'hi' ? 'हमसे संपर्क करें' : 'Contact Dr. Q.H. Khan Clinic'}
+        <h1 className="text-4xl sm:text-5xl font-black text-[#1A0706] leading-none tracking-tight">
+          {lang === 'hi' ? 'डॉ. क्यू. एच. खान' : 'DR. Q.H. KHAN'}
+          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#55100D] to-[#DD0200] text-xl sm:text-2.5xl font-extrabold mt-2.5 tracking-wider">
+            {lang === 'hi' ? 'क्लासिकल होम्योपैथिक क्लिनिक' : 'CLASSICAL HOMOEOPATHIC CLINIC'}
+          </span>
         </h1>
-        <p className="text-slate-655 text-xs sm:text-sm leading-relaxed font-medium max-w-xl mx-auto">
+        <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-bold max-w-xl mx-auto">
           {lang === 'hi'
             ? 'नगमटिया रोड, गया क्लिनिक पर आएं या किसी भी प्रकार की चिकित्सीय सहायता के लिए हमारे हेल्पलाइन नंबरों पर संपर्क करें।'
             : 'Visit us at Nagmatia Road, Gaya or connect via helpline, WhatsApp, or our general inquiry portal.'}
@@ -170,6 +187,11 @@ export default function ContactPage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-3">
+                {errorMsg && (
+                  <div className="p-3 bg-rose-50 border border-rose-200 text-rose-800 rounded-xl text-[10px] font-bold">
+                    {errorMsg}
+                  </div>
+                )}
                 <div>
                   <label className="block text-slate-700 mb-1">{lang === 'hi' ? 'आपका नाम *' : 'Your Name *'}</label>
                   <input

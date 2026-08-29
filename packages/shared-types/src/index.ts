@@ -155,6 +155,19 @@ export interface IFeedback {
   updatedAt: string;
 }
 
+export type InquiryStatus = 'pending' | 'resolved' | 'ignored';
+
+export interface IInquiry {
+  _id: string;
+  name: string;
+  phone: string;
+  subject: string;
+  message: string;
+  status: InquiryStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface IClinicSettings {
   clinicName: string;
   establishedYear: number;
