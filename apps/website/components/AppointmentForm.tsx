@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { apiClient } from '../lib/api-client';
-import { CheckCircle2, AlertCircle, Calendar, UploadCloud } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Calendar, UploadCloud, ShieldAlert, CreditCard } from 'lucide-react';
 
 export const AppointmentForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +20,9 @@ export const AppointmentForm: React.FC = () => {
 
   const [customDepartment, setCustomDepartment] = useState('');
   const [reportBase64, setReportBase64] = useState<string>('');
+  const [paymentBase64, setPaymentBase64] = useState<string>('');
   const [fileError, setFileError] = useState<string | null>(null);
+  const [paymentFileError, setPaymentFileError] = useState<string | null>(null);
 
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
@@ -72,14 +74,62 @@ export const AppointmentForm: React.FC = () => {
     }
   };
 
+  const handlePaymentFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPaymentFileError(null);
+    setPaymentBase64('');
+
+    const file = e.target.files?.[0];
+    if (file) {
+      // 1. File Size Verification (Max 200 KB = 200 * 1024 bytes)
+      if (file.size > 200 * 1024) {
+        setPaymentFileError('Security Safeguard: Payment screenshot exceeds 200 KB limit.');
+        return;
+      }
+
+      // 2. File Format and Extension Verification (Anti-Hacker Security Block)
+      const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+      const allowedExtensions = ['png', 'jpg', 'jpeg'];
+      const fileExt = file.name.split('.').pop()?.toLowerCase();
+
+      if (!allowedTypes.includes(file.type) || !fileExt || !allowedExtensions.includes(fileExt)) {
+        setPaymentFileError('Security Safeguard: Only valid image files (.png, .jpg, .jpeg) are allowed.');
+        return;
+      }
+
+      // Read safely as Base64 Data URL
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPaymentBase64(reader.result as string);
+      };
+      reader.onerror = () => {
+        setPaymentFileError('Failed to parse payment screenshot safely.');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg(null);
 
-    // If Other is selected, ensure patient manually typed their concern
+    // Validate that custom department is supplied if Other is selected
     if (formData.department === 'Other' && !customDepartment.trim()) {
       setErrorMsg('Please specify your health concern manually.');
+      setLoading(false);
+      return;
+    }
+
+    // Validate that payment screenshot is uploaded
+    if (!paymentBase64) {
+      setErrorMsg('Please upload a payment screenshot of ₹300 to confirm booking.');
+      setLoading(false);
+      return;
+    }
+
+    // Validate Terms & Conditions agreement checkbox
+    if (!formData.consent) {
+      setErrorMsg('You must read and accept the Terms & Conditions before booking.');
       setLoading(false);
       return;
     }
@@ -88,6 +138,7 @@ export const AppointmentForm: React.FC = () => {
       ...formData,
       department: formData.department === 'Other' ? customDepartment.trim() : formData.department,
       medicalDocuments: reportBase64 ? [reportBase64] : [],
+      paymentScreenshot: paymentBase64,
     };
 
     const res = await apiClient('/appointments', {
@@ -139,6 +190,7 @@ export const AppointmentForm: React.FC = () => {
               });
               setCustomDepartment('');
               setReportBase64('');
+              setPaymentBase64('');
             }}
             className="px-5 py-2.5 bg-clinic-indigo text-white font-bold rounded-lg shadow hover:bg-clinic-violet transition-colors"
           >
@@ -303,8 +355,8 @@ export const AppointmentForm: React.FC = () => {
               <div className="flex items-center gap-2">
                 <UploadCloud className="w-5 h-5 text-slate-450 shrink-0" />
                 <div>
-                  <span className="text-[10px] text-slate-500 font-medium block">
-                    {reportBase64 ? 'File uploaded and secured.' : 'Click to select or drag clinical file here'}
+                  <span className="text-[10px] text-slate-550 font-medium block">
+                    {reportBase64 ? 'Report loaded and secured.' : 'Click to select or drag medical file here'}
                   </span>
                 </div>
               </div>
@@ -316,6 +368,41 @@ export const AppointmentForm: React.FC = () => {
               />
             </div>
             {fileError && <p className="text-red-650 text-[10px] font-bold mt-1">{fileError}</p>}
+          </div>
+
+          {/* UPI Payment Instructions Box & Mandatory Payment Screenshot */}
+          <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
+            <div className="flex items-center gap-2 text-clinic-indigo">
+              <CreditCard className="w-4 h-4 text-clinic-indigo" />
+              <span className="font-bold text-xs uppercase tracking-wider">Required Consult Payment</span>
+            </div>
+            <p className="text-slate-655 text-[11px] leading-relaxed font-medium">
+              Pay the basic consultation fee of <strong className="text-slate-900">₹300</strong> to UPI Helpline ID: <strong className="text-slate-900 font-mono select-all">9135404090@upi</strong> before booking. Upload the confirmation screenshot below.
+            </p>
+
+            <div className="space-y-1">
+              <label className="block text-slate-700 font-bold">
+                Attach Payment Confirmation Screenshot * (PNG/JPG/JPEG, Max 200 KB)
+              </label>
+              <div className="relative border border-dashed border-slate-300 rounded-xl p-3 bg-white hover:bg-slate-50 transition-colors flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <UploadCloud className="w-5 h-5 text-slate-450 shrink-0" />
+                  <div>
+                    <span className="text-[10px] text-slate-550 font-medium block">
+                      {paymentBase64 ? 'Payment receipt loaded and secured.' : 'Upload UPI payment screenshot'}
+                    </span>
+                  </div>
+                </div>
+                <input
+                  type="file"
+                  required
+                  accept="image/png, image/jpeg, image/jpg"
+                  onChange={handlePaymentFileChange}
+                  className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                />
+              </div>
+              {paymentFileError && <p className="text-red-655 text-[10px] font-bold mt-1">{paymentFileError}</p>}
+            </div>
           </div>
 
           <div>
@@ -330,17 +417,19 @@ export const AppointmentForm: React.FC = () => {
             />
           </div>
 
-          <div className="flex items-start gap-2 pt-1">
+          {/* Terms & Conditions Agreement Checkbox */}
+          <div className="flex items-start gap-2 pt-1 border-t border-slate-100 pt-3">
             <input
               type="checkbox"
               name="consent"
               id="consent"
+              required
               checked={formData.consent}
               onChange={handleChange}
               className="mt-1 rounded text-clinic-indigo focus:ring-clinic-indigo"
             />
             <label htmlFor="consent" className="text-slate-500 font-medium text-[11px] leading-relaxed">
-              I consent to providing patient information for clinical consultation at Dr. Q.H. Khan Clinic. I understand emergency medical conditions require immediate hospital emergency care.
+              I agree to the <strong className="text-slate-800 font-bold">Terms & Conditions</strong> of Dr. Q.H. Khan Clinic. I confirm that I have paid the basic consultation fee of ₹300 and attached the payment confirmation. I understand my booking remains pending until payment validation.
             </label>
           </div>
 

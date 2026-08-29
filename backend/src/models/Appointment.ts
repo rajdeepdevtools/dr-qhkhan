@@ -15,6 +15,7 @@ export interface IAppointmentDocument extends Document {
   preferredTime: string;
   message?: string;
   medicalDocuments?: string[];
+  paymentScreenshot?: string;
   consent: boolean;
   status: AppointmentStatus;
   patient?: Types.ObjectId;
@@ -37,6 +38,7 @@ const appointmentSchema = new Schema<IAppointmentDocument>(
     preferredTime: { type: String, required: true },
     message: { type: String },
     medicalDocuments: [{ type: String }],
+    paymentScreenshot: { type: String },
     consent: { type: Boolean, required: true, default: true },
     status: {
       type: String,
