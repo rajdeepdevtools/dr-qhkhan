@@ -794,34 +794,54 @@ export default function HomePage() {
 
       {/* 11. HELPLINES & INSTANT CHAT WIDGET */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-clinic-indigo via-clinic-violet to-slate-900 text-white rounded-3xl p-8 shadow-xl flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="space-y-2 text-center md:text-left">
-            <h3 className="text-xl font-bold text-white">
+        <div className="relative bg-gradient-to-r from-[#55100D] via-[#1A0706] to-[#131314] text-white rounded-3xl p-8 shadow-2xl flex flex-col lg:flex-row justify-between items-center gap-6 overflow-hidden border border-white/5">
+          
+          {/* Animated decorative grid background */}
+          <div className="absolute inset-0 futuristic-grid opacity-[0.03] pointer-events-none" />
+          
+          <div className="space-y-3 text-center lg:text-left relative z-10">
+            {/* Live Indicator Tag */}
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-black uppercase tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>{lang === 'hi' ? 'लाइव सहायता उपलब्ध' : 'Live Support Available'}</span>
+            </div>
+            
+            <h3 className="text-2xl font-black text-white tracking-wide leading-none">
               {lang === 'hi' ? 'परामर्श में सहायता चाहिए?' : 'Need Consultation Assistance?'}
             </h3>
-            <p className="text-xs text-slate-300 max-w-xl">
+            <p className="text-xs text-rose-100/80 max-w-xl font-bold leading-relaxed">
               {lang === 'hi'
                 ? 'डॉक्टर की उपलब्धता जानने के लिए सीधे हमारे हेल्पलाइन नंबरों पर कॉल करें या व्हाट्सएप पर संदेश भेजें।'
                 : 'Call our helpline numbers directly or send a message via WhatsApp to check doctor availability at Nagmatia Road, Gaya.'}
             </p>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-3">
+          
+          <div className="flex flex-wrap items-center justify-center gap-3 relative z-10 text-xs">
             <a
               href="tel:9135404090"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white text-clinic-indigo font-bold text-xs shadow hover:bg-slate-100 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white hover:bg-slate-50 text-[#1A0706] font-extrabold shadow-md transition-colors"
             >
-              <Phone className="w-4 h-4 text-clinic-crimson" />
+              <Phone className="w-4 h-4 text-[#DD0200] animate-pulse" />
               <span>{lang === 'hi' ? 'कॉल करें: 9135404090' : 'Call 9135404090'}</span>
             </a>
+            
             <a
               href={`https://wa.me/91${clinicConfig.whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 text-white font-bold text-xs shadow hover:bg-emerald-700 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#075E54] hover:bg-[#128C7E] text-white font-extrabold shadow-md transition-colors border border-white/5"
             >
-              <MessageSquare className="w-4 h-4" />
+              <MessageSquare className="w-4 h-4 text-emerald-300" />
               <span>{lang === 'hi' ? 'व्हाट्सएप चैट' : 'WhatsApp Chat'}</span>
             </a>
+
+            <Link
+              href="/appointment"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#DD0200] to-rose-700 hover:from-rose-600 text-white font-extrabold shadow-md transition-all hover:-translate-y-0.5"
+            >
+              <Calendar className="w-4 h-4 text-white" />
+              <span>{lang === 'hi' ? 'ऑनलाइन बुक करें' : 'Book Online'}</span>
+            </Link>
           </div>
         </div>
       </section>
