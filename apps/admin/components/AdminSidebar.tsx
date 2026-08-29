@@ -18,6 +18,7 @@ import {
   MapPin,
   Youtube,
   QrCode,
+  Receipt,
 } from 'lucide-react';
 import { useAdminAuth } from '../lib/admin-auth';
 
@@ -31,6 +32,7 @@ export const AdminSidebar: React.FC = () => {
     { label: 'Doctors', href: '/doctors', icon: UserCheck },
     { label: 'Staff / Receptionists', href: '/staff', icon: UserCog },
     { label: 'Appointments', href: '/appointments', icon: Calendar },
+    { label: 'Patient Billing & Invoices', href: '/billing', icon: Receipt },
     { label: 'Medical Reports', href: '/reports', icon: FileText },
     { label: 'Health Blogs', href: '/blogs', icon: BookOpen },
     { label: 'Medical Camps (Shivir)', href: '/camps', icon: MapPin },

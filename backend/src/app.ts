@@ -19,6 +19,7 @@ import feedbackRoutes from './routes/feedbackRoutes';
 import settingsRoutes from './routes/settingsRoutes';
 import campRoutes from './routes/campRoutes';
 import videoRoutes from './routes/videoRoutes';
+import invoiceRoutes from './routes/invoiceRoutes';
 
 export const createApp = (): express.Application => {
   const app = express();
@@ -52,6 +53,7 @@ export const createApp = (): express.Application => {
   app.use('/api/settings', settingsRoutes);
   app.use('/api/camps', campRoutes);
   app.use('/api/videos', videoRoutes);
+  app.use('/api/invoices', invoiceRoutes);
 
   // Global Error Handler
   app.use(errorHandler);
