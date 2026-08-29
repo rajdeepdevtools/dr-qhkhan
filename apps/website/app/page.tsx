@@ -225,13 +225,13 @@ export default function HomePage() {
     : videos.filter(v => v.category === videoFilter);
 
   return (
-    <div className="space-y-20 pb-20">
+    <div className="space-y-12 pb-12">
       {/* 1. HERO SECTION */}
       <Hero />
 
       {/* 2. TICKER BANNER (SLOGANS CAROUSEL) */}
-      <section className="bg-clinic-indigo/5 border-y border-clinic-indigo/10 py-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4">
+      <section className="bg-clinic-indigo/5 border-y border-clinic-indigo/10 py-3 overflow-hidden">
+        <div className="max-w-[1600px] mx-auto px-4">
           <div className="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-bold text-clinic-indigo">
             {clinicConfig.slogans.map((slogan, idx) => (
               <span key={idx} className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm whitespace-nowrap">
@@ -244,7 +244,7 @@ export default function HomePage() {
       </section>
 
       {/* 3. FOUNDER'S MEMORIAL & LEGACY TIMELINE */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-slate-900 text-white rounded-3xl p-8 md:p-12 border border-slate-800 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-orange-600/10 rounded-full blur-3xl" />
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -315,7 +315,7 @@ export default function HomePage() {
       </section>
 
       {/* 4. ACTIVE CLINICAL SPECIALISTS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
         <div className="text-center space-y-2">
           <span className="text-xs font-bold text-clinic-indigo uppercase tracking-wider">
             {lang === 'hi' ? 'सक्रिय चिकित्सा टीम' : 'Active Clinical Team'}
@@ -338,7 +338,7 @@ export default function HomePage() {
       </section>
 
       {/* 5. COMMUNITY CAMPS & FREE SHIVIR GALLERY */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-slate-200 pb-4">
           <div>
             <span className="text-xs font-bold text-clinic-indigo uppercase tracking-wider">
@@ -392,7 +392,7 @@ export default function HomePage() {
       </section>
 
       {/* 6. CONSULTATION SPECIALTIES (TREATMENTS) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-slate-200 pb-4">
           <div>
             <span className="text-xs font-bold text-clinic-indigo uppercase tracking-wider">
@@ -419,7 +419,7 @@ export default function HomePage() {
       </section>
 
       {/* 7. FAQ ACCORDION SECTION */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 space-y-8">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 space-y-4">
         <div className="text-center space-y-2">
           <span className="text-xs font-bold text-clinic-indigo uppercase tracking-wider">
             {lang === 'hi' ? 'सहायक जानकारी' : 'HELPFUL KNOWLEDGE'}
@@ -453,7 +453,7 @@ export default function HomePage() {
       </section>
 
       {/* 8. PATIENT WRITTEN TESTIMONIALS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
         <div className="text-center space-y-2">
           <span className="text-xs font-bold text-clinic-indigo uppercase tracking-wider">
             {lang === 'hi' ? 'मरीजों की राय' : 'PATIENT VERDICTS'}
@@ -493,7 +493,7 @@ export default function HomePage() {
       </section>
 
       {/* 9. VIDEO TESTIMONIAL STREAMS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-slate-200 pb-4">
           <div>
             <span className="text-xs font-bold text-clinic-indigo uppercase tracking-wider">
@@ -570,7 +570,7 @@ export default function HomePage() {
 
       {/* 10. WRITE A REVIEW / SUBMIT FEEDBACK FORM */}
       <section id="review-form" className="max-w-xl mx-auto px-4 sm:px-6 scroll-mt-24">
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl space-y-4">
           <div className="text-center space-y-1">
             <h3 className="text-xl font-bold text-slate-950 font-sans">
               {lang === 'hi' ? 'अपना अनुभव साझा करें' : 'Share Your Experience'}
@@ -671,7 +671,7 @@ export default function HomePage() {
       </section>
 
       {/* 11. HELPLINES & INSTANT CHAT WIDGET */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-gradient-to-r from-clinic-indigo via-clinic-violet to-slate-900 text-white rounded-3xl p-8 shadow-xl flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="space-y-2 text-center md:text-left">
             <h3 className="text-xl font-bold text-white">
@@ -705,7 +705,7 @@ export default function HomePage() {
       </section>
 
       {/* 12. HEALTH INSIGHTS & BLOGS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-slate-200 pb-4">
           <div>
             <span className="text-xs font-bold text-clinic-indigo uppercase tracking-wider">
@@ -765,7 +765,7 @@ export default function HomePage() {
       </section>
 
       {/* 13. ADDRESS & GOOGLE MAP DIRECTIONS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-md">
           <div className="md:col-span-5 space-y-4">
             <span className="text-xs font-bold uppercase tracking-wider text-clinic-crimson bg-orange-50 px-3 py-1 rounded-full border border-orange-200">

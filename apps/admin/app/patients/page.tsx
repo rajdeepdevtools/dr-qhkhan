@@ -18,7 +18,7 @@ export default function AdminPatientsPage() {
     phone: '',
     age: 30,
     gender: 'Male',
-    bloodGroup: 'B+',
+    bloodGroup: '',
     address: '',
     primaryDoctor: '',
   });
@@ -181,6 +181,7 @@ export default function AdminPatientsPage() {
                       onChange={(e) => setFormData({ ...formData, bloodGroup: e.target.value })}
                       className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white"
                     >
+                      <option value="">Select Blood Group (Optional)</option>
                       <option value="A+">Blood Group: A+</option>
                       <option value="A-">Blood Group: A-</option>
                       <option value="B+">Blood Group: B+</option>

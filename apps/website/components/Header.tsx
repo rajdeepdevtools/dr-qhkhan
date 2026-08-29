@@ -18,7 +18,7 @@ export const Header: React.FC = () => {
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
       {/* Top Helpline Bar */}
       <div className="bg-clinic-indigo text-white text-xs py-2 px-4">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+        <div className="max-w-[1600px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex items-center space-x-4">
             <span className="font-semibold tracking-wide">
               DR. Q.H. KHAN CLINIC (ESTD. 1958) • GAYA, BIHAR
@@ -35,7 +35,7 @@ export const Header: React.FC = () => {
       </div>
 
       {/* Main Navigation */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-3 group">
           <img
             src="/images/logo.png"

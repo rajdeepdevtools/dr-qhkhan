@@ -13,7 +13,7 @@ export const Footer: React.FC = () => {
     <footer className="bg-clinic-indigo text-slate-200 text-sm">
       {/* Top Disclaimer Banner */}
       <div className="bg-slate-950/60 border-b border-white/10 py-3.5 px-4">
-        <div className="max-w-7xl mx-auto flex items-start gap-3 text-xs text-slate-300">
+        <div className="max-w-[1600px] mx-auto flex items-start gap-3 text-xs text-slate-300">
           <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
           <p>
             <strong className="text-white">
@@ -31,7 +31,7 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Column 1: Brand Info */}
         <div className="space-y-4">
           <div className="flex items-center space-x-3">

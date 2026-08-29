@@ -11,11 +11,11 @@ export const Hero: React.FC = () => {
   const { lang } = useLanguage();
 
   return (
-    <section className="relative bg-gradient-to-br from-clinic-indigo via-indigo-950 to-clinic-violet text-white overflow-hidden py-16 md:py-24">
+    <section className="relative bg-gradient-to-br from-clinic-indigo via-indigo-950 to-clinic-violet text-white overflow-hidden py-10 md:py-14">
       {/* Background Subtle Shapes */}
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Hero Copy */}
           <div className="lg:col-span-7 space-y-6 text-left">
