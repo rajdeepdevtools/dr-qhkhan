@@ -9,9 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        adminDark: '#0F172A',
-        adminIndigo: '#1E1B4B',
-        adminAccent: '#C2410C',
+        adminDark: '#1A0706', // Coffee Bean
+        adminIndigo: '#55100D', // Black Cherry
+        adminAccent: '#DD0200', // Racing Red
       },
     },
   },

@@ -10,11 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         clinic: {
-          indigo: '#1E1B4B',
-          violet: '#4C1D95',
-          crimson: '#C2410C',
-          lightBg: '#F8FAFC',
-          cardBorder: '#E2E8F0',
+          indigo: '#55100D', // Black Cherry
+          violet: '#1A0706', // Coffee Bean
+          crimson: '#DD0200', // Racing Red
+          lightBg: '#F8F8F8', // Alabaster Base Tint
+          cardBorder: '#D9D9D9', // Alabaster Grey
         },
       },
     },
