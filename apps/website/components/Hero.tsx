@@ -180,7 +180,7 @@ export const Hero: React.FC = () => {
             <div className="animate-fade-in-up-delay-2 flex flex-wrap items-center gap-3 pt-2">
               <Link
                 href="/appointment"
-                className="inline-flex items-center gap-1.5 px-5.5 py-3 rounded-xl bg-gradient-to-r from-clinic-crimson to-rose-700 hover:from-rose-600 hover:to-clinic-crimson text-white font-bold text-xs shadow-md transition-all hover:-translate-y-0.5"
+                className="inline-flex items-center gap-1.5 px-5.5 py-3 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white font-extrabold text-xs shadow-md transition-all hover:-translate-y-0.5 tracking-wide"
               >
                 <div className="w-2 h-2 rounded-full bg-white pulse-dot mr-1 shrink-0" />
                 <Calendar className="w-4 h-4" />
@@ -189,7 +189,7 @@ export const Hero: React.FC = () => {
 
               <a
                 href="tel:9135404090"
-                className="inline-flex items-center gap-1.5 px-4.5 py-3 rounded-xl bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-800 font-bold text-xs transition-all hover:-translate-y-0.5"
+                className="inline-flex items-center gap-1.5 px-4.5 py-3 rounded-xl bg-white border border-[#D9D9D9] hover:bg-slate-50 text-[#1A0706] font-extrabold text-xs transition-all hover:-translate-y-0.5 shadow-sm hover:border-[#55100D]/50 hover:shadow-md"
               >
                 <Phone className="w-4 h-4 text-emerald-600" />
                 <span>{lang === 'hi' ? 'कॉल हेल्पलाइन' : 'Call Helpline'}</span>
@@ -199,7 +199,7 @@ export const Hero: React.FC = () => {
                 href={`https://wa.me/91${clinicConfig.whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4.5 py-3 rounded-xl bg-emerald-50 border border-emerald-250 hover:bg-emerald-100 text-emerald-800 font-bold text-xs transition-all hover:-translate-y-0.5"
+                className="inline-flex items-center gap-1.5 px-4.5 py-3 rounded-xl bg-white border border-[#D9D9D9] hover:bg-slate-50 text-[#1A0706] font-extrabold text-xs transition-all hover:-translate-y-0.5 shadow-sm hover:border-[#55100D]/50 hover:shadow-md"
               >
                 <MessageSquare className="w-4 h-4 text-emerald-600" />
                 <span>{lang === 'hi' ? 'व्हाट्सएप' : 'WhatsApp'}</span>
@@ -209,9 +209,9 @@ export const Hero: React.FC = () => {
                 href={clinicConfig.googleMapsDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4.5 py-3 rounded-xl bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-800 font-bold text-xs transition-all hover:-translate-y-0.5"
+                className="inline-flex items-center gap-1.5 px-4.5 py-3 rounded-xl bg-white border border-[#D9D9D9] hover:bg-slate-50 text-[#1A0706] font-extrabold text-xs transition-all hover:-translate-y-0.5 shadow-sm hover:border-[#55100D]/50 hover:shadow-md"
               >
-                <MapPin className="w-4 h-4 text-rose-500" />
+                <MapPin className="w-4 h-4 text-[#DD0200]" />
                 <span>{lang === 'hi' ? 'दिशा-निर्देश' : 'Directions'}</span>
               </a>
             </div>
