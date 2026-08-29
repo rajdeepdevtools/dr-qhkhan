@@ -28,6 +28,7 @@ export const appointmentSchema = z.object({
   consent: z.boolean().refine((val) => val === true, {
     message: 'Consent is required',
   }),
+  medicalDocuments: z.array(z.string().regex(/^data:image\/(png|jpeg|jpg);base64,/, 'Only valid image files (PNG/JPG/JPEG) are allowed')).optional(),
 });
 
 export const appointmentStatusSchema = z.object({

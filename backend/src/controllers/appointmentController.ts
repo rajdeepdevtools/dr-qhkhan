@@ -7,7 +7,7 @@ import { AuthRequest } from '../middleware/auth';
 
 export class AppointmentController {
   static async createAppointment(req: Request, res: Response): Promise<void> {
-    const { name, email, phone, age, gender, department, doctor, preferredDate, preferredTime, message, consent } = req.body;
+    const { name, email, phone, age, gender, department, doctor, preferredDate, preferredTime, message, consent, medicalDocuments } = req.body;
 
     const dateStr = preferredDate.replace(/-/g, '');
     const randNum = Math.floor(1000 + Math.random() * 9000);
@@ -39,6 +39,7 @@ export class AppointmentController {
       preferredTime,
       message,
       consent,
+      medicalDocuments: medicalDocuments || [],
       status: 'pending',
       patient: patientRef || undefined,
     });
