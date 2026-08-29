@@ -57,7 +57,7 @@ export const Header: React.FC = () => {
         className={`sticky top-0 z-50 w-full transition-all duration-500 no-print border-b ${
           isScrolled
             ? 'bg-white/90 shadow-md backdrop-blur-lg py-2.5 border-slate-200/60'
-            : 'bg-indigo-950/90 backdrop-blur-md py-3.5 border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.05)]'
+            : 'bg-[#131314]/95 backdrop-blur-md py-3.5 border-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.08)]'
         }`}
       >
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -71,12 +71,12 @@ export const Header: React.FC = () => {
             />
             <div>
               <h1 className={`font-black text-base leading-tight transition-colors ${
-                isScrolled ? 'text-slate-900 group-hover:text-clinic-indigo' : 'text-white group-hover:text-indigo-200'
+                isScrolled ? 'text-[#1A0706]' : 'text-white'
               }`}>
                 DR. Q.H. KHAN
               </h1>
-              <p className={`text-[10px] font-bold tracking-wide uppercase ${
-                isScrolled ? 'text-slate-500' : 'text-indigo-200'
+              <p className={`text-[10px] font-black tracking-wider uppercase bg-clip-text text-transparent bg-gradient-to-r ${
+                isScrolled ? 'from-[#55100D] to-[#DD0200]' : 'from-rose-300 to-rose-500'
               }`}>
                 {lang === 'hi' ? 'क्लासिकल होम्योपैथिक क्लिनिक' : 'CLASSICAL HOMOEOPATHIC CLINIC'}
               </p>
@@ -93,17 +93,13 @@ export const Header: React.FC = () => {
                   href={link.path}
                   className={`group flex flex-col gap-0.5 transition-all ${
                     isActive 
-                      ? (isScrolled ? 'text-clinic-indigo font-black' : 'text-white font-black') 
-                      : (isScrolled ? 'text-slate-700 hover:text-clinic-indigo' : 'text-indigo-100 hover:text-white')
+                      ? (isScrolled ? 'text-clinic-indigo font-black tracking-wide' : 'text-white font-black tracking-wide') 
+                      : (isScrolled ? 'text-slate-700 hover:text-clinic-indigo font-bold tracking-wide' : 'text-[#D9D9D9] hover:text-white font-bold tracking-wide')
                   }`}
                 >
                   <span>{link.name}</span>
                   <div
-                    className={`h-0.5 transition-all duration-300 ${
-                      isScrolled 
-                        ? 'bg-clinic-indigo shadow-[0_0_8px_rgba(79,70,229,0.8)]' 
-                        : 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)]'
-                    } ${
+                    className={`h-0.5 transition-all duration-300 bg-[#DD0200] shadow-[0_0_8px_rgba(221,2,0,0.85)] ${
                       isActive ? 'w-full' : 'w-0 group-hover:w-full'
                     }`}
                   />
