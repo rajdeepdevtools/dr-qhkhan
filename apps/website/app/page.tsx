@@ -243,6 +243,48 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* NEW SECTION: CLINICAL METRICS GRID */}
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          {[
+            {
+              count: '68+',
+              labelEn: 'Years of Service',
+              labelHi: 'वर्षों की सेवा',
+              descEn: 'Trust since 1958',
+              descHi: '1958 से अटूट विश्वास'
+            },
+            {
+              count: '10,000+',
+              labelEn: 'Treated Cases',
+              labelHi: 'सफल उपचारित केस',
+              descEn: 'Skin & chronic ailments',
+              descHi: 'त्वचा एवं क्रोनिक रोग'
+            },
+            {
+              count: '3+',
+              labelEn: 'Registered Specialists',
+              labelHi: 'पंजीकृत विशेषज्ञ',
+              descEn: 'Qualified physicians',
+              descHi: 'योग्य चिकित्सक टीम'
+            },
+            {
+              count: '2+',
+              labelEn: 'Free Camps Monthly',
+              labelHi: 'मासिक मुफ्त शिविर',
+              descEn: 'Social health service',
+              descHi: 'सामाजिक स्वास्थ्य सेवा'
+            }
+          ].map((item, idx) => (
+            <div key={idx} className="bg-white border border-slate-200 rounded-2xl p-6 hover:border-slate-350 transition-colors shadow-sm">
+              <p className="text-3xl font-black text-clinic-indigo">{item.count}</p>
+              <p className="text-xs font-bold text-slate-800 mt-1.5">{lang === 'hi' ? item.labelHi : item.labelEn}</p>
+              <p className="text-[10px] text-slate-500 mt-0.5 font-medium">{lang === 'hi' ? item.descHi : item.descEn}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* 3. FOUNDER'S MEMORIAL & LEGACY TIMELINE */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-slate-900 text-white rounded-3xl p-8 md:p-12 border border-slate-800 shadow-2xl relative overflow-hidden">
@@ -333,6 +375,62 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {doctorsList.map((doc, idx) => (
             <DoctorCard key={idx} doctor={doc} />
+          ))}
+        </div>
+      </section>
+
+      {/* NEW SECTION: CONSTITUTIONAL CARE PROCESS */}
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+        <div className="text-center space-y-2">
+          <span className="text-xs font-bold text-clinic-indigo uppercase tracking-wider">
+            {lang === 'hi' ? 'हमारी उपचार प्रक्रिया' : 'Our Clinical Method'}
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            {lang === 'hi' ? 'संवैधानिक होम्योपैथिक उपचार मार्ग' : 'Constitutional Care Consultation Process'}
+          </h2>
+          <p className="text-slate-500 text-xs sm:text-sm max-w-2xl mx-auto font-medium">
+            {lang === 'hi'
+              ? 'मरीजों के संपूर्ण मानसिक, शारीरिक और अनुवांशिक लक्षणों के आधार पर व्यक्तिगत परामर्श।'
+              : 'Thorough step-by-step case evaluation based on individual constitutional profiles.'}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs font-semibold pt-4">
+          {[
+            {
+              step: '01',
+              titleEn: 'Individual Intake',
+              titleHi: 'व्यक्तिगत केस-इंटेक',
+              descEn: 'Detailed recording of chronic symptoms, lifestyle, genetic factors, and dietary habits.',
+              descHi: 'क्रोनिक लक्षणों, जीवन शैली, अनुवांशिक इतिहास और आहार संबंधी आदतों की विस्तृत केस स्टडी।'
+            },
+            {
+              step: '02',
+              titleEn: 'Medical Evaluation',
+              titleHi: 'चिकित्सीय विश्लेषण',
+              descEn: 'Analyzing past reports, clinical diagnostic tests, and pathological severity levels.',
+              descHi: 'पुराने मेडिकल रिकॉर्ड्स, नैदानिक जांच रिपोर्टों और बीमारी की तीव्रता का गहन विश्लेषण।'
+            },
+            {
+              step: '03',
+              titleEn: 'Remedy Selection',
+              titleHi: 'औषधि निर्धारण',
+              descEn: 'Determining the constitutional homeopathic remedy and precise therapeutic potency.',
+              descHi: 'व्यक्ति की शारीरिक एवं मानसिक प्रकृति के अनुकूल सही होम्योपैथिक दवा व पोटेंसी का चयन।'
+            },
+            {
+              step: '04',
+              titleEn: 'Active Monitoring',
+              titleHi: 'सतत अनुवर्ती निगरानी',
+              descEn: 'Ongoing follow-up consultations to monitor recovery progress and adjust potency schedules.',
+              descHi: 'बीमारी में सुधार की गति की जांच करने और दवा की मात्रा में आवश्यक बदलाव हेतु फॉलो-अप।'
+            }
+          ].map((item, idx) => (
+            <div key={idx} className="bg-slate-50 border border-slate-200 rounded-2xl p-5 hover:bg-white hover:border-slate-350 transition-all relative">
+              <span className="absolute -top-3 right-5 text-4xl font-black text-slate-200/80 select-none">{item.step}</span>
+              <h3 className="font-bold text-slate-950 text-sm mt-2">{lang === 'hi' ? item.titleHi : item.titleEn}</h3>
+              <p className="text-slate-650 mt-2 leading-relaxed text-[11px] font-medium">{lang === 'hi' ? item.descHi : item.descEn}</p>
+            </div>
           ))}
         </div>
       </section>
@@ -760,6 +858,26 @@ export default function HomePage() {
                   : 'Learn about case evaluation methodology in classical homeopathy and why individualized selection leads to long-lasting clinical relief.'}
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* NEW SECTION: MEDICAL SAFETY PLEDGE */}
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-br from-slate-900 to-clinic-indigo text-white rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="space-y-3 max-w-3xl">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-amber-300 text-[10px] font-bold uppercase tracking-wider">
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+              {lang === 'hi' ? 'चिकित्सीय शुचिता और सुरक्षा शपथ' : 'Clinical Integrity & Safety Pledge'}
+            </span>
+            <h3 className="text-xl font-bold text-white tracking-tight">
+              {lang === 'hi' ? 'जिम्मेदार स्वास्थ्य सेवाएं और नैतिक चिकित्सा' : 'Responsible Patient Care & Transparent Treatment'}
+            </h3>
+            <p className="text-slate-350 text-xs leading-relaxed font-medium">
+              {lang === 'hi'
+                ? 'हम चमत्कारी इलाज या १००% त्वरित समाधान का झूठा दावा नहीं करते हैं। हमारी सभी परामर्श प्रक्रियाएं पूरी गोपनीयता के साथ योग्य और पंजीकृत (B.H.M.S, M.D.) डॉक्टरों द्वारा संचालित की जाती हैं। गंभीर सर्जिकल या तीव्र आपातकालीन स्थितियों के लिए हम तुरंत उच्चतर अस्पतालों में रेफर करने की सलाह देते हैं।'
+                : 'At Dr. Q.H. Khan Clinic, we follow professional medical guidelines. We do not provide false guarantees or unrealistic cure claims. All consultations are handled with complete confidentiality by qualified, registered physicians. Acute, severe, or surgical emergencies are immediately directed to specialized hospital emergency facilities.'}
+            </p>
           </div>
         </div>
       </section>
