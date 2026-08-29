@@ -56,8 +56,8 @@ export const Header: React.FC = () => {
       <header
         className={`sticky top-0 z-50 w-full transition-all duration-500 no-print border-b ${
           isScrolled
-            ? 'bg-white/90 shadow-md backdrop-blur-lg py-2.5 border-slate-200'
-            : 'bg-indigo-600 py-4 border-indigo-700/50'
+            ? 'bg-white/90 shadow-md backdrop-blur-lg py-2.5 border-slate-200/60'
+            : 'bg-indigo-950/90 backdrop-blur-md py-3.5 border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.05)]'
         }`}
       >
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -91,16 +91,18 @@ export const Header: React.FC = () => {
                 <Link
                   key={idx}
                   href={link.path}
-                  className={`group flex flex-col gap-0.5 transition-colors ${
+                  className={`group flex flex-col gap-0.5 transition-all ${
                     isActive 
                       ? (isScrolled ? 'text-clinic-indigo font-black' : 'text-white font-black') 
-                      : (isScrolled ? 'text-slate-700 hover:text-clinic-indigo' : 'text-white/90 hover:text-white')
+                      : (isScrolled ? 'text-slate-700 hover:text-clinic-indigo' : 'text-indigo-100 hover:text-white')
                   }`}
                 >
                   <span>{link.name}</span>
                   <div
                     className={`h-0.5 transition-all duration-300 ${
-                      isScrolled ? 'bg-clinic-indigo' : 'bg-white'
+                      isScrolled 
+                        ? 'bg-clinic-indigo shadow-[0_0_8px_rgba(79,70,229,0.8)]' 
+                        : 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.9)]'
                     } ${
                       isActive ? 'w-full' : 'w-0 group-hover:w-full'
                     }`}
@@ -116,18 +118,18 @@ export const Header: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <Link
                   href="/doctor"
-                  className={`flex items-center gap-1.5 px-3 py-2 rounded-xl font-bold transition-colors ${
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold transition-all hover:scale-102 ${
                     isScrolled 
-                      ? 'bg-slate-100 text-slate-800 hover:bg-slate-200' 
-                      : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'
+                      ? 'bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-200' 
+                      : 'bg-white/10 text-white border border-white/20 hover:bg-white/25'
                   }`}
                 >
-                  <UserIcon className={`w-3.5 h-3.5 ${isScrolled ? 'text-clinic-indigo' : 'text-indigo-200'}`} />
+                  <UserIcon className={`w-3.5 h-3.5 ${isScrolled ? 'text-clinic-indigo' : 'text-indigo-300'}`} />
                   <span>Doctor Portal</span>
                 </Link>
                 <button
                   onClick={logout}
-                  className={`px-2 py-2 font-bold ${isScrolled ? 'text-red-600 hover:text-red-800' : 'text-red-300 hover:text-red-200'}`}
+                  className={`px-2 py-2 font-bold transition-colors ${isScrolled ? 'text-red-650 hover:text-red-800' : 'text-red-300 hover:text-red-200'}`}
                 >
                   Logout
                 </button>
@@ -135,10 +137,10 @@ export const Header: React.FC = () => {
             ) : (
               <Link
                 href="/login"
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl font-bold transition-colors ${
+                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold transition-all hover:scale-102 ${
                   isScrolled 
-                    ? 'bg-slate-100 text-slate-800 hover:bg-slate-200' 
-                    : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'
+                    ? 'bg-slate-100 text-slate-800 hover:bg-slate-200 border border-slate-200' 
+                    : 'bg-white/10 text-white border border-white/20 hover:bg-white/25'
                 }`}
               >
                 <UserIcon className={`w-3.5 h-3.5 ${isScrolled ? 'text-clinic-indigo' : 'text-white'}`} />
@@ -148,9 +150,10 @@ export const Header: React.FC = () => {
 
             <Link
               href="/appointment"
-              className="flex items-center gap-1.5 px-4.5 py-2.5 rounded-xl bg-clinic-crimson text-white font-black shadow-md hover:bg-amber-700 transition-colors"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-rose-700 text-white font-black shadow-md hover:from-rose-500 hover:to-rose-600 transition-all hover:scale-102"
             >
-              <Calendar className="w-4 h-4" />
+              <div className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+              <Calendar className="w-4 h-4 shrink-0" />
               <span>{t.navAppointment}</span>
             </Link>
           </div>
