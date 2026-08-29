@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { MapPin, Phone, MessageSquare, ShieldAlert } from 'lucide-react';
+import { MapPin, Phone, MessageSquare, ShieldAlert, Award, FileText, ArrowRight } from 'lucide-react';
 import { clinicConfig } from '../lib/clinicConfig';
 import { useLanguage } from '../lib/language-context';
 
@@ -10,178 +10,187 @@ export const Footer: React.FC = () => {
   const { lang } = useLanguage();
 
   return (
-    <footer className="bg-clinic-indigo text-slate-200 text-sm">
-      {/* Top Disclaimer Banner */}
-      <div className="bg-slate-950/60 border-b border-white/10 py-3.5 px-4">
-        <div className="max-w-[1600px] mx-auto flex items-start gap-3 text-xs text-slate-300">
-          <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
-          <p>
+    <div className="bg-slate-950 pt-16 px-4 sm:px-6 lg:px-8 no-print border-t border-slate-900">
+      
+      {/* Curved Dark Card Footer Wrapper */}
+      <footer className="bg-[#111827] w-full max-w-[1500px] mx-auto text-white pt-8 lg:pt-12 px-4 sm:px-8 md:px-12 lg:px-16 rounded-t-3xl overflow-hidden border border-slate-800/80 shadow-2xl relative">
+        
+        {/* Top Disclaimer Banner */}
+        <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 mb-10 flex items-start gap-3 text-xs text-slate-300">
+          <ShieldAlert className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+          <p className="leading-relaxed font-medium">
             <strong className="text-white">
               {lang === 'hi' ? 'चिकित्सा अस्वीकरण' : 'Medical Disclaimer'}:
             </strong>{' '}
             {lang === 'hi'
               ? 'इस वेबसाइट पर प्रदान की गई जानकारी केवल सामान्य सूचनात्मक उद्देश्यों के लिए है और पेशेवर चिकित्सा निदान, उपचार या आपातकालीन देखभाल का विकल्प नहीं है।'
               : clinicConfig.medicalDisclaimer}{' '}
-            <span className="text-amber-300 font-semibold">
+            <span className="text-amber-400 font-bold">
               {lang === 'hi'
                 ? 'यदि आप गंभीर, अचानक या जीवन के लिए खतरा पैदा करने वाले लक्षणों का अनुभव कर रहे हैं, तो तुरंत आपातकालीन चिकित्सा देखभाल लें।'
                 : clinicConfig.emergencyWarning}
             </span>
           </p>
         </div>
-      </div>
 
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Column 1: Brand Info */}
-        <div className="space-y-4">
-          <div className="flex items-center space-x-3">
-            <img
-              src="/images/logo.png"
-              alt="Dr. Q.H. Khan Clinic Logo"
-              className="w-10 h-10 rounded-xl shadow object-cover"
-            />
-            <div>
-              <h3 className="font-bold text-white text-base">
-                {lang === 'hi' ? 'डॉ. क्यू. एच. खान' : 'DR. Q.H. KHAN'}
-              </h3>
-              <p className="text-xs text-slate-400 font-medium">
-                {lang === 'hi' ? 'क्लासिकल होम्योपैथिक क्लिनिक' : 'CLASSICAL HOMOEOPATHIC CLINIC'}
-              </p>
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-8 md:gap-12 items-start">
+          
+          {/* Brand & Socials Column */}
+          <div className="lg:col-span-3 space-y-6">
+            <Link href="/" className="flex items-center space-x-3 group">
+              <img
+                src="/images/logo.png"
+                alt="Dr. Q.H. Khan Clinic Logo"
+                className="w-10 h-10 rounded-xl shadow object-cover"
+              />
+              <div>
+                <h3 className="font-black text-white text-base">
+                  {lang === 'hi' ? 'डॉ. क्यू. एच. खान' : 'DR. Q.H. KHAN'}
+                </h3>
+                <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">
+                  {lang === 'hi' ? 'क्लासिकल होम्योपैथिक क्लिनिक' : 'CLASSICAL HOMOEOPATHIC CLINIC'}
+                </p>
+              </div>
+            </Link>
+
+            <p className="text-xs text-slate-450 leading-relaxed max-w-sm font-medium">
+              {lang === 'hi'
+                ? 'गया, बिहार में 1958 में स्थापित। छह दशकों से अधिक समय से संवैधानिक क्लासिकल होम्योपैथिक देखभाल का संरक्षण।'
+                : 'Established in 1958 in Gaya, Bihar. Preserving constitutional classical homoeopathic care for over six decades.'}
+            </p>
+
+            <div className="flex gap-4">
+              <a
+                href="tel:9135404090"
+                className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white transition-colors"
+                title="Call Helpline"
+              >
+                <Phone className="w-4 h-4" />
+              </a>
+              <a
+                href={`https://wa.me/91${clinicConfig.whatsappNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white transition-colors"
+                title="WhatsApp Support"
+              >
+                <MessageSquare className="w-4 h-4" />
+              </a>
+              <a
+                href={clinicConfig.googleMapsDirectionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white transition-colors"
+                title="Google Maps"
+              >
+                <MapPin className="w-4 h-4" />
+              </a>
             </div>
           </div>
-          <p className="text-xs text-slate-300 leading-relaxed">
-            {lang === 'hi'
-              ? 'गया, बिहार में 1958 में स्थापित। छह दशकों से अधिक समय से संवैधानिक क्लासिकल होम्योपैथिक देखभाल का संरक्षण।'
-              : 'Established in 1958 in Gaya, Bihar. Preserving constitutional classical homoeopathic care for over six decades.'}
-          </p>
-          <div className="pt-1">
-            <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-amber-300 font-bold text-xs">
-              {lang === 'hi' ? 'स्थापना 1958' : 'ESTABLISHED 1958'}
-            </span>
-          </div>
-        </div>
 
-        {/* Column 2: Quick Links */}
-        <div>
-          <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">
-            {lang === 'hi' ? 'त्वरित नेविगेशन' : 'Quick Navigation'}
-          </h4>
-          <ul className="space-y-2.5 text-xs text-slate-300">
-            <li>
-              <Link href="/" className="hover:text-amber-300 transition-colors">
-                {lang === 'hi' ? 'होम पेज' : 'Home Page'}
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="hover:text-amber-300 transition-colors">
-                {lang === 'hi' ? 'क्लिनिक इतिहास और नेतृत्व' : 'Clinic History & Leadership'}
-              </Link>
-            </li>
-            <li>
-              <Link href="/doctors" className="hover:text-amber-300 transition-colors">
-                {lang === 'hi' ? 'डॉक्टर निर्देशिका' : 'Doctor Directory'}
-              </Link>
-            </li>
-            <li>
-              <Link href="/treatments" className="hover:text-amber-300 transition-colors">
-                {lang === 'hi' ? 'उपचार निर्देशिका' : 'Treatment Directory'}
-              </Link>
-            </li>
-            <li>
-              <Link href="/appointment" className="hover:text-amber-300 transition-colors">
-                {lang === 'hi' ? 'परामर्श बुक करें' : 'Book Consultation'}
-              </Link>
-            </li>
-            <li>
-              <Link href="/blogs" className="hover:text-amber-300 transition-colors">
-                {lang === 'hi' ? 'स्वास्थ्य ब्लॉग और विचार' : 'Health Blogs & Insights'}
-              </Link>
-            </li>
-          </ul>
-        </div>
+          {/* Nav Links Column */}
+          <div className="lg:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12 lg:gap-24 items-start text-xs font-semibold">
+            
+            {/* Quick Navigation */}
+            <div>
+              <h4 className="font-bold text-white mb-4 text-xs uppercase tracking-wider">
+                {lang === 'hi' ? 'नेविगेशन' : 'Navigation'}
+              </h4>
+              <ul className="space-y-3 text-slate-400 font-medium">
+                <li>
+                  <Link href="/" className="hover:text-white transition-colors">
+                    {lang === 'hi' ? 'होम पेज' : 'Home'}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/about" className="hover:text-white transition-colors">
+                    {lang === 'hi' ? 'इतिहास' : 'About Clinic'}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/doctors" className="hover:text-white transition-colors">
+                    {lang === 'hi' ? 'डॉक्टर टीम' : 'Doctors'}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/treatments" className="hover:text-white transition-colors">
+                    {lang === 'hi' ? 'उपचार सूची' : 'Treatments'}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/blogs" className="hover:text-white transition-colors">
+                    {lang === 'hi' ? 'स्वास्थ्य ब्लॉग' : 'Blogs'}
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
-        {/* Column 3: Patient & Legal */}
-        <div>
-          <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">
-            {lang === 'hi' ? 'मरीज सेवा और शर्तें' : 'Patient Care & Terms'}
-          </h4>
-          <ul className="space-y-2.5 text-xs text-slate-300">
-            <li>
-              <Link href="/login" className="hover:text-amber-300 transition-colors">
-                {lang === 'hi' ? 'मरीज और डॉक्टर लॉगिन' : 'Patient & Doctor Login'}
-              </Link>
-            </li>
-            <li>
-              <Link href="/privacy" className="hover:text-amber-300 transition-colors">
-                {lang === 'hi' ? 'गोपनीयता नीति' : 'Privacy Policy'}
-              </Link>
-            </li>
-            <li>
-              <Link href="/terms" className="hover:text-amber-300 transition-colors">
-                {lang === 'hi' ? 'सेवा की शर्तें' : 'Terms of Service'}
-              </Link>
-            </li>
-            <li>
-              <Link href="/medical-disclaimer" className="hover:text-amber-300 transition-colors">
-                {lang === 'hi' ? 'पूर्ण चिकित्सा अस्वीकरण' : 'Complete Medical Disclaimer'}
-              </Link>
-            </li>
-          </ul>
-        </div>
+            {/* Patient Portal / Help */}
+            <div>
+              <h4 className="font-bold text-white mb-4 text-xs uppercase tracking-wider">
+                {lang === 'hi' ? 'मरीज पोर्टल' : 'Patient Help'}
+              </h4>
+              <ul className="space-y-3 text-slate-400 font-medium">
+                <li>
+                  <Link href="/login" className="hover:text-white transition-colors">
+                    {lang === 'hi' ? 'पोर्टल लॉगिन' : 'Dashboard Login'}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/privacy" className="hover:text-white transition-colors">
+                    {lang === 'hi' ? 'गोपनीयता नीति' : 'Privacy Policy'}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/terms" className="hover:text-white transition-colors">
+                    {lang === 'hi' ? 'सेवा शर्तें' : 'Terms of Service'}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/medical-disclaimer" className="hover:text-white transition-colors">
+                    {lang === 'hi' ? 'अस्वीकरण' : 'Disclaimer'}
+                  </Link>
+                </li>
+              </ul>
+            </div>
 
-        {/* Column 4: Contact & Helplines */}
-        <div className="space-y-3">
-          <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-wider">
-            {lang === 'hi' ? 'क्लिनिक और निवास' : 'Clinic & Residence'}
-          </h4>
-          <div className="flex items-start gap-2 text-xs text-slate-300">
-            <MapPin className="w-4 h-4 text-clinic-crimson shrink-0 mt-0.5" />
-            <span>{lang === 'hi' ? 'नगमटिया रोड, गया, बिहार, भारत' : 'Nagmatia Road, Gaya, Bihar, India'}</span>
+            {/* Clinic Info */}
+            <div className="col-span-2 md:col-span-1">
+              <h4 className="font-bold text-white mb-4 text-xs uppercase tracking-wider">
+                {lang === 'hi' ? 'क्लिनिक समय' : 'Operations'}
+              </h4>
+              <ul className="space-y-3 text-slate-400 font-medium">
+                <li>
+                  <span className="text-white block font-bold">Mon - Sat:</span>
+                  <span>{clinicConfig.timings.weekdayMorning}</span> <br />
+                  <span>{clinicConfig.timings.weekdayEvening}</span>
+                </li>
+                <li>
+                  <span className="text-emerald-500 block font-bold">Sunday Schedule:</span>
+                  <span>{clinicConfig.timings.sundayTiming}</span>
+                </li>
+              </ul>
+            </div>
+
           </div>
 
-          <div className="space-y-1.5 pt-2">
-            <p className="text-xs font-semibold text-white">
-              {lang === 'hi' ? 'क्लिनिक हेल्पलाइन्स:' : 'Clinic Helplines:'}
-            </p>
-            {clinicConfig.helplines.map((h, i) => (
-              <a
-                key={i}
-                href={`tel:${h.number}`}
-                className="flex items-center gap-2 text-xs text-slate-300 hover:text-amber-300 transition-colors block"
-              >
-                <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                <span>{h.number}</span>
-                {h.isWhatsapp && (
-                  <span className="bg-emerald-600 text-white text-[10px] px-1.5 py-0.5 rounded font-bold">
-                    {lang === 'hi' ? 'व्हाट्सएप' : 'WhatsApp'}
-                  </span>
-                )}
-              </a>
-            ))}
-          </div>
-
-          <div className="pt-2">
-            <a
-              href={`https://wa.me/91${clinicConfig.whatsappNumber}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition-colors"
-            >
-              <MessageSquare className="w-4 h-4" />
-              <span>
-                {lang === 'hi' ? 'त्वरित व्हाट्सएप परामर्श' : 'Instant WhatsApp Consultation'}
-              </span>
-            </a>
-          </div>
         </div>
-      </div>
 
-      <div className="border-t border-white/10 py-4 text-center text-xs text-slate-400">
-        <p>
-          © {new Date().getFullYear()} {lang === 'hi' ? 'डॉ. क्यू. एच. खान क्लासिकल होम्योपैथिक क्लिनिक' : 'DR. Q.H. KHAN CLASSICAL HOMOEOPATHIC CLINIC'}.{' '}
-          {lang === 'hi' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}
-        </p>
-      </div>
-    </footer>
+        {/* Middle Divider */}
+        <div className="max-w-7xl mx-auto mt-12 pt-4 border-t border-slate-800 flex justify-between items-center text-xs text-slate-450 font-medium">
+          <p>© {new Date().getFullYear()} {lang === 'hi' ? 'डॉ. क्यू. एच. खान क्लिनिक' : 'Dr. Q.H. Khan Clinic'}</p>
+          <p>{lang === 'hi' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}</p>
+        </div>
+
+        {/* Ambient Glow Branding Banner (from template) */}
+        <div className="relative mt-8 select-none">
+          <div className="absolute inset-x-0 bottom-0 mx-auto w-full max-w-3xl h-full max-h-64 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none" />
+          <h3 className="text-center font-extrabold leading-[0.7] text-transparent text-[clamp(2rem,10vw,7.5rem)] [-webkit-text-stroke:1px_rgba(251,191,36,0.15)] mt-6 uppercase tracking-wider font-mono">
+            DR. Q.H. KHAN
+          </h3>
+        </div>
+
+      </footer>
+    </div>
   );
 };
