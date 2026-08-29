@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: dr-qhkhan-backend
+    runtime: node
+    plan: starter
+    buildCommand: pnpm install && pnpm build --filter=backend
+    startCommand: pnpm --filter backend start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+        placeholder: "e.g. mongodb+srv://username:password@cluster.mongodb.net/dr_qh_khan_clinic?retryWrites=true&w=majority"
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: WEBSITE_URL
+        sync: false
+        placeholder: "e.g. https://dr-qhkhan-website.vercel.app"
+      - key: ADMIN_URL
+        sync: false
+        placeholder: "e.g. https://dr-qhkhan-admin.vercel.app"
