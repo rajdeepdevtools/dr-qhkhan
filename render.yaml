@@ -16,8 +16,6 @@ services:
       - key: JWT_REFRESH_SECRET
         generateValue: true
       - key: WEBSITE_URL
-        sync: false
-        placeholder: "e.g. https://dr-qhkhan-website.vercel.app"
+        value: "https://dr-qhkhan-website.vercel.app"
       - key: ADMIN_URL
-        sync: false
-        placeholder: "e.g. https://dr-qhkhan-admin.vercel.app"
+        value: "https://dr-qhkhan-admin.vercel.app"
