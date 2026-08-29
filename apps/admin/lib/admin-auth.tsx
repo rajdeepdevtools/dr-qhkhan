@@ -54,8 +54,13 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const logoutAdmin = async () => {
-    await adminApiClient('/auth/logout', { method: 'POST' });
+    try {
+      await adminApiClient('/auth/logout', { method: 'POST' });
+    } catch (err) {
+      console.error('Logout request failed:', err);
+    }
     setAdminUser(null);
+    window.location.href = '/login';
   };
 
   return (

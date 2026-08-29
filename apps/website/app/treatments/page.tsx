@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { TreatmentCard } from '../../components/TreatmentCard';
 import { treatmentsData } from '../../lib/clinicConfig';
 import { useLanguage } from '../../lib/language-context';
-import { Search, Filter, ShieldAlert, FileText, CheckCircle2 } from 'lucide-react';
+import { Search, Filter, ShieldAlert, FileText } from 'lucide-react';
 
 export default function TreatmentsPage() {
   const { lang } = useLanguage();
@@ -43,12 +43,15 @@ export default function TreatmentsPage() {
     <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12 text-xs font-semibold">
       
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-3">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-clinic-indigo/5 border border-clinic-indigo/15 text-clinic-indigo text-xs font-bold uppercase tracking-wider">
+      <div className="text-center max-w-3xl mx-auto space-y-4">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#55100D]/5 border border-[#55100D]/15 text-[#55100D] text-xs font-bold uppercase tracking-wider">
           {lang === 'hi' ? 'चिकित्सीय परामर्श निर्देशिका' : 'CLINICAL CONSULTATION DIRECTORY'}
         </span>
-        <h1 className="text-3xl font-black text-slate-900 leading-none">
-          {lang === 'hi' ? 'स्वास्थ्य परामर्श एवं चिकित्सा क्षेत्र' : 'Conditions & Clinical Focus Areas'}
+        <h1 className="text-4xl sm:text-5xl font-black text-[#1A0706] leading-none tracking-tight">
+          {lang === 'hi' ? 'डॉ. क्यू. एच. खान' : 'DR. Q.H. KHAN'}
+          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#55100D] to-[#DD0200] text-xl sm:text-2.5xl font-extrabold mt-2.5 tracking-wider">
+            {lang === 'hi' ? 'स्वास्थ्य परामर्श एवं चिकित्सा क्षेत्र' : 'CONDITIONS & CLINICAL FOCUS AREAS'}
+          </span>
         </h1>
         <p className="text-slate-655 text-xs sm:text-sm leading-relaxed font-medium">
           {lang === 'hi'
@@ -64,7 +67,7 @@ export default function TreatmentsPage() {
           <strong className="font-bold text-sm block">
             {lang === 'hi' ? 'महत्वपूर्ण चिकित्सा चेतावनी (Emergency Alert):' : 'Important Emergency & Referrals Warning:'}
           </strong>
-          <p className="leading-relaxed">
+          <p className="leading-relaxed font-semibold">
             {lang === 'hi'
               ? 'हम कैंसर, मस्तिष्क ट्यूमर, गंभीर दिल का दौरा, तीव्र एपेंडिसाइटिस, या अन्य तत्काल सर्जिकल आपात स्थितियों के इलाज का दावा नहीं करते हैं। ऐसी किसी भी तीव्र आपातकालीन स्थिति में तुरंत नजदीकी मल्टी-स्पेशियलिटी अस्पताल की आपातकालीन इकाई (Emergency Department) से संपर्क करें।'
               : 'Our clinic does NOT treat surgical emergencies, active heart attacks, stroke, cancer, or acute life-threatening situations. For any emergency medical conditions, please proceed immediately to the nearest tertiary hospital emergency care department.'}
@@ -73,9 +76,9 @@ export default function TreatmentsPage() {
       </div>
 
       {/* Search & Filter Bar */}
-      <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="bg-white rounded-2xl p-4 border border-[#D9D9D9] shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="relative w-full md:w-96">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
           <input
             type="text"
             placeholder={
@@ -85,7 +88,7 @@ export default function TreatmentsPage() {
             }
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-slate-350"
+            className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-[#D9D9D9] rounded-xl text-xs outline-none focus:bg-white focus:border-[#DD0200] focus:ring-1 focus:ring-[#DD0200]/25 font-bold transition-all"
           />
         </div>
 
@@ -95,10 +98,10 @@ export default function TreatmentsPage() {
             <button
               key={idx}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-colors border ${
+              className={`px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-all border ${
                 selectedCategory === cat
-                  ? 'bg-clinic-indigo border-clinic-indigo text-white shadow-sm'
-                  : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                  ? 'bg-gradient-to-r from-[#55100D] to-[#DD0200] border-[#55100D]/10 text-white shadow-sm'
+                  : 'bg-slate-50 border-[#D9D9D9] text-slate-700 hover:bg-slate-100'
               }`}
             >
               {cat === 'All' ? (lang === 'hi' ? 'सभी' : 'All') : getCategoryLabel(cat)}
@@ -115,7 +118,7 @@ export default function TreatmentsPage() {
       </div>
 
       {filteredTreatments.length === 0 && (
-        <div className="text-center py-16 text-slate-500 text-xs font-medium">
+        <div className="text-center py-16 text-slate-500 text-xs font-bold bg-white border border-[#D9D9D9] rounded-2xl shadow-sm">
           {lang === 'hi'
             ? 'आपकी खोज के अनुकूल कोई बीमारी नहीं मिली। कृपया अंग्रेजी या हिंदी नाम टाइप करें।'
             : 'No health conditions matching your search query. Try searching with a different term.'}
@@ -123,10 +126,10 @@ export default function TreatmentsPage() {
       )}
 
       {/* Case Intake Protocol Advice */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-4">
+      <div className="bg-white border border-[#D9D9D9] rounded-2xl p-6 sm:p-8 space-y-4 shadow-sm">
         <div className="flex items-center gap-2 border-b border-slate-200 pb-3">
-          <FileText className="w-5 h-5 text-clinic-indigo shrink-0" />
-          <h3 className="text-sm font-bold text-slate-900">
+          <FileText className="w-5 h-5 text-[#55100D] shrink-0" />
+          <h3 className="text-sm font-black text-[#1A0706]">
             {lang === 'hi' ? 'चिकित्सीय केस मूल्यांकन नियमावली' : 'Clinical Evaluation Protocol'}
           </h3>
         </div>
