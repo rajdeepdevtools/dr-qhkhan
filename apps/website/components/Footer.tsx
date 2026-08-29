@@ -16,16 +16,16 @@ export const Footer: React.FC = () => {
       <footer className="bg-[#131314] w-full max-w-[1500px] mx-auto text-slate-300 pt-8 lg:pt-12 px-4 sm:px-8 md:px-12 lg:px-16 rounded-t-3xl overflow-hidden border border-white/5 shadow-2xl relative">
         
         {/* Top Disclaimer Banner (Matte Dark Mode) */}
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 mb-10 flex items-start gap-3 text-xs text-slate-300">
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 mb-10 flex items-start gap-3 text-xs text-white">
           <ShieldAlert className="w-5 h-5 text-clinic-crimson shrink-0 mt-0.5" />
-          <p className="leading-relaxed font-medium">
-            <strong className="text-white font-bold">
+          <p className="leading-relaxed font-bold tracking-wide">
+            <strong className="text-white font-extrabold">
               {lang === 'hi' ? 'चिकित्सा अस्वीकरण' : 'Medical Disclaimer'}:
             </strong>{' '}
             {lang === 'hi'
               ? 'इस वेबसाइट पर प्रदान की गई जानकारी केवल सामान्य सूचनात्मक उद्देश्यों के लिए है और पेशेवर चिकित्सा निदान, उपचार या आपातकालीन देखभाल का विकल्प नहीं है।'
               : clinicConfig.medicalDisclaimer}{' '}
-            <span className="text-[#DD0200] font-bold">
+            <span className="text-[#DD0200] font-black underline">
               {lang === 'hi'
                 ? 'यदि आप गंभीर, अचानक या जीवन के लिए खतरा पैदा करने वाले लक्षणों का अनुभव कर रहे हैं, तो तुरंत आपातकालीन चिकित्सा देखभाल लें।'
                 : clinicConfig.emergencyWarning}
@@ -53,7 +53,7 @@ export const Footer: React.FC = () => {
               </div>
             </Link>
 
-            <p className="text-xs text-slate-400 leading-relaxed max-w-sm font-medium">
+            <p className="text-xs text-white leading-relaxed max-w-sm font-bold tracking-wide">
               {lang === 'hi'
                 ? 'गया, बिहार में 1958 में स्थापित। छह दशकों से अधिक समय से संवैधानिक क्लासिकल होम्योपैथिक देखभाल का संरक्षण।'
                 : 'Established in 1958 in Gaya, Bihar. Preserving constitutional classical homoeopathic care for over six decades.'}
@@ -93,32 +93,32 @@ export const Footer: React.FC = () => {
             
             {/* Quick Navigation */}
             <div>
-              <h4 className="font-bold text-white mb-4 text-xs uppercase tracking-wider">
+              <h4 className="font-extrabold text-white mb-4 text-xs uppercase tracking-widest">
                 {lang === 'hi' ? 'नेविगेशन' : 'Navigation'}
               </h4>
-              <ul className="space-y-3 text-slate-400 font-medium">
+              <ul className="space-y-3 text-white font-bold tracking-wide">
                 <li>
-                  <Link href="/" className="hover:text-white transition-colors">
+                  <Link href="/" className="hover:text-rose-250 transition-colors">
                     {lang === 'hi' ? 'होम पेज' : 'Home'}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="hover:text-white transition-colors">
+                  <Link href="/about" className="hover:text-rose-250 transition-colors">
                     {lang === 'hi' ? 'इतिहास' : 'About Clinic'}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/doctors" className="hover:text-white transition-colors">
+                  <Link href="/doctors" className="hover:text-rose-250 transition-colors">
                     {lang === 'hi' ? 'डॉक्टर टीम' : 'Doctors'}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/treatments" className="hover:text-white transition-colors">
+                  <Link href="/treatments" className="hover:text-rose-250 transition-colors">
                     {lang === 'hi' ? 'उपचार सूची' : 'Treatments'}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blogs" className="hover:text-white transition-colors">
+                  <Link href="/blogs" className="hover:text-rose-250 transition-colors">
                     {lang === 'hi' ? 'स्वास्थ्य ब्लॉग' : 'Blogs'}
                   </Link>
                 </li>
@@ -127,27 +127,27 @@ export const Footer: React.FC = () => {
 
             {/* Patient Portal / Help */}
             <div>
-              <h4 className="font-bold text-white mb-4 text-xs uppercase tracking-wider">
+              <h4 className="font-extrabold text-white mb-4 text-xs uppercase tracking-widest">
                 {lang === 'hi' ? 'मरीज पोर्टल' : 'Patient Help'}
               </h4>
-              <ul className="space-y-3 text-slate-400 font-medium">
+              <ul className="space-y-3 text-white font-bold tracking-wide">
                 <li>
-                  <Link href="/login" className="hover:text-white transition-colors">
+                  <Link href="/login" className="hover:text-rose-250 transition-colors">
                     {lang === 'hi' ? 'पोर्टल लॉगिन' : 'Dashboard Login'}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/privacy" className="hover:text-white transition-colors">
+                  <Link href="/privacy" className="hover:text-rose-250 transition-colors">
                     {lang === 'hi' ? 'गोपनीयता नीति' : 'Privacy Policy'}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/terms" className="hover:text-white transition-colors">
+                  <Link href="/terms" className="hover:text-rose-250 transition-colors">
                     {lang === 'hi' ? 'सेवा शर्तें' : 'Terms of Service'}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/medical-disclaimer" className="hover:text-white transition-colors">
+                  <Link href="/medical-disclaimer" className="hover:text-rose-250 transition-colors">
                     {lang === 'hi' ? 'अस्वीकरण' : 'Disclaimer'}
                   </Link>
                 </li>
@@ -156,17 +156,17 @@ export const Footer: React.FC = () => {
 
             {/* Clinic Info */}
             <div className="col-span-2 md:col-span-1">
-              <h4 className="font-bold text-white mb-4 text-xs uppercase tracking-wider">
+              <h4 className="font-extrabold text-white mb-4 text-xs uppercase tracking-widest">
                 {lang === 'hi' ? 'क्लिनिक समय' : 'Operations'}
               </h4>
-              <ul className="space-y-3 text-slate-400 font-medium">
+              <ul className="space-y-3 text-white font-bold tracking-wide">
                 <li>
-                  <span className="text-white block font-bold">Mon - Sat:</span>
+                  <span className="text-white block font-extrabold">Mon - Sat:</span>
                   <span>{clinicConfig.timings.weekdayMorning}</span> <br />
                   <span>{clinicConfig.timings.weekdayEvening}</span>
                 </li>
                 <li>
-                  <span className="text-emerald-400 block font-bold">Sunday Schedule:</span>
+                  <span className="text-emerald-400 block font-extrabold">Sunday Schedule:</span>
                   <span>{clinicConfig.timings.sundayTiming}</span>
                 </li>
               </ul>
@@ -177,7 +177,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Middle Divider */}
-        <div className="max-w-7xl mx-auto mt-12 pt-4 border-t border-white/5 flex justify-between items-center text-xs text-slate-500 font-medium">
+        <div className="max-w-7xl mx-auto mt-12 pt-4 border-t border-white/10 flex justify-between items-center text-xs text-slate-200 font-bold tracking-wide">
           <p>© {new Date().getFullYear()} {lang === 'hi' ? 'डॉ. क्यू. एच. खान क्लिनिक' : 'Dr. Q.H. Khan Clinic'}</p>
           <p>{lang === 'hi' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}</p>
         </div>
