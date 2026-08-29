@@ -551,7 +551,7 @@ export default function HomePage() {
       </section>
 
       {/* 8. PATIENT WRITTEN TESTIMONIALS */}
-      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="text-center space-y-2">
           <span className="text-xs font-bold text-clinic-indigo uppercase tracking-wider">
             {lang === 'hi' ? 'मरीजों की राय' : 'PATIENT VERDICTS'}
@@ -567,25 +567,49 @@ export default function HomePage() {
               {lang === 'hi' ? 'प्रदर्शित करने के लिए अभी कोई स्वीकृत फीडबैक नहीं है।' : 'No approved feedbacks to display.'}
             </div>
           ) : (
-            feedback.map((fb) => (
-              <div key={fb._id} className="bg-white p-6 border border-slate-200 rounded-3xl shadow-md hover:shadow-lg transition-shadow relative flex flex-col justify-between space-y-4">
-                <Quote className="absolute top-4 right-4 w-8 h-8 text-slate-100 shrink-0 pointer-events-none" />
-                <div className="space-y-2">
-                  <div className="flex gap-0.5 text-amber-400">
-                    {[...Array(fb.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-400" />
-                    ))}
+            feedback.map((fb, idx) => {
+              const avatars = [
+                "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=100",
+                "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=100",
+                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100"
+              ];
+              const avatarUrl = avatars[idx % avatars.length];
+
+              return (
+                <div
+                  key={fb._id}
+                  className="text-sm border border-slate-200 pb-6 rounded-2xl bg-white shadow-[0px_4px_15px_0px] shadow-black/5 overflow-hidden flex flex-col justify-between space-y-4 hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-center gap-4 px-5 py-4 bg-clinic-indigo/5">
+                    <img className="h-12 w-12 rounded-full object-cover" src={avatarUrl} alt={fb.patientName} />
+                    <div>
+                      <h1 className="text-sm font-bold text-slate-900 leading-none">{fb.patientName}</h1>
+                      <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider mt-1.5">
+                        {lang === 'hi' ? 'सत्यापित रोगी' : 'Verified Patient'}
+                      </p>
+                    </div>
                   </div>
-                  <p className="text-slate-750 text-xs sm:text-sm italic leading-relaxed">"{fb.message}"</p>
+                  
+                  <div className="px-5 space-y-2 flex-grow">
+                    <div className="flex gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} width="16" height="15" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path
+                            d="M10.525.464a.5.5 0 0 1 .95 0l2.107 6.482a.5.5 0 0 0 .475.346h6.817a.5.5 0 0 1 .294.904l-5.515 4.007a.5.5 0 0 0-.181.559l2.106 6.483a.5.5 0 0 1-.77.559l-5.514-4.007a.5.5 0 0 0-.588 0l-5.514 4.007a.5.5 0 0 1-.77-.56l2.106-6.482a.5.5 0 0 0-.181-.56L.832 8.197a.5.5 0 0 1 .294-.904h6.817a.5.5 0 0 0 .475-.346z"
+                            fill={i < fb.rating ? "#FF532E" : "#E2E8F0"}
+                          />
+                        </svg>
+                      ))}
+                    </div>
+                    <p className="text-slate-600 text-xs mt-3 leading-relaxed italic">"{fb.message}"</p>
+                  </div>
+
+                  <a href="#review-form" className="text-clinic-crimson text-xs font-bold hover:underline px-5 mt-auto">
+                    {lang === 'hi' ? 'समीक्षा जोड़ें' : 'Submit Feedback'}
+                  </a>
                 </div>
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <span className="font-extrabold text-slate-950 text-xs">{fb.patientName}</span>
-                  <span className="text-[10px] text-emerald-600 font-bold uppercase tracking-wider">
-                    {lang === 'hi' ? 'सत्यापित रिकवरी' : 'Verified Recovery'}
-                  </span>
-                </div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
       </section>
