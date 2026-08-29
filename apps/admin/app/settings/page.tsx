@@ -52,56 +52,56 @@ export default function AdminSettingsPage() {
         <main className="p-6 space-y-6 flex-1 overflow-y-auto">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-bold text-white">Centralized Clinic Configuration</h1>
-              <p className="text-xs text-slate-400">Modify clinic timings, helpline numbers, address, and medical disclaimers</p>
+              <h1 className="text-2xl font-black text-[#1A0706]">Centralized Clinic Configuration</h1>
+              <p className="text-xs text-slate-500 font-bold">Modify clinic timings, helpline numbers, address, and medical disclaimers</p>
             </div>
           </div>
 
           {savedMsg && (
-            <div className="p-3 bg-emerald-950 border border-emerald-800 text-emerald-300 rounded-xl text-xs flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
+            <div className="p-3.5 bg-emerald-50 border border-emerald-250 text-emerald-800 rounded-xl text-xs flex items-center gap-2 font-bold">
+              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
               <span>Clinic configuration updated successfully!</span>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5 text-xs">
+          <form onSubmit={handleSubmit} className="bg-white border border-[#D9D9D9] rounded-2xl p-6 space-y-6 text-xs font-bold text-[#1A0706] shadow-sm">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-slate-300 font-semibold mb-1">Clinic Name</label>
+                <label className="block text-slate-500 mb-1.5 uppercase tracking-wider text-[10px]">Clinic Name</label>
                 <input
                   type="text"
                   value={settings.clinicName}
                   onChange={(e) => setSettings({ ...settings, clinicName: e.target.value })}
-                  className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white"
+                  className="w-full p-3 bg-slate-50 border border-[#D9D9D9] rounded-xl text-[#1A0706] placeholder-slate-400 focus:outline-none focus:border-[#DD0200] focus:ring-1 focus:ring-[#DD0200]/25 transition-all font-bold"
                 />
               </div>
               <div>
-                <label className="block text-slate-300 font-semibold mb-1">Established Year</label>
+                <label className="block text-slate-500 mb-1.5 uppercase tracking-wider text-[10px]">Established Year</label>
                 <input
                   type="number"
                   value={settings.establishedYear}
                   onChange={(e) => setSettings({ ...settings, establishedYear: parseInt(e.target.value) || 1958 })}
-                  className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white"
+                  className="w-full p-3 bg-slate-50 border border-[#D9D9D9] rounded-xl text-[#1A0706] placeholder-slate-400 focus:outline-none focus:border-[#DD0200] focus:ring-1 focus:ring-[#DD0200]/25 transition-all font-bold"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-slate-300 font-semibold mb-1">Address & Location</label>
+              <label className="block text-slate-500 mb-1.5 uppercase tracking-wider text-[10px]">Address & Location</label>
               <input
                 type="text"
                 value={settings.address}
                 onChange={(e) => setSettings({ ...settings, address: e.target.value })}
-                className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white"
+                className="w-full p-3 bg-slate-50 border border-[#D9D9D9] rounded-xl text-[#1A0706] placeholder-slate-400 focus:outline-none focus:border-[#DD0200] focus:ring-1 focus:ring-[#DD0200]/25 transition-all font-bold"
               />
             </div>
 
             {/* Timings */}
-            <div className="p-4 bg-slate-800/60 border border-slate-700 rounded-xl space-y-3">
-              <h4 className="font-bold text-amber-300 text-xs">Operating Clinic Timings</h4>
+            <div className="p-5 bg-[#55100D]/5 border border-[#55100D]/10 rounded-xl space-y-4">
+              <h4 className="font-black text-[#55100D] text-xs uppercase tracking-wider">Operating Clinic Timings</h4>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-slate-400 mb-1">Weekday Morning</label>
+                  <label className="block text-[#55100D]/80 mb-1 text-[10px] uppercase tracking-wider font-extrabold">Weekday Morning</label>
                   <input
                     type="text"
                     value={settings.timings?.weekdayMorning}
@@ -111,11 +111,11 @@ export default function AdminSettingsPage() {
                         timings: { ...settings.timings, weekdayMorning: e.target.value },
                       })
                     }
-                    className="w-full p-2 bg-slate-800 border border-slate-700 rounded text-white"
+                    className="w-full p-2.5 bg-white border border-[#D9D9D9] rounded-lg text-[#1A0706] focus:outline-none focus:border-[#DD0200] focus:ring-1 focus:ring-[#DD0200]/25 font-bold transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-400 mb-1">Weekday Evening</label>
+                  <label className="block text-[#55100D]/80 mb-1 text-[10px] uppercase tracking-wider font-extrabold">Weekday Evening</label>
                   <input
                     type="text"
                     value={settings.timings?.weekdayEvening}
@@ -125,11 +125,11 @@ export default function AdminSettingsPage() {
                         timings: { ...settings.timings, weekdayEvening: e.target.value },
                       })
                     }
-                    className="w-full p-2 bg-slate-800 border border-slate-700 rounded text-white"
+                    className="w-full p-2.5 bg-white border border-[#D9D9D9] rounded-lg text-[#1A0706] focus:outline-none focus:border-[#DD0200] focus:ring-1 focus:ring-[#DD0200]/25 font-bold transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-400 mb-1">Sunday Timing</label>
+                  <label className="block text-[#55100D]/80 mb-1 text-[10px] uppercase tracking-wider font-extrabold">Sunday Timing</label>
                   <input
                     type="text"
                     value={settings.timings?.sundayTiming}
@@ -139,7 +139,7 @@ export default function AdminSettingsPage() {
                         timings: { ...settings.timings, sundayTiming: e.target.value },
                       })
                     }
-                    className="w-full p-2 bg-slate-800 border border-slate-700 rounded text-white"
+                    className="w-full p-2.5 bg-white border border-[#D9D9D9] rounded-lg text-[#1A0706] focus:outline-none focus:border-[#DD0200] focus:ring-1 focus:ring-[#DD0200]/25 font-bold transition-all"
                   />
                 </div>
               </div>
@@ -147,7 +147,7 @@ export default function AdminSettingsPage() {
 
             {/* Helplines */}
             <div>
-              <label className="block text-slate-300 font-semibold mb-1">Helpline Numbers (Comma Separated)</label>
+              <label className="block text-slate-500 mb-1.5 uppercase tracking-wider text-[10px]">Helpline Numbers (Comma Separated)</label>
               <input
                 type="text"
                 value={settings.helplines?.join(', ')}
@@ -157,23 +157,23 @@ export default function AdminSettingsPage() {
                     helplines: e.target.value.split(',').map((h) => h.trim()),
                   })
                 }
-                className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white"
+                className="w-full p-3 bg-slate-50 border border-[#D9D9D9] rounded-xl text-[#1A0706] placeholder-slate-400 focus:outline-none focus:border-[#DD0200] focus:ring-1 focus:ring-[#DD0200]/25 transition-all font-bold"
               />
             </div>
 
             <div>
-              <label className="block text-slate-300 font-semibold mb-1">Medical Disclaimer Text</label>
+              <label className="block text-slate-500 mb-1.5 uppercase tracking-wider text-[10px]">Medical Disclaimer Text</label>
               <textarea
-                rows={2}
+                rows={3}
                 value={settings.disclaimerText}
                 onChange={(e) => setSettings({ ...settings, disclaimerText: e.target.value })}
-                className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white"
+                className="w-full p-3 bg-slate-50 border border-[#D9D9D9] rounded-xl text-[#1A0706] placeholder-slate-400 focus:outline-none focus:border-[#DD0200] focus:ring-1 focus:ring-[#DD0200]/25 transition-all font-bold"
               />
             </div>
 
             <button
               type="submit"
-              className="px-6 py-3 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold rounded-xl shadow flex items-center gap-2"
+              className="px-6 py-3.5 bg-gradient-to-r from-[#55100D] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white font-black text-xs rounded-xl shadow-md flex items-center gap-2 transition-all hover:-translate-y-0.5 tracking-wider uppercase"
             >
               <Save className="w-4 h-4" /> Save Clinic Configuration
             </button>

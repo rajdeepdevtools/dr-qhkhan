@@ -46,7 +46,7 @@ export const AdminSidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col justify-between p-4 min-h-screen">
+    <aside className="w-64 bg-[#131314] border-r border-white/5 flex flex-col justify-between p-4 min-h-screen">
       <div className="space-y-6">
         {/* Brand */}
         <div className="flex items-center space-x-3 px-2">
@@ -57,7 +57,7 @@ export const AdminSidebar: React.FC = () => {
           />
           <div>
             <h2 className="font-extrabold text-white text-sm tracking-wide">DR. Q.H. KHAN</h2>
-            <p className="text-[10px] text-amber-400 font-semibold uppercase tracking-wider">ADMIN CONTROL PANEL</p>
+            <p className="text-[10px] text-[#DD0200] font-black uppercase tracking-wider">ADMIN CONTROL PANEL</p>
           </div>
         </div>
 
@@ -70,10 +70,10 @@ export const AdminSidebar: React.FC = () => {
               <Link
                 key={idx}
                 href={item.href}
-                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-colors ${
+                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl transition-all ${
                   isActive
-                    ? 'bg-clinic-crimson text-white font-bold shadow'
-                    : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                    ? 'bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black shadow-md'
+                    : 'text-slate-400 hover:bg-white/5 hover:text-white font-bold'
                 }`}
               >
                 <Icon className="w-4 h-4 shrink-0" />

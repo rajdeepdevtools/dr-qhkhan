@@ -55,17 +55,17 @@ export default function AdminInquiriesPage() {
       <AdminSidebar />
       <div className="flex-1 flex flex-col min-w-0">
         <AdminHeader />
-        <main className="p-6 space-y-6 flex-1 overflow-y-auto bg-adminDark/95">
+        <main className="p-6 space-y-6 flex-1 overflow-y-auto">
           
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-black text-white">General Inquiries Portal</h1>
-              <p className="text-xs text-slate-400">View and respond to general contact form submissions from patients</p>
+              <h1 className="text-2xl font-black text-[#1A0706]">General Inquiries Portal</h1>
+              <p className="text-xs text-slate-500 font-bold">View and respond to general contact form submissions from patients</p>
             </div>
           </div>
 
           {/* Tabs Filter Bar */}
-          <div className="flex flex-wrap gap-2 border-b border-slate-800 pb-3 font-semibold text-xs">
+          <div className="flex flex-wrap gap-2 border-b border-[#D9D9D9] pb-3 font-semibold text-xs">
             {(['all', 'pending', 'resolved', 'ignored'] as const).map((tab) => {
               const active = statusFilter === tab;
               const count = getCounts(tab);
@@ -75,14 +75,14 @@ export default function AdminInquiriesPage() {
                   onClick={() => setStatusFilter(tab)}
                   className={`px-4 py-2 rounded-xl transition-all capitalize flex items-center gap-1.5 ${
                     active
-                      ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-md font-bold'
-                      : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white'
+                      ? 'bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white shadow-md font-black'
+                      : 'bg-white border border-[#D9D9D9] text-slate-500 hover:text-[#1A0706] font-bold'
                   }`}
                 >
                   <span>{tab}</span>
                   <span
                     className={`px-1.5 py-0.5 rounded-full text-[10px] ${
-                      active ? 'bg-white/20 text-white' : 'bg-slate-800 text-slate-400'
+                      active ? 'bg-white/20 text-white' : 'bg-slate-100 border border-[#D9D9D9] text-slate-500'
                     }`}
                   >
                     {count}
@@ -94,11 +94,11 @@ export default function AdminInquiriesPage() {
 
           {/* Grid View */}
           {loading ? (
-            <div className="p-12 text-center bg-slate-900 border border-slate-800 rounded-2xl text-slate-400 text-xs font-semibold">
+            <div className="p-12 text-center bg-white border border-[#D9D9D9] rounded-2xl text-slate-500 text-xs font-semibold">
               Loading inquiries...
             </div>
           ) : filteredInquiries.length === 0 ? (
-            <div className="p-12 text-center bg-slate-900 border border-slate-800 rounded-2xl text-slate-500 font-semibold text-xs">
+            <div className="p-12 text-center bg-white border border-[#D9D9D9] rounded-2xl text-slate-500 font-semibold text-xs">
               No inquiries found in this category.
             </div>
           ) : (
@@ -106,25 +106,25 @@ export default function AdminInquiriesPage() {
               {filteredInquiries.map((inquiry) => (
                 <div
                   key={inquiry._id}
-                  className="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between gap-4 hover:border-slate-700 transition-colors shadow-sm"
+                  className="bg-white border border-[#D9D9D9] rounded-2xl p-5 flex flex-col justify-between gap-4 hover:border-[#55100D]/50 transition-colors shadow-sm"
                 >
                   <div className="space-y-3">
                     
                     {/* Header */}
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="font-bold text-white text-sm">{inquiry.name}</h3>
-                        <p className="text-[10px] text-slate-450 mt-0.5 font-bold uppercase tracking-wider">
+                        <h3 className="font-bold text-[#1A0706] text-sm">{inquiry.name}</h3>
+                        <p className="text-[10px] text-slate-500 mt-0.5 font-bold uppercase tracking-wider">
                           Subject: {inquiry.subject}
                         </p>
                       </div>
                       <span
-                        className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${
+                        className={`px-2.5 py-0.5 rounded text-[9px] font-black uppercase border ${
                           inquiry.status === 'resolved'
-                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-250'
                             : inquiry.status === 'ignored'
-                            ? 'bg-slate-500/10 text-slate-400 border-slate-500/20'
-                            : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                            ? 'bg-slate-50 text-slate-600 border-slate-200'
+                            : 'bg-amber-50 text-amber-800 border-amber-200'
                         }`}
                       >
                         {inquiry.status}
@@ -132,30 +132,30 @@ export default function AdminInquiriesPage() {
                     </div>
 
                     {/* Message Body */}
-                    <div className="bg-slate-950/40 border border-slate-800/80 rounded-xl p-3 text-slate-300 leading-relaxed font-semibold italic text-[11px]">
+                    <div className="bg-[#55100D]/5 border border-[#55100D]/10 rounded-xl p-3 text-[#1A0706] leading-relaxed font-bold italic text-[11px]">
                       "{inquiry.message}"
                     </div>
 
                     {/* Details block */}
-                    <div className="flex flex-wrap items-center gap-4 text-[10px] text-slate-400 font-bold pt-1">
+                    <div className="flex flex-wrap items-center gap-4 text-[10px] text-slate-500 font-bold pt-1">
                       <a
                         href={`tel:${inquiry.phone}`}
-                        className="flex items-center gap-1 hover:text-[#DD0200] transition-colors"
+                        className="flex items-center gap-1 hover:text-[#DD0200] transition-colors text-[#55100D]"
                       >
                         <Phone className="w-3.5 h-3.5" />
                         <span>{inquiry.phone}</span>
                       </a>
-                      <span className="text-slate-600">•</span>
+                      <span className="text-slate-350 font-normal">•</span>
                       <span>Submitted: {new Date(inquiry.createdAt).toLocaleDateString()}</span>
                     </div>
 
                   </div>
 
                   {/* Actions footer */}
-                  <div className="flex justify-between items-center pt-3 border-t border-slate-800/80">
+                  <div className="flex justify-between items-center pt-3 border-t border-slate-200/60">
                     <button
                       onClick={() => deleteInquiry(inquiry._id)}
-                      className="p-1.5 bg-slate-950 hover:bg-rose-950/40 text-slate-400 hover:text-rose-450 rounded-xl transition-colors border border-slate-850"
+                      className="p-1.5 bg-white hover:bg-rose-50 text-slate-400 hover:text-rose-600 rounded-xl transition-all border border-[#D9D9D9]"
                       title="Delete permanently"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -174,7 +174,7 @@ export default function AdminInquiriesPage() {
                       {inquiry.status !== 'ignored' && (
                         <button
                           onClick={() => updateStatus(inquiry._id, 'ignored')}
-                          className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+                          className="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-[#D9D9D9] rounded-xl font-bold flex items-center gap-1.5 transition-colors shadow-sm"
                         >
                           <X className="w-3.5 h-3.5" />
                           <span>Ignore</span>
