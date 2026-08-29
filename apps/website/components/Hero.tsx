@@ -90,6 +90,13 @@ export const Hero: React.FC = () => {
               box-shadow: 0 0 0 0 rgba(225, 29, 72, 0);
             }
           }
+          @keyframes spin-slow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+          .animate-spin-slow {
+            animation: spin-slow 80s linear infinite;
+          }
         `}
       </style>
 
@@ -101,6 +108,35 @@ export const Hero: React.FC = () => {
       <div className="absolute w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[130px] -top-80 -left-60 glow-sphere-indigo pointer-events-none" />
       <div className="absolute w-[500px] h-[500px] bg-rose-600/5 rounded-full blur-[120px] -bottom-40 -right-40 glow-sphere-crimson pointer-events-none" />
       <div className="absolute w-[350px] h-[350px] bg-emerald-500/5 rounded-full blur-[100px] top-40 right-1/3 pointer-events-none" />
+
+      {/* Rotating medical target radar graphic pattern */}
+      <div className="absolute top-1/2 right-[15%] transform -translate-y-1/2 w-[600px] h-[600px] opacity-[0.06] pointer-events-none select-none animate-spin-slow">
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-indigo-400">
+          <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="0.5" strokeDasharray="4 4" />
+          <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="0.75" />
+          <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="0.5" strokeDasharray="8 4" />
+          <line x1="100" y1="0" x2="100" y2="200" stroke="currentColor" strokeWidth="0.25" strokeDasharray="5 5" />
+          <line x1="0" y1="100" x2="200" y2="100" stroke="currentColor" strokeWidth="0.25" strokeDasharray="5 5" />
+        </svg>
+      </div>
+
+      {/* Futuristic DNA scientific network pattern on the left */}
+      <div className="absolute top-1/4 left-10 w-72 h-72 opacity-[0.05] pointer-events-none select-none">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-rose-455">
+          <circle cx="20" cy="20" r="2.5" fill="currentColor" />
+          <circle cx="50" cy="30" r="3.5" fill="currentColor" />
+          <circle cx="80" cy="20" r="2.5" fill="currentColor" />
+          <circle cx="30" cy="60" r="3" fill="currentColor" />
+          <circle cx="70" cy="70" r="3.5" fill="currentColor" />
+          <line x1="20" y1="20" x2="50" y2="30" stroke="currentColor" strokeWidth="0.75" />
+          <line x1="50" y1="30" x2="80" y2="20" stroke="currentColor" strokeWidth="0.75" />
+          <line x1="20" y1="20" x2="30" y2="60" stroke="currentColor" strokeWidth="0.75" />
+          <line x1="30" y1="60" x2="50" y2="30" stroke="currentColor" strokeWidth="0.75" />
+          <line x1="50" y1="30" x2="70" y2="70" stroke="currentColor" strokeWidth="0.75" />
+          <line x1="80" y1="20" x2="70" y2="70" stroke="currentColor" strokeWidth="0.75" />
+          <line x1="30" y1="60" x2="70" y2="70" stroke="currentColor" strokeWidth="0.75" />
+        </svg>
+      </div>
 
       {/* 3. HERO CONTENT */}
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
