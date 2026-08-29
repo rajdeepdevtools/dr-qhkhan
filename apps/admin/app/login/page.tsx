@@ -93,43 +93,43 @@ export default function AdminLoginPage() {
         </div>
 
         {/* Demo Credentials Panel */}
-        <div className="bg-[#131314]/70 border border-white/5 rounded-2xl p-5 space-y-4 max-w-md">
-          <div className="flex items-center gap-2 text-white border-b border-white/5 pb-2">
-            <Key className="w-4.5 h-4.5 text-[#DD0200]" />
-            <h3 className="font-extrabold text-sm tracking-wide">Quick Access Credentials Directory</h3>
+        <div className="bg-white/10 border border-white/15 rounded-2xl p-5 space-y-4 max-w-md shadow-xl">
+          <div className="flex items-center gap-2 text-white border-b border-white/10 pb-2">
+            <Key className="w-4.5 h-4.5 text-amber-400" />
+            <h3 className="font-black text-sm tracking-wide text-white uppercase">Quick Access Credentials Directory</h3>
           </div>
           
-          <div className="space-y-3 font-mono text-[10px] text-slate-300">
+          <div className="space-y-3 font-sans text-xs text-slate-200">
             
             {/* Super Admin */}
-            <div className="bg-white/5 p-2.5 rounded-xl border border-white/5 flex justify-between items-center gap-2">
-              <div>
-                <p className="text-[#DD0200] font-black uppercase text-[8px] tracking-wider">Super Administrator</p>
-                <p className="text-white mt-0.5">Email: admin@drqhkhanclinic.com</p>
-                <p className="text-slate-400">Pass: Admin@DrQHKhan1958!</p>
+            <div className="bg-[#1A0706] p-3.5 rounded-xl border border-white/10 flex justify-between items-center gap-2">
+              <div className="space-y-1">
+                <p className="text-amber-400 font-black uppercase text-[9px] tracking-widest">Super Administrator</p>
+                <p className="text-white mt-1"><span className="text-slate-350 font-bold">Email:</span> admin@drqhkhanclinic.com</p>
+                <p className="text-white"><span className="text-slate-350 font-bold">Password:</span> Admin@DrQHKhan1958!</p>
               </div>
               <button
                 onClick={() => handleCopy('admin@drqhkhanclinic.com', 'admin')}
-                className="p-1.5 hover:bg-white/5 rounded transition-colors text-slate-400 hover:text-white shrink-0"
+                className="p-2 bg-white/5 hover:bg-white/10 rounded-xl transition-colors text-white border border-white/10 shrink-0"
                 title="Copy Email"
               >
-                {copiedText === 'admin' ? <Check className="w-4 h-4 text-emerald-500" /> : <Clipboard className="w-4 h-4" />}
+                {copiedText === 'admin' ? <Check className="w-4 h-4 text-emerald-400" /> : <Clipboard className="w-4 h-4 text-slate-300" />}
               </button>
             </div>
 
             {/* Receptionist */}
-            <div className="bg-white/5 p-2.5 rounded-xl border border-white/5 flex justify-between items-center gap-2">
-              <div>
-                <p className="text-[#DD0200] font-black uppercase text-[8px] tracking-wider">Reception Desk / Staff</p>
-                <p className="text-white mt-0.5">Email: staff@drqhkhanclinic.com</p>
-                <p className="text-slate-400">Pass: Staff@DrQHKhan1958!</p>
+            <div className="bg-[#1A0706] p-3.5 rounded-xl border border-white/10 flex justify-between items-center gap-2">
+              <div className="space-y-1">
+                <p className="text-amber-400 font-black uppercase text-[9px] tracking-widest">Reception Desk / Staff</p>
+                <p className="text-white mt-1"><span className="text-slate-350 font-bold">Email:</span> staff@drqhkhanclinic.com</p>
+                <p className="text-white"><span className="text-slate-350 font-bold">Password:</span> Staff@DrQHKhan1958!</p>
               </div>
               <button
                 onClick={() => handleCopy('staff@drqhkhanclinic.com', 'staff')}
-                className="p-1.5 hover:bg-white/5 rounded transition-colors text-slate-400 hover:text-white shrink-0"
+                className="p-2 bg-white/5 hover:bg-white/10 rounded-xl transition-colors text-white border border-white/10 shrink-0"
                 title="Copy Email"
               >
-                {copiedText === 'staff' ? <Check className="w-4 h-4 text-emerald-500" /> : <Clipboard className="w-4 h-4" />}
+                {copiedText === 'staff' ? <Check className="w-4 h-4 text-emerald-400" /> : <Clipboard className="w-4 h-4 text-slate-300" />}
               </button>
             </div>
 
