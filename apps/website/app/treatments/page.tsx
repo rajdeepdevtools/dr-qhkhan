@@ -9,34 +9,18 @@ import { Search, Filter, ShieldAlert, FileText } from 'lucide-react';
 export default function TreatmentsPage() {
   const { lang } = useLanguage();
   const [search, setSearch] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
-
-  // Standard category labels
-  const getCategoryLabel = (category: string) => {
-    if (lang === 'hi') {
-      switch (category.toLowerCase()) {
-        case 'dermatology': return 'त्वचा रोग (Dermatology)';
-        case 'gastrointestinal': return 'उदर एवं पाचन (Gastrointestinal)';
-        case 'respiratory': return 'श्वसन तंत्र (Respiratory)';
-        case 'chronic illness': return 'क्रोनिक बीमारियां (Chronic Illness)';
-        case 'urinary': return 'मूत्र संबंधी रोग (Urinary)';
-        default: return category;
-      }
-    }
-    return category;
-  };
-
-  const categories = ['All', ...Array.from(new Set(treatmentsData.map((t) => t.category)))];
+  const [selectedGroup, setSelectedGroup] = useState<'All' | 'Male' | 'Female' | 'Children' | 'General'>('All');
 
   const filteredTreatments = treatmentsData.filter((t) => {
     const matchesSearch =
       t.nameEn.toLowerCase().includes(search.toLowerCase()) ||
       t.nameHi.includes(search) ||
+      t.category.toLowerCase().includes(search.toLowerCase()) ||
       t.description.toLowerCase().includes(search.toLowerCase());
 
-    const matchesCategory = selectedCategory === 'All' || t.category === selectedCategory;
+    const matchesGroup = selectedGroup === 'All' || t.targetGroup === selectedGroup;
 
-    return matchesSearch && matchesCategory;
+    return matchesSearch && matchesGroup;
   });
 
   return (
@@ -50,13 +34,13 @@ export default function TreatmentsPage() {
         <h1 className="text-4xl sm:text-5xl font-black text-[#1A0706] leading-none tracking-tight">
           {lang === 'hi' ? 'डॉ. क्यू. एच. खान' : 'DR. Q.H. KHAN'}
           <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#55100D] to-[#DD0200] text-xl sm:text-2.5xl font-extrabold mt-2.5 tracking-wider">
-            {lang === 'hi' ? 'स्वास्थ्य परामर्श एवं चिकित्सा क्षेत्र' : 'CONDITIONS & CLINICAL FOCUS AREAS'}
+            {lang === 'hi' ? 'पुरुष, महिला एवं बाल रोग चिकित्सा क्षेत्र' : 'MEN, WOMEN & PEDIATRIC CLINICAL FOCUS AREAS'}
           </span>
         </h1>
         <p className="text-slate-655 text-xs sm:text-sm leading-relaxed font-medium">
           {lang === 'hi'
-            ? 'उन प्रमुख रोगों की सूची जिनके लिए हमारा क्लिनिक संवैधानिक होम्योपैथी परामर्श और दीर्घकालिक स्वास्थ्य सहायता प्रदान करता है।'
-            : 'Browse the medical conditions for which our clinical team provides specialized, constitutional homeopathic consultations.'}
+            ? 'पुरुष स्वास्थ्य (प्रोस्टेट, बांझपन), महिला स्वास्थ्य (गर्भाशय, पीसीओडी), बाल रोग (टॉन्सिल, एडेनोइड्स) एवं क्रोनिक त्वचा रोगों के संवैधानिक उपचार की निर्देशिका।'
+            : 'Browse constitutional homoeopathic care guidelines for Men\'s Health, Women\'s Health, Pediatric Care, and Chronic Skin conditions.'}
         </p>
       </div>
 
@@ -83,8 +67,8 @@ export default function TreatmentsPage() {
             type="text"
             placeholder={
               lang === 'hi'
-                ? 'बीमारी खोजें (जैसे सोरायसिस, बवासीर, सफेद दाग)...'
-                : 'Search condition (e.g. Psoriasis, Piles, Stricture)...'
+                ? 'बीमारी खोजें (जैसे प्रोस्टेट, फाइब्रॉइड, एडेनोइड्स, सोरायसिस)...'
+                : 'Search condition (e.g. Prostate, Fibroids, Adenoids, Psoriasis)...'
             }
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -94,24 +78,31 @@ export default function TreatmentsPage() {
 
         <div className="flex items-center space-x-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-none">
           <Filter className="w-4 h-4 text-slate-500 shrink-0" />
-          {categories.map((cat, idx) => (
+          {[
+            { id: 'All', labelEn: 'All Conditions', labelHi: 'सभी रोग' },
+            { id: 'Male', labelEn: 'Male Health (पुरुष)', labelHi: 'पुरुष स्वास्थ्य' },
+            { id: 'Female', labelEn: 'Women\'s Health (महिला)', labelHi: 'महिला स्वास्थ्य' },
+            { id: 'Children', labelEn: 'Pediatric Care (बाल रोग)', labelHi: 'बाल रोग' },
+            { id: 'Mental', labelEn: 'Mental & Brain (मानसिक)', labelHi: 'मानसिक व मस्तिष्क रोग' },
+            { id: 'General', labelEn: 'Skin & General (त्वचा रोग)', labelHi: 'त्वचा एवं सामान्य' },
+          ].map((grp) => (
             <button
-              key={idx}
-              onClick={() => setSelectedCategory(cat)}
+              key={grp.id}
+              onClick={() => setSelectedGroup(grp.id as any)}
               className={`px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-all border ${
-                selectedCategory === cat
+                selectedGroup === grp.id
                   ? 'bg-gradient-to-r from-[#55100D] to-[#DD0200] border-[#55100D]/10 text-white shadow-sm'
                   : 'bg-slate-50 border-[#D9D9D9] text-slate-700 hover:bg-slate-100'
               }`}
             >
-              {cat === 'All' ? (lang === 'hi' ? 'सभी' : 'All') : getCategoryLabel(cat)}
+              {lang === 'hi' ? grp.labelHi : grp.labelEn}
             </button>
           ))}
         </div>
       </div>
 
       {/* Treatment Card Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {filteredTreatments.map((t, idx) => (
           <TreatmentCard key={idx} treatment={t} />
         ))}

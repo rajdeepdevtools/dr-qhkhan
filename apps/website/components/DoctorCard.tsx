@@ -16,13 +16,21 @@ export const DoctorCard: React.FC<{ doctor: Partial<IDoctorProfile> }> = ({ doct
         {/* Professional Portrait Container */}
         <div className="relative w-full h-64 bg-slate-50 rounded-xl overflow-hidden border border-slate-200/60 shadow-inner group">
           <img
-            src={(doctor as any).image || '/images/doctors/placeholder.jpg'}
+            src={
+              (doctor as any).image ||
+              (doctor.slug === 'dr-q-h-khan' || doctor.isDeceased
+                ? '/images/dr-qh-khan.png'
+                : doctor.slug === 'dr-i-khan'
+                ? '/images/dr-i-khan.png'
+                : '/images/doctors/placeholder.jpg')
+            }
             alt={doctor.name}
             className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
             onError={(e) => {
-              // High-quality professional medical fallbacks if local files do not exist
-              if (doctor.isDeceased) {
-                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=350&auto=format&fit=crop';
+              if (doctor.isDeceased || doctor.slug === 'dr-q-h-khan') {
+                (e.target as HTMLImageElement).src = '/images/dr-qh-khan.png';
+              } else if (doctor.slug === 'dr-i-khan') {
+                (e.target as HTMLImageElement).src = '/images/dr-i-khan.png';
               } else if (doctor.name?.includes('Adeeba') || doctor.name?.includes('अदीबा')) {
                 (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1594824813573-246434de83fb?q=80&w=350&auto=format&fit=crop';
               } else {

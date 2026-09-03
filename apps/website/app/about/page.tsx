@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Award, ShieldCheck, Clock, MapPin, Calendar, Heart, ShieldAlert, Sparkles } from 'lucide-react';
+import { Award, ShieldCheck, Clock, MapPin, Calendar, Heart, ShieldAlert, Sparkles, ArrowRight } from 'lucide-react';
 import { clinicConfig } from '../../lib/clinicConfig';
 import { useLanguage } from '../../lib/language-context';
 
@@ -76,28 +76,72 @@ export default function AboutPage() {
         </p>
       </div>
 
+      {/* Founder Biography Highlight Banner */}
+      <div className="bg-gradient-to-r from-[#1C0706] via-[#2A0D0A] to-[#55100D] border border-[#DD0200]/30 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-5">
+          <div className="w-20 h-20 rounded-2xl overflow-hidden border-2 border-amber-400 shrink-0 shadow-lg">
+            <img
+              src="/images/dr-qh-khan.png"
+              alt="Late Dr. Q.H. Khan"
+              className="w-full h-full object-cover object-top"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = '/images/dr-qh-khan.png';
+              }}
+            />
+          </div>
+          <div className="space-y-1">
+            <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 bg-amber-400/10 border border-amber-400/20 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1">
+              <Award className="w-3 h-3 text-[#DD0200]" />
+              {lang === 'hi' ? 'संस्थापक की पावन स्मृति एवं जीवनी' : 'FOUNDER LEGACY & BIOGRAPHY'}
+            </span>
+            <h2 className="text-xl sm:text-2xl font-black text-white leading-snug">
+              {lang === 'hi' ? 'स्वर्गीय डॉ. क्यू. एच. खान (1958 से विरासत)' : 'Late Dr. Q.H. Khan (1958 Heritage)'}
+            </h2>
+            <p className="text-slate-300 text-xs font-semibold leading-relaxed max-w-xl">
+              {lang === 'hi'
+                ? 'गया एवं मगध प्रमंडल में क्लासिकल होम्योपैथी के अग्रदूत, जिन्होंने 1958 में इस क्लिनिक की नींव रखी। उनके संपूर्ण जीवन चरित्र, समाज सेवा दर्शन और चिकित्सीय सिद्धांतों को विस्तार से पढ़ें।'
+                : 'Pioneer of classical homoeopathy in Gaya who established this institution in 1958. Read his detailed life history, Samaj Seva philosophy, and clinical values.'}
+            </p>
+          </div>
+        </div>
+        <Link
+          href="/doctors/dr-q-h-khan"
+          className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#DD0200] to-amber-500 hover:from-amber-500 hover:to-[#DD0200] text-white text-xs font-black shadow-lg transition-all hover:-translate-y-0.5 tracking-wider uppercase shrink-0"
+        >
+          <span>{lang === 'hi' ? 'संस्थापक जीवनी (Biography) पढ़ें' : 'Read Founder Biography'}</span>
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
+
       {/* Leadership Profile Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         
         {/* Managing Director */}
         <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#D9D9D9] shadow-sm space-y-4 hover:border-[#55100D]/50 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-[#55100D] text-white flex items-center justify-center font-black text-lg shadow">
-              IK
+            <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#55100D] shadow shrink-0">
+              <img
+                src="/images/dr-i-khan.png"
+                alt="Dr. I. Khan"
+                className="w-full h-full object-cover object-top"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/images/dr-i-khan.png';
+                }}
+              />
             </div>
             <div>
               <h2 className="text-base font-extrabold text-[#1A0706]">Dr. I. Khan</h2>
-              <p className="text-xs font-bold text-[#55100D]">{lang === 'hi' ? 'प्रबंध निदेशक' : 'Managing Director'}</p>
+              <p className="text-xs font-bold text-[#55100D]">{lang === 'hi' ? 'प्रबंध निदेशक एवं जनरल फिजिशियन' : 'Managing Director & General Physician'}</p>
               <p className="text-[10px] text-slate-500 font-mono font-bold">Reg. 33454</p>
             </div>
           </div>
           <div className="space-y-2 text-slate-600 border-t border-slate-100 pt-3 text-xs leading-relaxed font-medium">
-            <p><strong className="text-slate-900 font-bold">{lang === 'hi' ? 'योग्यता:' : 'Qualifications:'}</strong> B.H.M.S. (B.U.) | M.D. | R.B.S.M.H.C.</p>
-            <p><strong className="text-slate-900 font-bold">{lang === 'hi' ? 'क्लिनिक फोकस:' : 'Clinical Focus:'}</strong> {lang === 'hi' ? 'त्वचा एवं गुप्त रोग विशेषज्ञ' : 'Skin and private disease specialist'}</p>
+            <p><strong className="text-slate-900 font-bold">{lang === 'hi' ? 'योग्यता:' : 'Qualifications:'}</strong> B.H.M.S. (B.U.) | R.B.S.M.H.C.</p>
+            <p><strong className="text-slate-900 font-bold">{lang === 'hi' ? 'क्लिनिक फोकस:' : 'Clinical Focus:'}</strong> {lang === 'hi' ? 'जनरल फिजिशियन, क्रोनिक रोग, विटिलिगो व त्वचा विकार' : 'General Physician, Chronic Diseases, Vitiligo & Skin Disorders'}</p>
             <p>
               {lang === 'hi'
-                ? 'डॉ. आई. खान क्लिनिक के दैनिक परामर्श और संवैधानिक नुस्खे के मानकों का संचालन करते हैं, जिससे क्रोनिक बीमारियों में व्यक्तिगत इलाज सुनिश्चित हो सकें।'
-                : 'Dr. I. Khan guides the daily consultation workflows and constitutional case evaluations, preserving strict standards in homeopathic prescribing.'}
+                ? 'डॉ. आई. खान क्लिनिक के प्रबंध निदेशक एवं जनरल फिजिशियन हैं, जो क्रोनिक बीमारियों, दीर्घकालिक रोगों, विटिलिगो और त्वचा विकारों में क्लासिकल संवैधानिक होम्योपैथी के विशेषज्ञ हैं।'
+                : 'Dr. I. Khan is Managing Director & General Physician specializing in chronic long-term diseases, vitiligo, skin disorders, and classical constitutional homoeopathy.'}
             </p>
           </div>
         </div>
@@ -110,17 +154,17 @@ export default function AboutPage() {
             </div>
             <div>
               <h2 className="text-base font-extrabold text-[#1A0706]">Dr. Adeeba Farheen</h2>
-              <p className="text-xs font-bold text-[#55100D]">{lang === 'hi' ? 'वैज्ञानिक सलाहकार' : 'Scientific Advisor'}</p>
+              <p className="text-xs font-bold text-[#55100D]">{lang === 'hi' ? 'कंसल्टेंट फिजिशियन एवं महिला स्वास्थ्य विशेषज्ञ' : 'Consultant Physician & Female Health Specialist'}</p>
               <p className="text-[10px] text-slate-500 font-mono font-bold">Reg. 31319</p>
             </div>
           </div>
           <div className="space-y-2 text-slate-600 border-t border-slate-100 pt-3 text-xs leading-relaxed font-medium">
-            <p><strong className="text-slate-900 font-bold">{lang === 'hi' ? 'योग्यता:' : 'Qualifications:'}</strong> B.H.M.S. (B.U.) | M.D. | G.D.M.C., Katihar, Patna</p>
-            <p><strong className="text-slate-900 font-bold">{lang === 'hi' ? 'क्लिनिक फोकस:' : 'Clinical Focus:'}</strong> {lang === 'hi' ? 'विटिलिगो (सफेद दाग) एवं बांझपन विशेषज्ञ' : 'Leucoderma/skin pigmentation and female infertility'}</p>
+            <p><strong className="text-slate-900 font-bold">{lang === 'hi' ? 'योग्यता:' : 'Qualifications:'}</strong> B.H.M.S. (B.U.) | M.D. (Physician) | G.D.M.C., Katihar, Patna</p>
+            <p><strong className="text-slate-900 font-bold">{lang === 'hi' ? 'क्लिनिक फोकस:' : 'Clinical Focus:'}</strong> {lang === 'hi' ? 'सामान्य रोग फिजिशियन, PCOD, स्तन गांठ व ट्यूमर एवं महिला स्वास्थ्य' : 'General Physician, PCOD, Breast Lumps/Tumours & Female Healthcare'}</p>
             <p>
               {lang === 'hi'
-                ? 'विशेषज्ञ सलाहकार जो बांझपन, विटिलिगो और विभिन्न जटिल क्रोनिक त्वचा शिकायतों के प्रबंधन में अनुसंधान-आधारित होम्योपैथी का उपयोग करती हैं।'
-                : 'Specialist consultant focusing on vitiligo, leucoderma, and female infertility complaints using research-aware constitutional protocols.'}
+                ? 'सामान्य फिजिशियन एवं महिला स्वास्थ्य विशेषज्ञ, जो PCOD/PCOS, स्तन गांठ/ट्यूमर, सामान्य प्रसव मार्गदर्शन एवं सभी सामान्य स्वास्थ्य समस्याओं के उपचार में अनुभवी हैं।'
+                : 'General Physician and Female Healthcare consultant focusing on PCOD/PCOS, breast tumours/lumps, female health disorders, normal delivery guidance, and general conditions.'}
             </p>
           </div>
         </div>
@@ -203,17 +247,39 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Philosophy & Referral Policy */}
+      {/* Philosophy, Legal & Medical Claims Integrity Disclaimer */}
       <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#D9D9D9] shadow-sm space-y-4">
         <h3 className="text-base font-extrabold text-[#1A0706] flex items-center gap-2">
           <ShieldCheck className="w-5 h-5 text-[#55100D]" />
-          {lang === 'hi' ? 'जिम्मेदार चिकित्सा और नैतिक आचरण नीति' : 'Our Medical Philosophy & Responsible Messaging'}
+          {lang === 'hi' ? 'चिकित्सीय सत्यता, पारदर्शिता एवं कानूनी आचरण नीति' : 'Medical Integrity, Legal Transparency & Ethics Policy'}
         </h3>
-        <p className="text-xs text-slate-600 leading-relaxed max-w-4xl font-medium">
-          {lang === 'hi'
-            ? 'डॉ. क्यू.एच. खान क्लिनिक में हम विटिलिगो, सोरायसिस और अन्य त्वचा स्थितियों के लिए सुरक्षित, संवैधानिक होम्योपैथी परामर्श प्रदान करते हैं। हम चमत्कारी इलाज के झूठे दावे या १००% गारंटी नहीं देते हैं। गंभीर एक्यूट, सर्जिकल या दर्दनाक आपातकालीन मामलों में हम हमेशा नजदीकी आपातकालीन अस्पताल रेफरल की सलाह देते हैं।'
-            : 'At Dr. Q.H. Khan Clinic, we preserve traditional constitutional homoeopathy principles while maintaining responsible medical safety. We do not issue unrealistic guarantees or 100% cure claims. All acute, severe, or surgical emergencies are directed to appropriate hospital emergency facilities.'}
-        </p>
+        
+        <div className="space-y-3 text-xs text-slate-700 leading-relaxed font-medium bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <p>
+            <strong className="text-slate-900 font-extrabold">
+              {lang === 'hi' ? '१. प्रामाणिक एवं पंजीकृत चिकित्सा परामर्श:' : '1. Registered & Qualified Clinical Practice:'}
+            </strong>{' '}
+            {lang === 'hi'
+              ? 'डॉ. क्यू. एच. खान क्लासिकल होम्योपैथिक क्लिनिक में सभी स्वास्थ्य परामर्श केवल आयुष मंत्रालय एवं राज्य बोर्ड द्वारा पंजीकृत योग्य चिकित्सकों (B.H.M.S. / M.D.) द्वारा प्रदान किए जाते हैं।'
+              : 'All consultations at Dr. Q.H. Khan Clinic are conducted exclusively by registered, qualified medical professionals holding recognized degrees (B.H.M.S. / M.D.).'}
+          </p>
+          <p>
+            <strong className="text-slate-900 font-extrabold">
+              {lang === 'hi' ? '२. कोई भ्रामक या चमत्कारिक दावे नहीं (Strict No-False-Claim Policy):' : '2. Strict No-False-Claim Policy:'}
+            </strong>{' '}
+            {lang === 'hi'
+              ? 'हमारा क्लिनिक किसी भी बीमारी के 100% इलाज या तात्कालिक चमत्कारी परिणाम का कोई भी असत्य या भ्रामक दावा नहीं करता है। होम्योपैथिक उपचार प्रत्येक मरीज की अनुवांशिकता, पुरानी बीमारी की स्थिति, संवैधानिक विशेषताओं और व्यक्तिगत शारीरिक प्रतिक्रिया पर निर्भर करता है।'
+              : 'Our institution strictly refrains from making false 100% cure guarantees or deceptive medical promises. Clinical response to constitutional homoeopathic consultation varies individually depending on pathology, genetics, duration, and patient compliance.'}
+          </p>
+          <p>
+            <strong className="text-slate-900 font-extrabold">
+              {lang === 'hi' ? '३. आपातकालीन अस्पताल रेफरल नीति (Hospital Emergency Protocol):' : '3. Hospital Emergency Protocol:'}
+            </strong>{' '}
+            {lang === 'hi'
+              ? 'अचानक पैदा होने वाले तीव्र दर्द, दुर्घटनाओं, गंभीर कार्डियक, न्यूरोलॉजिकल या सर्जिकल आपातकाल के मामलों में हम मरीजों को बिना किसी देरी के निकटतम मल्टी-स्पेशलिटी अस्पताल या सर्जिकल इमरजेंसी जाने की हिदायत देते हैं।'
+              : 'For acute medical emergencies, surgical complications, or trauma, patients are directed immediately to nearby hospital emergency and surgical centers.'}
+          </p>
+        </div>
 
         <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
           <div className="text-xs text-slate-650 font-semibold">
@@ -221,13 +287,23 @@ export default function AboutPage() {
             <p><strong className="text-slate-800 font-bold">{lang === 'hi' ? 'हेल्पलाइन्स:' : 'Helplines:'}</strong> {clinicConfig.helplines.map((h) => h.number).join(' | ')}</p>
           </div>
 
-          <Link
-            href="/appointment"
-            className="px-6 py-3 bg-gradient-to-r from-[#55100D] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white text-xs font-black rounded-xl shadow transition-all hover:-translate-y-0.5 tracking-wider uppercase"
-          >
-            <Calendar className="w-4 h-4" />
-            <span>{lang === 'hi' ? 'परामर्श हेतु बुक करें' : 'Book Consultation'}</span>
-          </Link>
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              href="/doctors/dr-q-h-khan"
+              className="px-5 py-3 bg-white border border-[#D9D9D9] hover:bg-slate-50 text-[#1A0706] text-xs font-extrabold rounded-xl shadow-xs transition-all hover:-translate-y-0.5 tracking-wider uppercase inline-flex items-center gap-1.5"
+            >
+              <Award className="w-4 h-4 text-[#DD0200]" />
+              <span>{lang === 'hi' ? 'संस्थापक जीवनी' : 'Founder Biography'}</span>
+            </Link>
+
+            <Link
+              href="/appointment"
+              className="px-6 py-3 bg-gradient-to-r from-[#55100D] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white text-xs font-black rounded-xl shadow transition-all hover:-translate-y-0.5 tracking-wider uppercase inline-flex items-center gap-1.5"
+            >
+              <Calendar className="w-4 h-4" />
+              <span>{lang === 'hi' ? 'परामर्श हेतु बुक करें' : 'Book Consultation'}</span>
+            </Link>
+          </div>
         </div>
       </div>
       

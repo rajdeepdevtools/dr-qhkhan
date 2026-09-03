@@ -11,7 +11,6 @@ import { apiClient } from '../lib/api-client';
 import {
   ShieldCheck,
   HeartPulse,
-  Sparkles,
   MapPin,
   Phone,
   MessageSquare,
@@ -25,12 +24,22 @@ import {
   Calendar,
   ThumbsUp,
   Map,
-  Tag
+  Tag,
+  Sparkles
 } from 'lucide-react';
 
 export default function HomePage() {
   const { lang } = useLanguage();
-  const featuredTreatments = treatmentsData.slice(0, 8);
+  const [activeTargetGroup, setActiveTargetGroup] = useState<'all' | 'Male' | 'Female' | 'Children' | 'General'>('all');
+
+  const displayTreatments = activeTargetGroup === 'all'
+    ? [
+        ...treatmentsData.filter(t => t.targetGroup === 'Male').slice(0, 3),
+        ...treatmentsData.filter(t => t.targetGroup === 'Female').slice(0, 3),
+        ...treatmentsData.filter(t => t.targetGroup === 'Children').slice(0, 3),
+        ...treatmentsData.filter(t => t.targetGroup === 'General').slice(0, 3),
+      ]
+    : treatmentsData.filter(t => t.targetGroup === activeTargetGroup);
 
   // Dynamic Data States
   const [camps, setCamps] = useState<any[]>([]);
@@ -160,30 +169,33 @@ export default function HomePage() {
     {
       slug: 'dr-q-h-khan',
       name: 'Late Dr. Q.H. Khan',
-      degrees: ['B.H.M.S. (B.U.)', 'M.D.', 'R.B.S.M.H.C.'],
+      degrees: ['B.H.M.S. (B.U.)', 'R.B.S.M.H.C.'],
       registrationNumber: 'Reg. 33454',
-      specialization: 'Skin and private disease specialist',
+      specialization: 'Multi-Specialist & General Physician',
       designation: 'Founder (In Memoriam)',
       bio: 'Pioneer of classical homoeopathy in Gaya who established this clinic in 1958. His dedication to Samaj Seva forms the bedrock of our clinic.',
+      image: '/images/dr-qh-khan.png',
       isDeceased: true,
     },
     {
       slug: 'dr-i-khan',
-      name: 'Dr. I. Khan (Skin)',
-      degrees: ['B.H.M.S. (B.U.)', 'M.D.', 'R.B.S. M.H.C.'],
+      name: 'Dr. I. Khan',
+      degrees: ['B.H.M.S. (B.U.)', 'R.B.S. M.H.C.'],
       registrationNumber: 'Reg. 33454',
-      specialization: 'Skin and private disease specialist',
-      designation: 'Managing Director',
-      bio: 'Managing Director of the clinic with extensive experience in classical homoeopathy, specializing in chronic skin disorders, vitiligo, and private diseases.',
+      specialization: 'General Physician & Chronic Disease Specialist',
+      designation: 'Managing Director & General Physician',
+      bio: 'Managing Director & General Physician with extensive experience in classical homoeopathy, specializing in chronic diseases, severe long-term illnesses, skin disorders, vitiligo, and private constitutional complaints.',
+      image: '/images/dr-i-khan.png',
     },
     {
       slug: 'dr-adeeba-farheen',
       name: 'Dr. Adeeba Farheen',
-      degrees: ['B.H.M.S. (B.U.)', 'M.D.', 'G.D.M.C., Katihar, Patna'],
+      degrees: ['B.H.M.S. (B.U.)', 'M.D. (Physician)', 'G.D.M.C., Katihar, Patna'],
       registrationNumber: 'Reg. 31319',
-      specialization: 'Infertility and skin pigmentation related conditions',
-      designation: 'Scientific Advisor / Infertility Specialist',
-      bio: 'Specialist consultant focusing on Vitiligo, Leucoderma, and female infertility conditions using advanced classical homoeopathy.',
+      specialization: 'General Physician, Female Disorders (PCOD, Breast Lumps) & Normal Delivery Care',
+      designation: 'Consultant Physician & Female Health Specialist',
+      bio: 'General Physician and Female Healthcare consultant experienced in PCOD/PCOS, breast tumours/lumps, female health disorders, normal delivery consultation, and general medical conditions.',
+      image: '/images/doctors/dr-adeeba-farheen.jpg',
     },
   ];
 
@@ -191,30 +203,33 @@ export default function HomePage() {
     {
       slug: 'dr-q-h-khan',
       name: 'स्वर्गीय डॉ. क्यू. एच. खान',
-      degrees: ['बी.एच.एम.एस. (बी.यू.)', 'एम.डी.', 'आर.बी.एस.एम.एच.सी.'],
+      degrees: ['बी.एच.एम.एस. (बी.यू.)', 'आर.बी.एस.एम.एच.सी.'],
       registrationNumber: 'पंजीकरण संख्या 33454',
-      specialization: 'त्वचा एवं गुप्त रोग विशेषज्ञ',
+      specialization: 'मल्टी-स्पेशलिस्ट एवं जनरल फिजिशियन',
       designation: 'संस्थापक (स्मृति में)',
       bio: 'गया में क्लासिकल होम्योपैथी के अग्रदूत जिन्होंने 1958 में इस क्लिनिक की स्थापना की। समाज सेवा के प्रति उनका समर्पण हमारे क्लिनिक की आधारशिला है।',
+      image: '/images/dr-qh-khan.png',
       isDeceased: true,
     },
     {
       slug: 'dr-i-khan',
-      name: 'डॉ. आई. खान (त्वचा)',
-      degrees: ['बी.एच.एम.एस. (बी.यू.)', 'एम.डी.', 'आर.बी.एस.एम.एच.सी.'],
+      name: 'डॉ. आई. खान',
+      degrees: ['बी.एच.एम.एस. (बी.यू.)', 'आर.बी.एस.एम.एच.सी.'],
       registrationNumber: 'पंजीकरण संख्या 33454',
-      specialization: 'त्वचा एवं गुप्त रोग विशेषज्ञ',
-      designation: 'प्रबंध निदेशक',
-      bio: 'क्लिनिक के प्रबंध निदेशक, क्लासिकल होम्योपैथी में व्यापक अनुभव के साथ, क्रोनिक त्वचा विकारों, विटिलिगो और गुप्त रोगों के विशेषज्ञ।',
+      specialization: 'जनरल फिजिशियन, क्रोनिक एवं गंभीर रोग विशेषज्ञ',
+      designation: 'प्रबंध निदेशक एवं जनरल फिजिशियन',
+      bio: 'क्लिनिक के प्रबंध निदेशक एवं जनरल फिजिशियन, जो क्लासिकल होम्योपैथी में व्यापक अनुभव के साथ क्रोनिक बीमारियों, जटिल दीर्घकालिक रोगों, त्वचा विकारों, विटिलिगो और गुप्त रोगों के उपचार में विशेषज्ञ हैं।',
+      image: '/images/dr-i-khan.png',
     },
     {
       slug: 'dr-adeeba-farheen',
       name: 'डॉ. अदीबा फरहीन',
-      degrees: ['बी.एच.एम.एस. (बी.यू.)', 'एम.डी.', 'जी.डी.एम.सी., कटिहार, पटना'],
+      degrees: ['बी.एच.एम.एस. (बी.यू.)', 'एम.डी. (फिजिशियन)', 'जी.डी.एम.सी., कटिहार, पटना'],
       registrationNumber: 'पंजीकरण संख्या 31319',
-      specialization: 'बांझपन और त्वचा रंजकता से संबंधित स्थितियां',
-      designation: 'वैज्ञानिक सलाहकार / बांझपन विशेषज्ञ',
-      bio: 'विटिलिगो, ल्यूकोडर्मा और उन्नत क्लासिकल होम्योपैथी का उपयोग करके महिला बांझपन की स्थितियों पर ध्यान केंद्रित करने वाली विशेषज्ञ सलाहकार।',
+      specialization: 'सामान्य फिजिशियन, महिला स्वास्थ्य (PCOD, स्तन गांठ/ट्यूमर) एवं सामान्य प्रसव परामर्श',
+      designation: 'कंसल्टेंट फिजिशियन एवं महिला स्वास्थ्य विशेषज्ञ',
+      bio: 'सामान्य फिजिशियन एवं महिला स्वास्थ्य परामर्शदाता, जो PCOD/PCOS, स्तन गांठ व ट्यूमर, महिला रोगों, सामान्य प्रसव मार्गदर्शन एवं सभी सामान्य बीमारियों के उपचार में अनुभवी हैं।',
+      image: '/images/doctors/dr-adeeba-farheen.jpg',
     },
   ];
 
@@ -229,19 +244,6 @@ export default function HomePage() {
       {/* 1. HERO SECTION */}
       <Hero />
 
-      {/* 2. TICKER BANNER (SLOGANS CAROUSEL) */}
-      <section className="bg-[#55100D]/5 border-y border-[#55100D]/10 py-3.5 overflow-hidden">
-        <div className="max-w-[1600px] mx-auto px-4">
-          <div className="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-black text-[#55100D]">
-            {clinicConfig.slogans.map((slogan, idx) => (
-              <span key={idx} className="flex items-center gap-2 bg-white px-4.5 py-2 rounded-full border border-[#D9D9D9] shadow-sm whitespace-nowrap">
-                <Sparkles className="w-3.5 h-3.5 text-[#DD0200] animate-pulse" />
-                <span>{slogan}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* CLINICAL METRICS GRID */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -287,71 +289,212 @@ export default function HomePage() {
 
       {/* 3. FOUNDER'S MEMORIAL & LEGACY TIMELINE */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#131314] text-white rounded-3xl p-8 md:p-12 border border-white/5 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#DD0200]/5 rounded-full blur-3xl" />
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7 space-y-6">
-              <span className="text-[10px] font-black uppercase tracking-wider text-[#DD0200] bg-[#DD0200]/10 border border-[#DD0200]/20 px-3 py-1 rounded-full">
-                {lang === 'hi' ? 'स्थापना 1958 गया — ऐतिहासिक धरोहर' : 'Est. 1958 Gaya — Historical Heritage'}
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight tracking-tight">
-                {lang === 'hi' 
-                  ? 'हमारी जड़ें: समाज सेवा के लिए स्वर्गीय डॉ. क्यू. एच. खान का दृष्टिकोण'
-                  : 'Our Roots: Late Dr. Q.H. Khan’s Vision for Samaj Seva'}
-              </h2>
-              <p className="text-slate-300 text-sm leading-relaxed font-semibold">
-                {lang === 'hi'
-                  ? '1958 में, स्वर्गीय डॉ. क्यू. एच. खान ने गया, बिहार में क्लासिकल होम्योपैथी की शुरुआत की। उनका दृढ़ विश्वास था कि चिकित्सा मानवता की सेवा है, इसलिए उन्होंने अपनी प्रैक्टिस को समाज सेवा (Samaj Seva) के इर्द-गिर्द केंद्रित किया, जिसके तहत वे ग्रामीण मरीजों को मुफ्त परामर्श और स्वास्थ्य जांच प्रदान करते थे।'
-                  : 'In 1958, Late Dr. Q.H. Khan brought classical homoeopathy to Gaya, Bihar. Believing that healing is a service to humanity, he structured his practice around Samaj Seva (community social service), offering free consultations and medical checkups to rural patients.'}
-              </p>
+        <div className="bg-gradient-to-br from-[#FFFDF9] via-[#FAF4ED] to-[#F5ECE2] text-[#1A0706] rounded-3xl p-6 sm:p-10 lg:p-12 border border-[#E0D0C0] shadow-xl relative overflow-hidden">
+          
+          {/* Subtle Royal Accent Lighting Orbs */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#DD0200]/10 via-amber-400/15 to-transparent rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-amber-500/10 to-transparent rounded-full blur-2xl pointer-events-none" />
+
+          <div className="relative z-10 space-y-10">
+            
+            {/* Header Title Row */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border-b border-[#E6D8C8] pb-8">
               
-              <div className="space-y-4 pt-2">
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#DD0200]/10 text-[#DD0200] border border-[#DD0200]/25 flex items-center justify-center font-black text-xs shrink-0">1</div>
+              <div className="lg:col-span-8 space-y-4">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#55100D]/5 border border-[#55100D]/20 text-[#55100D] text-xs font-black uppercase tracking-wider shadow-xs">
+                  <Award className="w-4 h-4 text-[#DD0200]" />
+                  <span>
+                    {lang === 'hi'
+                      ? '31 दिसंबर 1934 – 3 जून • 1958 से मगध प्रमंडल की अटूट धरोहर'
+                      : '31st DEC 1934 – 3rd JUNE • 68+ YEARS OF HERITAGE & TRUST'}
+                  </span>
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1A0706] leading-tight tracking-tight">
+                  {lang === 'hi' ? (
+                    <>
+                      हमारी ऐतिहासिक धरोहर:{' '}
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#55100D] via-[#DD0200] to-[#B30000]">
+                        स्वर्गीय डॉ. क्यू. एच. खान
+                      </span>{' '}
+                      का जीवन चरित्र एवं समाज सेवा
+                    </>
+                  ) : (
+                    <>
+                      Our Heritage:{' '}
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#55100D] via-[#DD0200] to-[#B30000]">
+                        Late Dr. Q.H. Khan’s
+                      </span>{' '}
+                      Life Biography & Legacy
+                    </>
+                  )}
+                </h2>
+
+                <p className="text-[#4A3533] text-xs sm:text-sm leading-relaxed font-semibold max-w-3xl">
+                  {lang === 'hi'
+                    ? '31 दिसंबर 1934 को ग्राम कालवाना, पोस्ट चेरकी (गया) में जन्मे स्वर्गीय डॉ. क्यू. एच. खान ने बचपन नाना जी के संरक्षण में बिताया तथा कोलकाता से होम्योपैथिक डॉक्टर की उपाधि अर्जित की। 1958 में नगमटिया रोड, गया में क्लिनिक की स्थापना के साथ उन्होंने अनाथ बच्चियों हेतु "The Gaya Muslim Girls Orphanage" एवं धर्मार्थ अस्पताल की शुरुआत की।'
+                    : 'Born on 31st Dec 1934 in Kalwana, Cherki (Gaya), Late Dr. Q.H. Khan completed medical studies in Kolkata and established Dr. Q.H. Khan Clinic at Nagmatia Road in 1958. A visionary philanthropist who also founded The Gaya Muslim Girls Orphanage.'}
+                </p>
+
+                <div className="pt-2">
+                  <Link
+                    href="/doctors/dr-q-h-khan"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white text-xs font-black shadow-lg transition-all hover:-translate-y-0.5 tracking-wider uppercase"
+                  >
+                    <span>{lang === 'hi' ? 'संस्थापक की संपूर्ण जीवनी (Biography) पढ़ें' : 'Read Full Founder Biography'}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Founder Portrait & Memorial Card */}
+              <div className="lg:col-span-4 flex flex-col items-center justify-center">
+                <div className="bg-white border border-[#E5D5C5] p-6 rounded-3xl shadow-xl text-center space-y-3 w-full max-w-sm relative overflow-hidden">
+                  
+                  {/* Decorative Gold Header Bar */}
+                  <div className="h-1.5 bg-gradient-to-r from-[#55100D] via-amber-400 to-[#DD0200] absolute top-0 left-0 right-0" />
+
+                  <div className="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto rounded-2xl overflow-hidden border-2 border-amber-400/80 shadow-lg group mt-2">
+                    <img
+                      src="/images/dr-qh-khan.png"
+                      alt="Late Dr. Q.H. Khan"
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = '/images/dr-qh-khan.png';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <span className="absolute bottom-2 left-2 right-2 text-[9px] font-black uppercase tracking-wider bg-[#DD0200] text-white py-0.5 px-2 rounded-md shadow-xs">
+                      31 DEC 1934 – 3 JUNE
+                    </span>
+                  </div>
+
                   <div>
-                    <h4 className="font-extrabold text-white text-sm">
-                      {lang === 'hi' ? '1958: स्थापना' : '1958: Foundation'}
-                    </h4>
-                    <p className="text-slate-400 text-xs font-semibold">
+                    <h3 className="font-black text-[#1A0706] text-base sm:text-lg">
+                      {lang === 'hi' ? 'स्वर्गीय डॉ. क्यू. एच. खान' : 'Late Dr. Q.H. Khan'}
+                    </h3>
+                    <p className="text-[#55100D] text-xs font-black mt-0.5">
+                      {lang === 'hi' ? 'कोलकाता मेडिसिन • संस्थापक (1958)' : 'Kolkata Graduate • Founder (1958)'}
+                    </p>
+                    <p className="text-[#5A4543] text-[11px] font-semibold italic mt-2.5 bg-[#FAF3EC] p-3 rounded-xl border border-[#E8DCD0]">
                       {lang === 'hi'
-                        ? 'समाज के सभी वर्गों को गुणवत्तापूर्ण चिकित्सा प्रदान करने के लिए नगमटिया रोड पर क्लिनिक की स्थापना की।'
-                        : 'Set up the clinic at Nagmatia Road to offer quality treatment to all segments of society.'}
+                        ? '"चिकित्सा केवल आजीविका नहीं, बल्कि पीड़ित मानवता एवं अनाथ बच्चों की निस्वार्थ सेवा है।"'
+                        : '"Medical treatment is not a commercial enterprise; it is a sacred duty to relieve human suffering."'}
                     </p>
                   </div>
                 </div>
-                <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#DD0200]/10 text-[#DD0200] border border-[#DD0200]/25 flex items-center justify-center font-black text-xs shrink-0">2</div>
-                  <div>
-                    <h4 className="font-extrabold text-white text-sm">
-                      {lang === 'hi' ? 'निःशुल्क चिकित्सा शिविर' : 'Free Medical Shivirs'}
-                    </h4>
-                    <p className="text-slate-400 text-xs font-semibold">
-                      {lang === 'hi'
-                        ? 'गया के ग्रामीण जिलों का दौरा कर स्वास्थ्य जागरूकता शिविर आयोजित करने और मुफ्त दवाएं वितरित करने की मासिक दिनचर्या स्थापित की।'
-                        : 'Established a monthly routine of traveling to rural districts of Gaya to conduct health awareness camps and distribute free medicines.'}
-                    </p>
+              </div>
+
+            </div>
+
+            {/* 4 Milestone Pillars */}
+            <div className="space-y-4">
+              <h3 className="text-xs font-black uppercase tracking-widest text-[#55100D] flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#DD0200]" />
+                <span>{lang === 'hi' ? 'ऐतिहासिक विकास यात्रा के 4 मुख्य स्तंभ' : '4 HISTORICAL MILESTONES OF OUR LEGACY'}</span>
+              </h3>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
+                  <div className="flex items-center justify-between">
+                    <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black text-xs flex items-center justify-center shadow-xs">
+                      1934
+                    </span>
+                    <span className="text-[10px] font-black text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 uppercase tracking-wider">
+                      {lang === 'hi' ? 'जन्म एवं शिक्षा' : 'Birth & Studies'}
+                    </span>
                   </div>
+                  <h4 className="font-black text-[#1A0706] text-sm">
+                    {lang === 'hi' ? 'कालवाना (गया) से कोलकाता' : 'Kalwana to Kolkata'}
+                  </h4>
+                  <p className="text-[#5A4543] text-xs font-medium leading-relaxed">
+                    {lang === 'hi'
+                      ? '31 दिसंबर 1934 को जन्म। कोलकाता से होम्योपैथिक डॉक्टर की उच्च शिक्षा हासिल की।'
+                      : 'Born 31st Dec 1934. Earned Homoeopathic doctor degree from Kolkata.'}
+                  </p>
                 </div>
+
+                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
+                  <div className="flex items-center justify-between">
+                    <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black text-xs flex items-center justify-center shadow-xs">
+                      1958
+                    </span>
+                    <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 uppercase tracking-wider">
+                      {lang === 'hi' ? 'क्लिनिक स्थापना' : 'Clinic Est.'}
+                    </span>
+                  </div>
+                  <h4 className="font-black text-[#1A0706] text-sm">
+                    {lang === 'hi' ? 'नगमटिया रोड क्लिनिक' : 'Nagmatia Road Clinic'}
+                  </h4>
+                  <p className="text-[#5A4543] text-xs font-medium leading-relaxed">
+                    {lang === 'hi'
+                      ? 'गया में क्लासिकल होम्योपैथी एवं निशुल्क ग्रामीण चिकित्सा शिविरों की ऐतिहासिक शुरुआत।'
+                      : 'Established the historic classical homoeopathy clinic at Nagmatia Road, Gaya.'}
+                  </p>
+                </div>
+
+                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
+                  <div className="flex items-center justify-between">
+                    <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black text-xs flex items-center justify-center shadow-xs">
+                      Orphan
+                    </span>
+                    <span className="text-[10px] font-black text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200 uppercase tracking-wider">
+                      {lang === 'hi' ? 'समाज सुधार' : 'Social Welfare'}
+                    </span>
+                  </div>
+                  <h4 className="font-black text-[#1A0706] text-sm">
+                    {lang === 'hi' ? 'Gaya Muslim Girls Orphanage' : 'Girls Orphanage Founder'}
+                  </h4>
+                  <p className="text-[#5A4543] text-xs font-medium leading-relaxed">
+                    {lang === 'hi'
+                      ? 'अनाथ बच्चियों के आश्रय व शिक्षा हेतु कालवाना (चेरकी, गया) में अनाथालय की स्थापना।'
+                      : 'Founded The Gaya Muslim Girls Orphanage at Kalwana (Cherki, Gaya).'}
+                  </p>
+                </div>
+
+                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
+                  <div className="flex items-center justify-between">
+                    <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black text-xs flex items-center justify-center shadow-xs">
+                      Today
+                    </span>
+                    <span className="text-[10px] font-black text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200 uppercase tracking-wider">
+                      {lang === 'hi' ? 'अमर धरोहर' : 'Living Legacy'}
+                    </span>
+                  </div>
+                  <h4 className="font-black text-[#1A0706] text-sm">
+                    {lang === 'hi' ? 'डॉ. आई. खान (प्रबंध निदेशक)' : 'Dr. I. Khan (MD)'}
+                  </h4>
+                  <p className="text-[#5A4543] text-xs font-medium leading-relaxed">
+                    {lang === 'hi'
+                      ? '70 वर्ष की आयु में 3 जून को दुर्घटना उपरांत निधन के बाद सुपुत्र डॉ. आई. खान द्वारा संस्था का सफल संचालन।'
+                      : 'MD Dr. I. Khan continuing the legacy after his father’s tragic demise on 3rd June at age 70.'}
+                  </p>
+                </div>
+
               </div>
             </div>
 
-            <div className="lg:col-span-5 bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4 shadow-xl">
-              <Award className="w-10 h-10 text-[#DD0200]" />
-              <h3 className="font-extrabold text-lg text-white">
-                {lang === 'hi' ? 'संस्थापक विरासत संदेश' : 'Founder Legacy Note'}
-              </h3>
-              <p className="text-xs text-slate-350 leading-relaxed font-semibold italic">
-                {lang === 'hi'
-                  ? '"हमारे संस्थापक स्वर्गीय डॉ. क्यू. एच. खान ने क्लासिकल होम्योपैथी को एक प्राकृतिक, संवैधानिक उपचार प्रणाली के रूप में प्रसारित करने में अपना जीवन समर्पित किया। हम उत्कृष्ट त्वचा रोग परामर्श और निरंतर सामाजिक सेवा शिविरों को जोड़कर उनके मूल्यों के प्रति प्रतिबद्ध हैं।"'
-                  : '"Our founder Late Dr. Q.H. Khan spent his lifetime propagating classical homeopathy as a natural, constitutional healing system. We remain committed to his values by combining top-tier skin care consultation with continuous social service camps."'}
-              </p>
-              <div className="pt-3 border-t border-white/10 flex justify-between items-center text-xs font-bold">
-                <span className="font-black text-[#DD0200]">Dr. I. Khan</span>
-                <span className="text-slate-400">
-                  {lang === 'hi' ? 'प्रबंध निदेशक' : 'Managing Director'}
+            {/* Bottom Legacy Quote & MD Message Card */}
+            <div className="bg-gradient-to-r from-[#55100D] via-[#701511] to-[#DD0200] text-white border border-[#55100D]/30 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-lg">
+              <div className="space-y-1">
+                <span className="text-[10px] font-black text-amber-300 uppercase tracking-wider block">
+                  {lang === 'hi' ? 'प्रबंध निदेशक का संकल्प संदेश' : 'MANAGING DIRECTOR’S LEGACY COMMITMENT'}
+                </span>
+                <p className="text-xs sm:text-sm text-slate-100 font-semibold italic">
+                  {lang === 'hi'
+                    ? '"हम अपने संस्थापक स्वर्गीय डॉ. क्यू. एच. खान द्वारा 1958 में स्थापित उच्च चिकित्सीय मूल्यों और समाज सेवा के संकल्प को आगे बढ़ाने के लिए पूरी तरह प्रतिबद्ध हैं।"'
+                    : '"We remain strictly committed to upholding the clinical excellence and noble Samaj Seva vision established by our founder Late Dr. Q.H. Khan in 1958."'}
+                </p>
+              </div>
+              <div className="shrink-0 text-right">
+                <strong className="block text-white font-black text-sm">Dr. I. Khan</strong>
+                <span className="text-[11px] font-bold text-amber-300">
+                  {lang === 'hi' ? 'प्रबंध निदेशक एवं जनरल फिजिशियन' : 'Managing Director & General Physician'}
                 </span>
               </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -489,28 +632,59 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. CONSULTATION SPECIALTIES (TREATMENTS) */}
-      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-slate-200 pb-4">
-          <div>
+      {/* 6. CONSULTATION SPECIALTIES (TREATMENTS FOR MEN, WOMEN & CHILDREN) */}
+      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-slate-200 pb-4">
+          <div className="space-y-1">
             <span className="text-xs font-black text-[#55100D] uppercase tracking-wider">
-              {lang === 'hi' ? 'क्लिनिक परामर्श क्षेत्र' : 'CLINICAL CONSULTATION AREAS'}
+              {lang === 'hi' ? 'विशेषज्ञ परामर्श क्षेत्र (पुरुष, महिला एवं बाल रोग)' : 'SPECIALIZED CLINICAL CONSULTATIONS'}
             </span>
-            <h2 className="text-2xl font-black text-[#1A0706] tracking-tight">
-              {lang === 'hi' ? 'त्वचा, रंजकता (Pigmentation) और क्रोनिक बीमारी देखभाल' : 'Featured Skin, Pigmentation & Chronic Disease Care'}
+            <h2 className="text-2xl sm:text-3xl font-black text-[#1A0706] tracking-tight">
+              {lang === 'hi'
+                ? 'पुरुष, महिला और बच्चों के स्वास्थ्य एवं क्रोनिक रोग परामर्श'
+                : 'Healthcare Consultations for Men, Women & Children'}
             </h2>
+            <p className="text-xs text-slate-600 font-semibold max-w-2xl">
+              {lang === 'hi'
+                ? 'पुरुष स्वास्थ्य (प्रोस्टेट, हाइड्रोसील, बांझपन), महिला स्वास्थ्य (गर्भाशय, पीसीओडी, फाइब्रॉइड) और बच्चों के रोगों (टॉन्सिल, एडेनोइड्स, बिस्तर गीला करना) का संपूर्ण संवैधानिक उपचार।'
+                : 'Specialized homeopathic care tailored for Men\'s Health (Prostate, Hydrocele, Infertility), Women\'s Health (Uterine, PCOD, Fibroids), and Pediatric Care (Adenoids, Tonsils, Bed-wetting).'}
+            </p>
           </div>
           <Link
             href="/treatments"
-            className="text-xs font-black text-[#55100D] hover:text-[#DD0200] inline-flex items-center gap-1 uppercase tracking-wider"
+            className="text-xs font-black text-[#55100D] hover:text-[#DD0200] inline-flex items-center gap-1 uppercase tracking-wider shrink-0"
           >
-            <span>{lang === 'hi' ? 'सभी विशेषज्ञता देखें' : 'View All Specialties'}</span>
+            <span>{lang === 'hi' ? 'सभी रोग एवं उपचार देखें' : 'View All Conditions'}</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-          {featuredTreatments.map((t, idx) => (
+        {/* Gender / Age Group Filter Tabs */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+          {[
+            { id: 'all', labelEn: 'All Consultations', labelHi: 'सभी परामर्श' },
+            { id: 'Male', labelEn: 'Male Health (पुरुष रोग)', labelHi: 'पुरुष स्वास्थ्य एवं रोग' },
+            { id: 'Female', labelEn: 'Women\'s Health (महिला रोग)', labelHi: 'महिला स्वास्थ्य एवं रोग' },
+            { id: 'Children', labelEn: 'Pediatric Care (बाल रोग)', labelHi: 'बाल रोग (Children Care)' },
+            { id: 'Mental', labelEn: 'Brain & Mental Health (मानसिक रोग)', labelHi: 'मानसिक एवं मस्तिष्क रोग' },
+            { id: 'General', labelEn: 'Skin & General (त्वचा रोग)', labelHi: 'त्वचा एवं सामान्य रोग' },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTargetGroup(tab.id as any)}
+              className={`px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-all border ${
+                activeTargetGroup === tab.id
+                  ? 'bg-[#55100D] text-white border-[#55100D] shadow-md'
+                  : 'bg-white text-slate-700 border-[#D9D9D9] hover:bg-slate-50'
+              }`}
+            >
+              {lang === 'hi' ? tab.labelHi : tab.labelEn}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          {displayTreatments.map((t, idx) => (
             <TreatmentCard key={idx} treatment={t} />
           ))}
         </div>
@@ -916,7 +1090,7 @@ export default function HomePage() {
             </h3>
             <p className="text-slate-300 text-xs leading-relaxed font-semibold">
               {lang === 'hi'
-                ? 'हम चमत्कारी इलाज या १००% त्वरित समाधान का झूठा दावा नहीं करते हैं। हमारी सभी परामर्श प्रक्रियाएं पूरी गोपनीयता के साथ योग्य और पंजीकृत (B.H.M.S, M.D.) डॉक्टरों द्वारा संचालित की जाती हैं। गंभीर सर्जिकल या तीव्र आपातकालीन स्थितियों के लिए हम तुरंत उच्चतर अस्पतालों में रेफर करने की सलाह देते हैं।'
+                ? 'हम चमत्कारी इलाज या १००% त्वरित समाधान का झूठा दावा नहीं करते हैं। हमारी सभी परामर्श प्रक्रियाएं पूरी गोपनीयता के साथ योग्य और पंजीकृत (B.H.M.S.) डॉक्टरों द्वारा संचालित की जाती हैं। गंभीर सर्जिकल या तीव्र आपातकालीन स्थितियों के लिए हम तुरंत उच्चतर अस्पतालों में रेफर करने की सलाह देते हैं।'
                 : 'At Dr. Q.H. Khan Clinic, we follow professional medical guidelines. We do not provide false guarantees or unrealistic cure claims. All consultations are handled with complete confidentiality by qualified, registered physicians. Acute, severe, or surgical emergencies are immediately directed to specialized hospital emergency facilities.'}
             </p>
           </div>

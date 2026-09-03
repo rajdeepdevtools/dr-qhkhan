@@ -91,9 +91,9 @@ const seedDatabase = async () => {
     {
       slug: 'dr-q-h-khan',
       name: 'Late Dr. Q.H. Khan',
-      degrees: ['B.H.M.S. (B.U.)', 'M.D.', 'R.B.S.M.H.C.'],
+      degrees: ['B.H.M.S. (B.U.)', 'R.B.S.M.H.C.'],
       registrationNumber: 'Reg. 33454',
-      specialization: 'Skin and private disease specialist',
+      specialization: 'Multi-Specialist & General Physician',
       designation: 'Founder (In Memoriam)',
       bio: 'Pioneer of classical homoeopathy in Gaya who established this clinic in 1958. His legacy and clinical standards continue to guide our active specialists.',
       clinicSchedule: {
@@ -106,12 +106,12 @@ const seedDatabase = async () => {
     },
     {
       slug: 'dr-i-khan',
-      name: 'Dr. I. Khan (Skin)',
-      degrees: ['B.H.M.S. (B.U.)', 'M.D.', 'R.B.S. M.H.C.'],
+      name: 'Dr. I. Khan',
+      degrees: ['B.H.M.S. (B.U.)', 'R.B.S. M.H.C.'],
       registrationNumber: 'Reg. 33454',
-      specialization: 'Skin and private disease specialist',
-      designation: 'Managing Director',
-      bio: 'Managing Director of the clinic with extensive experience in classical homoeopathy, specializing in chronic skin disorders, vitiligo, and private diseases.',
+      specialization: 'General Physician & Chronic Disease Specialist',
+      designation: 'Managing Director & General Physician',
+      bio: 'Managing Director & General Physician with extensive experience in classical homoeopathy, specializing in chronic diseases, severe long-term illnesses, skin disorders, vitiligo, and private constitutional complaints.',
       clinicSchedule: {
         days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         morning: '8:00 AM – 12:00 PM',
@@ -123,11 +123,11 @@ const seedDatabase = async () => {
     {
       slug: 'dr-adeeba-farheen',
       name: 'Dr. Adeeba Farheen',
-      degrees: ['B.H.M.S. (B.U.)', 'M.D.', 'G.D.M.C., Katihar, Patna'],
+      degrees: ['B.H.M.S. (B.U.)', 'M.D. (Physician)', 'G.D.M.C., Katihar, Patna'],
       registrationNumber: 'Reg. 31319',
-      specialization: 'Infertility and skin pigmentation related conditions',
-      designation: 'Scientific Advisor / Infertility Specialist',
-      bio: 'Specialist consultant focusing on Vitiligo, Leucoderma, and female infertility conditions using advanced classical homoeopathy.',
+      specialization: 'General Physician, Female Disorders (PCOD, Breast Lumps) & Normal Delivery Care',
+      designation: 'Consultant Physician & Female Health Specialist',
+      bio: 'General Physician and Female Healthcare consultant experienced in PCOD/PCOS, breast tumours/lumps, female health disorders, normal delivery consultation, and general medical conditions.',
       clinicSchedule: {
         days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
         morning: '9:00 AM – 1:00 PM',

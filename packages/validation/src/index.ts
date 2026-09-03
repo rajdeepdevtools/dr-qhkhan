@@ -24,12 +24,13 @@ export const appointmentSchema = z.object({
   doctor: z.string().optional(),
   preferredDate: z.string().min(1, 'Date is required'),
   preferredTime: z.string().min(1, 'Time is required'),
+  paymentMode: z.enum(['clinic', 'online']).optional(),
   message: z.string().optional(),
   consent: z.boolean().refine((val) => val === true, {
     message: 'Consent is required',
   }),
-  medicalDocuments: z.array(z.string().regex(/^data:image\/(png|jpeg|jpg);base64,/, 'Only valid image files (PNG/JPG/JPEG) are allowed')).optional(),
-  paymentScreenshot: z.string().regex(/^data:image\/(png|jpeg|jpg);base64,/, 'Only valid image files (PNG/JPG/JPEG) are allowed'),
+  medicalDocuments: z.array(z.string()).optional(),
+  paymentScreenshot: z.string().optional().nullable(),
 });
 
 export const appointmentStatusSchema = z.object({

@@ -108,6 +108,12 @@ export const Footer: React.FC = () => {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/doctors/dr-q-h-khan" className="hover:text-[#FF4D4D] transition-colors text-amber-300 font-extrabold flex items-center gap-1">
+                    <Award className="w-3.5 h-3.5 text-[#DD0200]" />
+                    {lang === 'hi' ? 'संस्थापक जीवनी (Biography)' : 'Founder Biography'}
+                  </Link>
+                </li>
+                <li>
                   <Link href="/doctors" className="hover:text-rose-250 transition-colors">
                     {lang === 'hi' ? 'डॉक्टर टीम' : 'Doctors'}
                   </Link>

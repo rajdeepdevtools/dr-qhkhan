@@ -12,8 +12,9 @@ export const AppointmentForm: React.FC = () => {
     age: 30,
     gender: 'Male',
     department: 'General Homoeopathy',
-    preferredDate: '',
+    preferredDate: new Date().toISOString().split('T')[0],
     preferredTime: '8:00 AM - 10:00 AM',
+    paymentMode: 'clinic', // 'clinic' | 'online'
     message: '',
     consent: true,
   });
@@ -120,9 +121,9 @@ export const AppointmentForm: React.FC = () => {
       return;
     }
 
-    // Validate that payment screenshot is uploaded
-    if (!paymentBase64) {
-      setErrorMsg('Please upload a payment screenshot of ₹300 to confirm booking.');
+    // Validate payment mode: if Pay Online, validate screenshot upload
+    if (formData.paymentMode === 'online' && !paymentBase64) {
+      setErrorMsg('Please upload a payment screenshot of ₹300 to confirm online payment booking, or select "Pay at Clinic".');
       setLoading(false);
       return;
     }
@@ -134,12 +135,15 @@ export const AppointmentForm: React.FC = () => {
       return;
     }
 
-    const payload = {
+    const payload: Record<string, any> = {
       ...formData,
       department: formData.department === 'Other' ? customDepartment.trim() : formData.department,
       medicalDocuments: reportBase64 ? [reportBase64] : [],
-      paymentScreenshot: paymentBase64,
     };
+
+    if (paymentBase64) {
+      payload.paymentScreenshot = paymentBase64;
+    }
 
     const res = await apiClient('/appointments', {
       method: 'POST',
@@ -152,7 +156,8 @@ export const AppointmentForm: React.FC = () => {
       setSuccessMsg('Your appointment request has been submitted successfully.');
       setAppointmentId(res.data.appointmentId);
     } else {
-      setErrorMsg(res.message || 'Failed to submit appointment. Please check required fields.');
+      const detailedErrors = res.errors ? res.errors.map((e: any) => `${e.field}: ${e.message}`).join(' | ') : null;
+      setErrorMsg(detailedErrors || res.message || 'Failed to submit appointment. Please check required fields.');
     }
   };
 
@@ -370,39 +375,74 @@ export const AppointmentForm: React.FC = () => {
             {fileError && <p className="text-red-650 text-[10px] font-bold mt-1">{fileError}</p>}
           </div>
 
-          {/* UPI Payment Instructions Box & Mandatory Payment Screenshot */}
+          {/* Payment Selection Box */}
           <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
-            <div className="flex items-center gap-2 text-clinic-indigo">
-              <CreditCard className="w-4 h-4 text-clinic-indigo" />
-              <span className="font-bold text-xs uppercase tracking-wider">Required Consult Payment</span>
-            </div>
-            <p className="text-slate-655 text-[11px] leading-relaxed font-medium">
-              Pay the basic consultation fee of <strong className="text-slate-900">₹300</strong> to UPI Helpline ID: <strong className="text-slate-900 font-mono select-all">9135404090@upi</strong> before booking. Upload the confirmation screenshot below.
-            </p>
-
-            <div className="space-y-1">
-              <label className="block text-slate-700 font-bold">
-                Attach Payment Confirmation Screenshot * (PNG/JPG/JPEG, Max 200 KB)
-              </label>
-              <div className="relative border border-dashed border-slate-300 rounded-xl p-3 bg-white hover:bg-slate-50 transition-colors flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <UploadCloud className="w-5 h-5 text-slate-450 shrink-0" />
-                  <div>
-                    <span className="text-[10px] text-slate-550 font-medium block">
-                      {paymentBase64 ? 'Payment receipt loaded and secured.' : 'Upload UPI payment screenshot'}
-                    </span>
-                  </div>
-                </div>
-                <input
-                  type="file"
-                  required
-                  accept="image/png, image/jpeg, image/jpg"
-                  onChange={handlePaymentFileChange}
-                  className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 text-[#55100D]">
+                <CreditCard className="w-4 h-4 text-[#55100D]" />
+                <span className="font-extrabold text-xs uppercase tracking-wider">Consultation Fee Payment</span>
               </div>
-              {paymentFileError && <p className="text-red-655 text-[10px] font-bold mt-1">{paymentFileError}</p>}
+              <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                Fee: ₹300
+              </span>
             </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <label className={`p-3 rounded-xl border cursor-pointer transition-all flex items-start gap-2.5 ${formData.paymentMode === 'clinic' ? 'bg-white border-[#55100D] shadow-xs' : 'bg-slate-100/60 border-slate-200'}`}>
+                <input
+                  type="radio"
+                  name="paymentMode"
+                  value="clinic"
+                  checked={formData.paymentMode === 'clinic'}
+                  onChange={handleChange}
+                  className="mt-0.5 accent-[#55100D]"
+                />
+                <div>
+                  <strong className="block text-slate-900 font-extrabold text-xs">Pay at Clinic (Offline)</strong>
+                  <span className="text-[10px] text-slate-500 font-medium block mt-0.5">Pay ₹300 during your consultation visit.</span>
+                </div>
+              </label>
+
+              <label className={`p-3 rounded-xl border cursor-pointer transition-all flex items-start gap-2.5 ${formData.paymentMode === 'online' ? 'bg-white border-[#55100D] shadow-xs' : 'bg-slate-100/60 border-slate-200'}`}>
+                <input
+                  type="radio"
+                  name="paymentMode"
+                  value="online"
+                  checked={formData.paymentMode === 'online'}
+                  onChange={handleChange}
+                  className="mt-0.5 accent-[#55100D]"
+                />
+                <div>
+                  <strong className="block text-slate-900 font-extrabold text-xs">Pay Online via UPI (₹300)</strong>
+                  <span className="text-[10px] text-slate-500 font-medium block mt-0.5">Pay to 9135404090@upi & upload screenshot.</span>
+                </div>
+              </label>
+            </div>
+
+            {formData.paymentMode === 'online' && (
+              <div className="space-y-1.5 pt-2 border-t border-slate-200">
+                <label className="block text-slate-700 font-bold">
+                  Attach Payment Confirmation Screenshot * (PNG/JPG/JPEG, Max 200 KB)
+                </label>
+                <div className="relative border border-dashed border-slate-300 rounded-xl p-3 bg-white hover:bg-slate-50 transition-colors flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <UploadCloud className="w-5 h-5 text-slate-450 shrink-0" />
+                    <div>
+                      <span className="text-[10px] text-slate-550 font-medium block">
+                        {paymentBase64 ? 'Payment receipt loaded and secured.' : 'Upload UPI payment screenshot'}
+                      </span>
+                    </div>
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/png, image/jpeg, image/jpg"
+                    onChange={handlePaymentFileChange}
+                    className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                  />
+                </div>
+                {paymentFileError && <p className="text-red-655 text-[10px] font-bold mt-1">{paymentFileError}</p>}
+              </div>
+            )}
           </div>
 
           <div>
