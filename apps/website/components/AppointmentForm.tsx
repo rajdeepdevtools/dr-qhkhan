@@ -190,6 +190,7 @@ export const AppointmentForm: React.FC = () => {
                 department: 'General Homoeopathy',
                 preferredDate: '',
                 preferredTime: '8:00 AM - 10:00 AM',
+                paymentMode: 'clinic',
                 message: '',
                 consent: true,
               });
