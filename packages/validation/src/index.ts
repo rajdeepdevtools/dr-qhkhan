@@ -132,7 +132,12 @@ export const campSchema = z.object({
   description: z.string().min(5, 'Description must be at least 5 characters'),
   date: z.string().min(1, 'Date is required'),
   location: z.string().min(3, 'Location must be at least 3 characters'),
+  doctor: z.string().optional(),
   imageUrl: z.string().min(1, 'Image is required'),
+  isActive: z.boolean().optional(),
+  isUpcomingPopup: z.boolean().optional(),
+  timing: z.string().optional(),
+  helplinePhone: z.string().optional(),
 });
 
 export const videoSchema = z.object({

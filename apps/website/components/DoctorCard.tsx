@@ -22,7 +22,9 @@ export const DoctorCard: React.FC<{ doctor: Partial<IDoctorProfile> }> = ({ doct
                 ? '/images/dr-qh-khan.png'
                 : doctor.slug === 'dr-i-khan'
                 ? '/images/dr-i-khan.png'
-                : '/images/doctors/placeholder.jpg')
+                : doctor.slug === 'dr-adeeba-farheen' || doctor.name?.includes('Adeeba') || doctor.name?.includes('अदीबा')
+                ? '/images/dr-adeeba-farheen.png'
+                : '/images/dr-adeeba-farheen.png')
             }
             alt={doctor.name}
             className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
@@ -31,10 +33,10 @@ export const DoctorCard: React.FC<{ doctor: Partial<IDoctorProfile> }> = ({ doct
                 (e.target as HTMLImageElement).src = '/images/dr-qh-khan.png';
               } else if (doctor.slug === 'dr-i-khan') {
                 (e.target as HTMLImageElement).src = '/images/dr-i-khan.png';
-              } else if (doctor.name?.includes('Adeeba') || doctor.name?.includes('अदीबा')) {
-                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1594824813573-246434de83fb?q=80&w=350&auto=format&fit=crop';
+              } else if (doctor.name?.includes('Adeeba') || doctor.name?.includes('अदीबा') || doctor.slug === 'dr-adeeba-farheen') {
+                (e.target as HTMLImageElement).src = '/images/dr-adeeba-farheen.png';
               } else {
-                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=350&auto=format&fit=crop';
+                (e.target as HTMLImageElement).src = '/images/dr-adeeba-farheen.png';
               }
             }}
           />

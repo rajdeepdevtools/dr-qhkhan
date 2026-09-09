@@ -96,6 +96,7 @@ const seedDatabase = async () => {
       specialization: 'Multi-Specialist & General Physician',
       designation: 'Founder (In Memoriam)',
       bio: 'Pioneer of classical homoeopathy in Gaya who established this clinic in 1958. His legacy and clinical standards continue to guide our active specialists.',
+      image: '/images/dr-qh-khan.png',
       clinicSchedule: {
         days: [],
         morning: 'N/A',
@@ -112,6 +113,7 @@ const seedDatabase = async () => {
       specialization: 'General Physician & Chronic Disease Specialist',
       designation: 'Managing Director & General Physician',
       bio: 'Managing Director & General Physician with extensive experience in classical homoeopathy, specializing in chronic diseases, severe long-term illnesses, skin disorders, vitiligo, and private constitutional complaints.',
+      image: '/images/dr-i-khan.png',
       clinicSchedule: {
         days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         morning: '8:00 AM – 12:00 PM',
@@ -128,6 +130,7 @@ const seedDatabase = async () => {
       specialization: 'General Physician, Female Disorders (PCOD, Breast Lumps) & Normal Delivery Care',
       designation: 'Consultant Physician & Female Health Specialist',
       bio: 'General Physician and Female Healthcare consultant experienced in PCOD/PCOS, breast tumours/lumps, female health disorders, normal delivery consultation, and general medical conditions.',
+      image: '/images/dr-adeeba-farheen.png',
       clinicSchedule: {
         days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
         morning: '9:00 AM – 1:00 PM',

@@ -11,7 +11,7 @@ class LocalStorageProvider implements StorageProvider {
   private uploadDir: string;
 
   constructor() {
-    this.uploadDir = path.resolve(__dirname, '../../uploads');
+    this.uploadDir = path.resolve(process.cwd(), 'uploads');
     if (!fs.existsSync(this.uploadDir)) {
       fs.mkdirSync(this.uploadDir, { recursive: true });
     }

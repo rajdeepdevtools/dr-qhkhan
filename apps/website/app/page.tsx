@@ -196,7 +196,7 @@ export default function HomePage() {
       specialization: 'General Physician, Female Disorders (PCOD, Breast Lumps) & Normal Delivery Care',
       designation: 'Consultant Physician & Female Health Specialist',
       bio: 'General Physician and Female Healthcare consultant experienced in PCOD/PCOS, breast tumours/lumps, female health disorders, normal delivery consultation, and general medical conditions.',
-      image: '/images/doctors/dr-adeeba-farheen.jpg',
+      image: '/images/dr-adeeba-farheen.png',
     },
   ];
 
@@ -230,7 +230,7 @@ export default function HomePage() {
       specialization: 'सामान्य फिजिशियन, महिला स्वास्थ्य (PCOD, स्तन गांठ/ट्यूमर) एवं सामान्य प्रसव परामर्श',
       designation: 'कंसल्टेंट फिजिशियन एवं महिला स्वास्थ्य विशेषज्ञ',
       bio: 'सामान्य फिजिशियन एवं महिला स्वास्थ्य परामर्शदाता, जो PCOD/PCOS, स्तन गांठ व ट्यूमर, महिला रोगों, सामान्य प्रसव मार्गदर्शन एवं सभी सामान्य बीमारियों के उपचार में अनुभवी हैं।',
-      image: '/images/doctors/dr-adeeba-farheen.jpg',
+      image: '/images/dr-adeeba-farheen.png',
     },
   ];
 

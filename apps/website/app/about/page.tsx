@@ -149,8 +149,15 @@ export default function AboutPage() {
         {/* Scientific Advisor */}
         <div className="bg-white rounded-2xl p-6 sm:p-8 border border-[#D9D9D9] shadow-sm space-y-4 hover:border-[#55100D]/50 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-[#1A0706] text-white flex items-center justify-center font-black text-lg shadow">
-              AF
+            <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#55100D] shadow shrink-0">
+              <img
+                src="/images/dr-adeeba-farheen.png"
+                alt="Dr. Adeeba Farheen"
+                className="w-full h-full object-cover object-top"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/images/dr-adeeba-farheen.png';
+                }}
+              />
             </div>
             <div>
               <h2 className="text-base font-extrabold text-[#1A0706]">Dr. Adeeba Farheen</h2>

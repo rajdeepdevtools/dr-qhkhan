@@ -32,7 +32,7 @@ export const createApp = (): express.Application => {
   app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
   // Serve static files from the uploads directory
-  app.use('/uploads', express.static(path.resolve(__dirname, '../uploads')));
+  app.use('/uploads', express.static(path.resolve(process.cwd(), 'uploads')));
 
   app.use('/api', apiRateLimiter);
 

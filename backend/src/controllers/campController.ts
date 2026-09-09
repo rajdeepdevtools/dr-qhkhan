@@ -75,6 +75,22 @@ export class CampController {
     }
   }
 
+  static async getUpcomingPopupCamp(req: Request, res: Response): Promise<void> {
+    try {
+      // Find camp explicitly flagged as upcoming popup
+      let camp = await Camp.findOne({ isActive: true, isUpcomingPopup: true }).sort({ updatedAt: -1 });
+      
+      // Fallback: If no camp flagged as popup, return the newest active camp
+      if (!camp) {
+        camp = await Camp.findOne({ isActive: true }).sort({ createdAt: -1 });
+      }
+
+      res.status(200).json({ success: true, data: camp || null });
+    } catch (error: any) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  }
+
   static async getAllCampsAdmin(req: AuthRequest, res: Response): Promise<void> {
     try {
       const camps = await Camp.find().sort({ createdAt: -1 });
@@ -86,7 +102,7 @@ export class CampController {
 
   static async createCamp(req: AuthRequest, res: Response): Promise<void> {
     try {
-      const { title, description, date, location, imageUrl } = req.body;
+      const { title, description, date, location, doctor, imageUrl, isActive, isUpcomingPopup, timing, helplinePhone } = req.body;
       
       let finalImageUrl: string;
       try {
@@ -96,13 +112,21 @@ export class CampController {
         return;
       }
 
+      if (isUpcomingPopup) {
+        await Camp.updateMany({}, { isUpcomingPopup: false });
+      }
+
       const camp = await Camp.create({
         title,
         description,
         date,
         location,
+        doctor: doctor || 'Dr. I. Khan',
         imageUrl: finalImageUrl,
-        isActive: true,
+        isActive: isActive !== undefined ? isActive : true,
+        isUpcomingPopup: Boolean(isUpcomingPopup),
+        timing: timing || '',
+        helplinePhone: helplinePhone || '9135404090',
       });
 
       // Audit log
@@ -124,7 +148,7 @@ export class CampController {
 
   static async updateCamp(req: AuthRequest, res: Response): Promise<void> {
     try {
-      const { title, description, date, location, imageUrl, isActive } = req.body;
+      const { title, description, date, location, doctor, imageUrl, isActive, isUpcomingPopup, timing, helplinePhone } = req.body;
       
       let finalImageUrl: string;
       try {
@@ -134,9 +158,24 @@ export class CampController {
         return;
       }
 
+      if (isUpcomingPopup) {
+        await Camp.updateMany({ _id: { $ne: req.params.id } }, { isUpcomingPopup: false });
+      }
+
       const camp = await Camp.findByIdAndUpdate(
         req.params.id,
-        { title, description, date, location, imageUrl: finalImageUrl, isActive },
+        {
+          title,
+          description,
+          date,
+          location,
+          doctor: doctor || 'Dr. I. Khan',
+          imageUrl: finalImageUrl,
+          isActive,
+          isUpcomingPopup: Boolean(isUpcomingPopup),
+          timing: timing || '',
+          helplinePhone: helplinePhone || '9135404090',
+        },
         { new: true }
       );
 
@@ -157,6 +196,37 @@ export class CampController {
       });
 
       res.status(200).json({ success: true, message: 'Camp updated successfully', data: camp });
+    } catch (error: any) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  }
+
+  static async toggleUpcomingPopup(req: AuthRequest, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+      const targetCamp = await Camp.findById(id);
+
+      if (!targetCamp) {
+        res.status(404).json({ success: false, message: 'Camp not found' });
+        return;
+      }
+
+      const newStatus = !targetCamp.isUpcomingPopup;
+
+      if (newStatus) {
+        // Clear all other popups
+        await Camp.updateMany({}, { isUpcomingPopup: false });
+      }
+
+      targetCamp.isUpcomingPopup = newStatus;
+      if (newStatus) targetCamp.isActive = true; // Automatically activate if set as popup
+      await targetCamp.save();
+
+      res.status(200).json({
+        success: true,
+        message: newStatus ? 'Camp set as Active Upcoming Shivir Popup!' : 'Upcoming Popup flag removed.',
+        data: targetCamp,
+      });
     } catch (error: any) {
       res.status(500).json({ success: false, message: error.message });
     }

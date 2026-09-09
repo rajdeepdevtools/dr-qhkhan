@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import { Appointment } from '../models/Appointment';
 import { Patient } from '../models/Patient';
 import { DoctorProfile } from '../models/DoctorProfile';
@@ -9,14 +10,18 @@ export class AppointmentController {
   static async createAppointment(req: Request, res: Response): Promise<void> {
     const { name, email, phone, age, gender, department, doctor, preferredDate, preferredTime, message, consent, medicalDocuments, paymentScreenshot } = req.body;
 
-    const dateStr = preferredDate.replace(/-/g, '');
+    const dateStr = (preferredDate || new Date().toISOString().slice(0, 10)).replace(/-/g, '');
     const randNum = Math.floor(1000 + Math.random() * 9000);
     const appointmentId = `HOSP-APT-${dateStr}-${randNum}`;
 
     let doctorName: string | undefined;
-    if (doctor) {
+    let doctorId: any = undefined;
+    if (doctor && mongoose.isValidObjectId(doctor)) {
       const docObj = await DoctorProfile.findById(doctor);
-      if (docObj) doctorName = docObj.name;
+      if (docObj) {
+        doctorName = docObj.name;
+        doctorId = docObj._id;
+      }
     }
 
     let patientRef: any = null;
@@ -30,18 +35,18 @@ export class AppointmentController {
       name,
       email,
       phone,
-      age,
+      age: Number(age) || 30,
       gender,
       department,
-      doctor: doctor || undefined,
+      doctor: doctorId,
       doctorName,
       preferredDate,
       preferredTime,
       message,
-      consent,
+      consent: consent !== undefined ? consent : true,
       medicalDocuments: medicalDocuments || [],
       paymentScreenshot,
-      status: 'pending',
+      status: req.body.status || 'pending',
       patient: patientRef || undefined,
     });
 
@@ -75,7 +80,7 @@ export class AppointmentController {
     }
 
     appointment.status = status || appointment.status;
-    if (doctor) {
+    if (doctor && mongoose.isValidObjectId(doctor)) {
       const docObj = await DoctorProfile.findById(doctor);
       if (docObj) {
         appointment.doctor = docObj._id as any;
@@ -112,7 +117,7 @@ export class AppointmentController {
     appointment.name = name ?? appointment.name;
     appointment.email = email ?? appointment.email;
     appointment.phone = phone ?? appointment.phone;
-    appointment.age = age ?? appointment.age;
+    appointment.age = age !== undefined ? Number(age) : appointment.age;
     appointment.gender = gender ?? appointment.gender;
     appointment.department = department ?? appointment.department;
     appointment.preferredDate = preferredDate ?? appointment.preferredDate;
@@ -120,12 +125,15 @@ export class AppointmentController {
     appointment.status = status ?? appointment.status;
     appointment.message = message !== undefined ? message : appointment.message;
 
-    if (doctor) {
+    if (doctor && mongoose.isValidObjectId(doctor)) {
       const docObj = await DoctorProfile.findById(doctor);
       if (docObj) {
         appointment.doctor = docObj._id as any;
         appointment.doctorName = docObj.name;
       }
+    } else if (doctor === '' || doctor === null) {
+      appointment.doctor = undefined;
+      appointment.doctorName = undefined;
     }
 
     await appointment.save();
@@ -164,3 +172,4 @@ export class AppointmentController {
     res.status(200).json({ success: true, message: 'Appointment deleted successfully' });
   }
 }
+

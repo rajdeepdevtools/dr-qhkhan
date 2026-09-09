@@ -54,7 +54,7 @@ const doctorsMap: Record<string, any> = {
     bio: 'General Physician and Female Healthcare consultant specializing in PCOD/PCOS, breast tumours/lumps, female health disorders, normal delivery guidance, and general medical conditions.',
     bioHi: 'सामान्य फिजिशियन एवं महिला स्वास्थ्य परामर्शदाता, जो PCOD/PCOS, स्तन गांठ व ट्यूमर, महिला रोगों, सामान्य प्रसव मार्गदर्शन एवं सभी सामान्य बीमारियों के उपचार में अनुभवी हैं।',
     schedule: 'Monday – Saturday (Morning: 9:00 AM – 1:00 PM | Evening: 3:00 PM – 7:00 PM)',
-    photo: 'https://images.unsplash.com/photo-1594824813573-246434de83fb?q=80&w=350&auto=format&fit=crop',
+    photo: '/images/dr-adeeba-farheen.png',
   },
 };
 

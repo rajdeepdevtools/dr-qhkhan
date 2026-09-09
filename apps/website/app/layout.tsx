@@ -4,6 +4,7 @@ import { AuthProvider } from '../lib/auth-context';
 import { LanguageProvider } from '../lib/language-context';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { UpcomingShivirPopup } from '../components/UpcomingShivirPopup';
 
 export const metadata: Metadata = {
   title: 'DR. Q.H. KHAN CLASSICAL HOMOEOPATHIC CLINIC | Est. 1958 Gaya',
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Header />
             <main className="flex-grow">{children}</main>
             <Footer />
+            <UpcomingShivirPopup />
           </LanguageProvider>
         </AuthProvider>
       </body>

@@ -7,14 +7,17 @@ import { campSchema } from '@hospital/validation';
 
 const router = Router();
 
-// Public route
+// Public routes
 router.get('/', CampController.getActiveCamps);
+router.get('/upcoming-popup', CampController.getUpcomingPopupCamp);
 
 // Admin only routes
 router.use(authenticateJWT, authorizeRoles('admin', 'super_admin'));
 router.get('/admin', CampController.getAllCampsAdmin);
 router.post('/', validateRequest(campSchema), CampController.createCamp);
 router.put('/:id', validateRequest(campSchema), CampController.updateCamp);
+router.put('/:id/toggle-popup', CampController.toggleUpcomingPopup);
 router.delete('/:id', CampController.deleteCamp);
 
 export default router;
+
