@@ -22,4 +22,16 @@ router.get(
   StaffController.getStaffList
 );
 
+router.put(
+  '/:id',
+  authorizeRoles('admin', 'super_admin'),
+  StaffController.updateReceptionist
+);
+
+router.delete(
+  '/:id',
+  authorizeRoles('admin', 'super_admin'),
+  StaffController.deleteReceptionist
+);
+
 export default router;

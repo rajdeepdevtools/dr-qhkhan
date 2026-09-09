@@ -15,5 +15,16 @@ router.put(
   authorizeRoles('admin', 'super_admin', 'receptionist', 'doctor'),
   AppointmentController.updateAppointmentStatus
 );
+router.put(
+  '/:id',
+  authenticateJWT,
+  authorizeRoles('admin', 'super_admin', 'receptionist'),
+  AppointmentController.updateAppointment
+);
+router.delete(
+  '/:id',
+  authorizeRoles('admin', 'super_admin'),
+  AppointmentController.deleteAppointment
+);
 
 export default router;

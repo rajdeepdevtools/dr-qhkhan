@@ -30,4 +30,14 @@ export class FeedbackController {
     const feedback = await Feedback.findByIdAndUpdate(req.params.id, { status }, { new: true });
     res.status(200).json({ success: true, message: 'Feedback status updated', data: feedback });
   }
+
+  static async deleteFeedback(req: AuthRequest, res: Response): Promise<void> {
+    const { id } = req.params;
+    const feedback = await Feedback.findByIdAndDelete(id);
+    if (!feedback) {
+      res.status(404).json({ success: false, message: 'Feedback not found' });
+      return;
+    }
+    res.status(200).json({ success: true, message: 'Feedback deleted successfully' });
+  }
 }

@@ -12,6 +12,7 @@ router.use(authorizeRoles('admin', 'receptionist', 'super_admin'));
 router.post('/', InvoiceController.createInvoice);
 router.get('/', InvoiceController.getInvoices);
 router.get('/:id', InvoiceController.getInvoiceById);
+router.put('/:id', InvoiceController.updateInvoice);
 router.delete('/:id', InvoiceController.deleteInvoice);
 
 export default router;

@@ -12,5 +12,6 @@ router.post('/', validateRequest(feedbackSchema), FeedbackController.submitFeedb
 
 router.get('/admin', authenticateJWT, authorizeRoles('admin', 'super_admin'), FeedbackController.getAllFeedbackAdmin);
 router.put('/:id/status', authenticateJWT, authorizeRoles('admin', 'super_admin'), FeedbackController.updateFeedbackStatus);
+router.delete('/:id', authenticateJWT, authorizeRoles('admin', 'super_admin'), FeedbackController.deleteFeedback);
 
 export default router;

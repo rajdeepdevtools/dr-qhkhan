@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { adminApiClient } from '../../lib/api-client';
 import { AdminSidebar } from '../../components/AdminSidebar';
 import { AdminHeader } from '../../components/AdminHeader';
-import { Plus, Printer, Trash2, Search, Receipt, X, PlusCircle, CreditCard, ShieldCheck } from 'lucide-react';
+import { Plus, Printer, Trash2, Search, Receipt, X, PlusCircle, CreditCard, ShieldCheck, Edit3 } from 'lucide-react';
 
 const CLINIC_INFO = {
   name: 'DR. Q.H. KHAN CLASSICAL HOMOEOPATHIC CLINIC',
@@ -27,6 +27,7 @@ export default function AdminBillingPage() {
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [selectedPatientId, setSelectedPatientId] = useState('');
   const [invoiceDate, setInvoiceDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [items, setItems] = useState<InvoiceItem[]>([
@@ -63,6 +64,30 @@ export default function AdminBillingPage() {
     fetchPatients();
   }, [searchQuery]);
 
+  const handleOpenCreate = () => {
+    setEditingId(null);
+    if (patients.length > 0) setSelectedPatientId(patients[0]._id);
+    setInvoiceDate(new Date().toISOString().slice(0, 10));
+    setItems([{ description: 'Consultation Fee', quantity: 1, price: 300 }]);
+    setDiscountAmount(0);
+    setPaymentStatus('paid');
+    setPaymentMethod('cash');
+    setErrorMsg(null);
+    setIsModalOpen(true);
+  };
+
+  const handleOpenEdit = (inv: any) => {
+    setEditingId(inv._id);
+    setSelectedPatientId(inv.patient ? (typeof inv.patient === 'object' ? inv.patient._id : inv.patient) : '');
+    setInvoiceDate(inv.date || new Date().toISOString().slice(0, 10));
+    setItems(inv.items || [{ description: 'Consultation Fee', quantity: 1, price: 300 }]);
+    setDiscountAmount(inv.discountAmount || 0);
+    setPaymentStatus(inv.paymentStatus || 'paid');
+    setPaymentMethod(inv.paymentMethod || 'cash');
+    setErrorMsg(null);
+    setIsModalOpen(true);
+  };
+
   const handleAddItem = () => {
     setItems([...items, { description: '', quantity: 1, price: 0 }]);
   };
@@ -85,7 +110,7 @@ export default function AdminBillingPage() {
   const totalAmount = items.reduce((sum, item) => sum + item.quantity * item.price, 0);
   const finalAmount = Math.max(0, totalAmount - discountAmount);
 
-  const handleCreateInvoice = async (e: React.FormEvent) => {
+  const handleSaveInvoice = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedPatientId) {
       setErrorMsg('Please select a patient.');
@@ -110,8 +135,11 @@ export default function AdminBillingPage() {
       paymentMethod,
     };
 
-    const res = await adminApiClient('/invoices', {
-      method: 'POST',
+    const method = editingId ? 'PUT' : 'POST';
+    const endpoint = editingId ? `/invoices/${editingId}` : '/invoices';
+
+    const res = await adminApiClient(endpoint, {
+      method,
       body: JSON.stringify(payload),
     });
 
@@ -119,14 +147,9 @@ export default function AdminBillingPage() {
 
     if (res.success) {
       setIsModalOpen(false);
-      // Reset Form
-      setItems([{ description: 'Consultation Fee', quantity: 1, price: 300 }]);
-      setDiscountAmount(0);
-      setPaymentStatus('paid');
-      setPaymentMethod('cash');
       fetchInvoices();
     } else {
-      setErrorMsg(res.message || 'Failed to create invoice.');
+      setErrorMsg(res.message || 'Failed to save invoice.');
     }
   };
 
@@ -175,7 +198,7 @@ export default function AdminBillingPage() {
                 <p className="text-xs text-slate-400">Generate bills, track patient payments, and print receipts</p>
               </div>
               <button
-                onClick={() => setIsModalOpen(true)}
+                onClick={handleOpenCreate}
                 className="px-4 py-2 bg-clinic-crimson text-white font-bold text-xs rounded-xl shadow hover:bg-amber-700 transition-colors flex items-center gap-1.5"
               >
                 <Plus className="w-4 h-4" /> Create Invoice
@@ -245,8 +268,15 @@ export default function AdminBillingPage() {
                         <td className="p-3 uppercase font-bold text-slate-400">{inv.paymentMethod}</td>
                         <td className="p-3 text-right space-x-2">
                           <button
+                            onClick={() => handleOpenEdit(inv)}
+                            className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-bold transition-colors inline-flex items-center gap-1"
+                            title="Edit Invoice"
+                          >
+                            <Edit3 className="w-3 h-3" /> Edit
+                          </button>
+                          <button
                             onClick={() => handlePrint(inv)}
-                            className="px-2.5 py-1 bg-indigo-700 hover:bg-indigo-600 text-white rounded font-bold transition-colors flex inline-flex items-center gap-1"
+                            className="px-2.5 py-1 bg-indigo-700 hover:bg-indigo-600 text-white rounded font-bold transition-colors inline-flex items-center gap-1"
                           >
                             <Printer className="w-3 h-3" /> Print Receipt
                           </button>
@@ -273,7 +303,7 @@ export default function AdminBillingPage() {
           <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 space-y-4 text-slate-300">
             <div className="flex justify-between items-center border-b border-slate-800 pb-3">
               <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
-                <Receipt className="w-4 h-4 text-clinic-indigo" /> Create Patient Invoice
+                <Receipt className="w-4 h-4 text-clinic-indigo" /> {editingId ? 'Edit Patient Invoice' : 'Create Patient Invoice'}
               </h3>
               <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-white">
                 <X className="w-4 h-4" />
@@ -286,7 +316,7 @@ export default function AdminBillingPage() {
               </div>
             )}
 
-            <form onSubmit={handleCreateInvoice} className="space-y-4">
+            <form onSubmit={handleSaveInvoice} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Select Patient */}
                 <div>
@@ -433,7 +463,7 @@ export default function AdminBillingPage() {
                 disabled={submitting}
                 className="w-full py-3 bg-clinic-crimson text-white font-bold rounded-xl shadow hover:bg-amber-700 transition-colors disabled:opacity-50"
               >
-                {submitting ? 'Creating Invoice...' : 'Save & Print Invoice'}
+                {submitting ? 'Saving Invoice...' : editingId ? 'Save Changes' : 'Save & Print Invoice'}
               </button>
             </form>
           </div>

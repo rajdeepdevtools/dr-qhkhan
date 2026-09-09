@@ -148,6 +148,7 @@ export class AuthController {
         user: { id: user._id, email: user.email, role: user.role },
         profile,
         token: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
       },
     });
   }
@@ -191,7 +192,7 @@ export class AuthController {
       res.status(200).json({
         success: true,
         message: 'Tokens refreshed successfully',
-        data: { token: tokens.accessToken },
+        data: { token: tokens.accessToken, refreshToken: tokens.refreshToken },
       });
     } catch (err) {
       res.status(401).json({
@@ -237,11 +238,18 @@ export class AuthController {
       profile = await ReceptionistProfile.findOne({ user: user._id });
     }
 
+    const token =
+      req.cookies?.accessToken ||
+      (req.headers.authorization?.startsWith('Bearer ')
+        ? req.headers.authorization.split(' ')[1]
+        : undefined);
+
     res.status(200).json({
       success: true,
       data: {
         user,
         profile,
+        token,
       },
     });
   }

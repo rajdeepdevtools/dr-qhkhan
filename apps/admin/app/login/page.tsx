@@ -36,6 +36,12 @@ export default function AdminLoginPage() {
     setLoading(false);
 
     if (res.success && res.data && ['admin', 'super_admin', 'receptionist'].includes(res.data.user.role)) {
+      if (res.data.token) {
+        localStorage.setItem('adminToken', res.data.token);
+      }
+      if (res.data.refreshToken) {
+        localStorage.setItem('adminRefreshToken', res.data.refreshToken);
+      }
       loginAdmin(res.data);
       router.push('/');
     } else {

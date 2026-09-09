@@ -69,6 +69,47 @@ export class InvoiceController {
     res.status(200).json({ success: true, data: invoice });
   }
 
+  static async updateInvoice(req: AuthRequest, res: Response): Promise<void> {
+    const { id } = req.params;
+    const { patientId, date, items, totalAmount, discountAmount, finalAmount, paymentStatus, paymentMethod } = req.body;
+
+    const invoice = await Invoice.findById(id);
+    if (!invoice) {
+      res.status(404).json({ success: false, message: 'Invoice not found' });
+      return;
+    }
+
+    if (patientId) {
+      const patientRecord = await Patient.findById(patientId);
+      if (patientRecord) {
+        invoice.patient = patientRecord._id as any;
+        invoice.patientName = patientRecord.name;
+      }
+    }
+
+    invoice.date = date ?? invoice.date;
+    invoice.items = items ?? invoice.items;
+    invoice.totalAmount = totalAmount ?? invoice.totalAmount;
+    invoice.discountAmount = discountAmount !== undefined ? discountAmount : invoice.discountAmount;
+    invoice.finalAmount = finalAmount ?? invoice.finalAmount;
+    invoice.paymentStatus = paymentStatus ?? invoice.paymentStatus;
+    invoice.paymentMethod = paymentMethod ?? invoice.paymentMethod;
+
+    await invoice.save();
+
+    await AuditService.logAction({
+      actorId: req.user!.userId,
+      actorEmail: req.user!.email,
+      actorRole: req.user!.role,
+      action: 'ADMIN_UPDATE_INVOICE',
+      resourceType: 'Invoice',
+      resourceId: invoice.invoiceId,
+      ipAddress: req.ip,
+    });
+
+    res.status(200).json({ success: true, message: 'Invoice updated successfully', data: invoice });
+  }
+
   static async deleteInvoice(req: AuthRequest, res: Response): Promise<void> {
     const invoice = await Invoice.findByIdAndDelete(req.params.id);
     if (!invoice) {

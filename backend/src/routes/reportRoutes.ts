@@ -23,6 +23,12 @@ router.put(
 );
 
 router.get(
+  '/admin/all',
+  authorizeRoles('admin', 'super_admin', 'receptionist'),
+  ReportController.getAllReportsAdmin
+);
+
+router.get(
   '/my',
   authorizeRoles('doctor', 'receptionist', 'admin', 'super_admin'),
   ReportController.getMyReports
@@ -32,6 +38,12 @@ router.get(
   '/:id',
   authorizeRoles('patient', 'doctor', 'receptionist', 'admin', 'super_admin'),
   ReportController.getReportById
+);
+
+router.delete(
+  '/:id',
+  authorizeRoles('admin', 'super_admin'),
+  ReportController.deleteReport
 );
 
 export default router;

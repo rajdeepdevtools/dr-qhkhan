@@ -4,13 +4,16 @@ import React, { useEffect, useState } from 'react';
 import { adminApiClient } from '../../lib/api-client';
 import { AdminSidebar } from '../../components/AdminSidebar';
 import { AdminHeader } from '../../components/AdminHeader';
-import { Plus, Trash2, Calendar, MapPin, Edit3, Image as ImageIcon } from 'lucide-react';
+import { Plus, Trash2, Calendar, MapPin, Edit3, Image as ImageIcon, Link as LinkIcon, Upload, ShieldAlert, X } from 'lucide-react';
 
 export default function AdminCampsPage() {
   const [camps, setCamps] = useState<any[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const [imageMode, setImageMode] = useState<'upload' | 'url'>('upload');
+  const [imageUrlInput, setImageUrlInput] = useState('');
 
   const [formData, setFormData] = useState({
     title: '',
@@ -27,29 +30,90 @@ export default function AdminCampsPage() {
   };
 
   useEffect(() => {
-    
     fetchCamps();
   }, []);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const validateAndProcessFile = (file: File) => {
+    setErrorMessage('');
 
-    if (file.size > 5 * 1024 * 1024) {
-      setErrorMessage('Image size must be less than 5MB');
+    // 1. Format check (.jpg or .jpeg extension)
+    const fileName = file.name.toLowerCase();
+    if (!fileName.endsWith('.jpg') && !fileName.endsWith('.jpeg')) {
+      setErrorMessage('Security Warning: Only .jpg and .jpeg image files are allowed.');
       return;
     }
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFormData((prev) => ({ ...prev, imageUrl: reader.result as string }));
-      setErrorMessage('');
+    if (file.type && !['image/jpeg', 'image/jpg', 'image/pjpeg'].includes(file.type)) {
+      setErrorMessage('Security Warning: Invalid file MIME type. Only JPG/JPEG format is supported.');
+      return;
+    }
+
+    // 2. Size check (Max 150 KB = 153,600 bytes)
+    const MAX_SIZE = 150 * 1024;
+    if (file.size > MAX_SIZE) {
+      setErrorMessage(`Image file size must be 150 KB or less. Selected file is ${(file.size / 1024).toFixed(1)} KB.`);
+      return;
+    }
+
+    // 3. Security Header Check (JPEG Magic Bytes: FF D8 FF)
+    const headerReader = new FileReader();
+    headerReader.onloadend = () => {
+      if (headerReader.result) {
+        const arr = new Uint8Array(headerReader.result as ArrayBuffer);
+        if (arr.length < 3 || arr[0] !== 0xff || arr[1] !== 0xd8 || arr[2] !== 0xff) {
+          setErrorMessage('Security Warning: File headers do not match valid JPEG image signature.');
+          return;
+        }
+
+        // File is valid JPEG header & size, now read as Data URL
+        const dataUrlReader = new FileReader();
+        dataUrlReader.onloadend = () => {
+          setFormData((prev) => ({ ...prev, imageUrl: dataUrlReader.result as string }));
+          setErrorMessage('');
+        };
+        dataUrlReader.readAsDataURL(file);
+      }
     };
-    reader.readAsDataURL(file);
+    headerReader.readAsArrayBuffer(file.slice(0, 4));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    validateAndProcessFile(file);
+  };
+
+  const handleUrlInputChange = (url: string) => {
+    setImageUrlInput(url);
+    const trimmed = url.trim();
+    setErrorMessage('');
+
+    if (!trimmed) {
+      setFormData((prev) => ({ ...prev, imageUrl: '' }));
+      return;
+    }
+
+    // Security check: Must start with http:// or https://
+    if (!trimmed.startsWith('http://') && !trimmed.startsWith('https://')) {
+      setErrorMessage('Security Error: Image link must start with http:// or https://');
+      setFormData((prev) => ({ ...prev, imageUrl: '' }));
+      return;
+    }
+
+    // Security check against script injection / XSS
+    if (trimmed.toLowerCase().includes('javascript:') || trimmed.toLowerCase().includes('<script')) {
+      setErrorMessage('Security Error: Malicious script pattern detected in image URL.');
+      setFormData((prev) => ({ ...prev, imageUrl: '' }));
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, imageUrl: trimmed }));
   };
 
   const handleOpenCreate = () => {
     setEditingId(null);
+    setImageMode('upload');
+    setImageUrlInput('');
     setFormData({
       title: '',
       description: '',
@@ -64,6 +128,9 @@ export default function AdminCampsPage() {
 
   const handleOpenEdit = (camp: any) => {
     setEditingId(camp._id);
+    const isDirectUrl = camp.imageUrl?.startsWith('http://') || camp.imageUrl?.startsWith('https://');
+    setImageMode(isDirectUrl ? 'url' : 'upload');
+    setImageUrlInput(isDirectUrl ? camp.imageUrl : '');
     setFormData({
       title: camp.title,
       description: camp.description,
@@ -79,7 +146,7 @@ export default function AdminCampsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.imageUrl) {
-      setErrorMessage('Image is required');
+      setErrorMessage('Image is required (Upload JPG file <= 150KB or provide a direct image link URL).');
       return;
     }
 
@@ -114,8 +181,8 @@ export default function AdminCampsPage() {
     if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
       return path;
     }
-    // Prefix backend domain for local uploads
-    return `http://localhost:5000${path}`;
+    const backendOrigin = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').replace(/\/api\/?$/, '');
+    return `${backendOrigin}${path.startsWith('/') ? path : `/${path}`}`;
   };
 
   return (
@@ -163,6 +230,9 @@ export default function AdminCampsPage() {
                             src={getFullImageUrl(c.imageUrl)}
                             alt={c.title}
                             className="w-12 h-10 object-cover rounded-lg border border-slate-700"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800';
+                            }}
                           />
                         ) : (
                           <div className="w-12 h-10 bg-slate-800 rounded-lg flex items-center justify-center text-slate-500">
@@ -210,15 +280,26 @@ export default function AdminCampsPage() {
           {showModal && (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-lg space-y-4 text-xs">
-                <h3 className="font-bold text-white text-base">
-                  {editingId ? 'Edit Medical Camp' : 'Add Medical Camp (Shivir)'}
-                </h3>
+                <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+                  <h3 className="font-bold text-white text-base">
+                    {editingId ? 'Edit Medical Camp' : 'Add Medical Camp (Shivir)'}
+                  </h3>
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+
                 {errorMessage && (
-                  <div className="p-3 bg-rose-950/40 border border-rose-900 rounded-xl text-rose-400 font-bold">
-                    {errorMessage}
+                  <div className="p-3 bg-rose-950/60 border border-rose-800 rounded-xl text-rose-300 font-bold flex items-start gap-2">
+                    <ShieldAlert className="w-4 h-4 shrink-0 text-rose-400 mt-0.5" />
+                    <span>{errorMessage}</span>
                   </div>
                 )}
-                <form onSubmit={handleSubmit} className="space-y-3">
+
+                <form onSubmit={handleSubmit} className="space-y-3.5">
                   <div>
                     <label className="block text-[10px] text-slate-400 uppercase font-semibold mb-1">Camp Title</label>
                     <input
@@ -265,24 +346,104 @@ export default function AdminCampsPage() {
                       className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
                     />
                   </div>
-                  <div>
-                    <label className="block text-[10px] text-slate-400 uppercase font-semibold mb-1">Camp Image Upload</label>
-                    <div className="flex gap-3 items-center">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        className="w-full text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-white file:cursor-pointer"
-                      />
-                      {formData.imageUrl && (
+
+                  {/* Camp Image Options: Upload vs Direct URL */}
+                  <div className="space-y-2.5 bg-slate-950/70 p-3.5 rounded-xl border border-slate-800">
+                    <div className="flex justify-between items-center">
+                      <label className="block text-[10px] text-slate-300 uppercase font-bold tracking-wider">
+                        Camp Photo / Image
+                      </label>
+                      <div className="flex items-center gap-1 bg-slate-900 p-0.5 rounded-lg border border-slate-800">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setImageMode('upload');
+                            setErrorMessage('');
+                          }}
+                          className={`px-2.5 py-1 rounded-md text-[10px] font-bold flex items-center gap-1 transition-all ${
+                            imageMode === 'upload'
+                              ? 'bg-orange-600 text-white shadow'
+                              : 'text-slate-400 hover:text-slate-200'
+                          }`}
+                        >
+                          <Upload className="w-3 h-3" />
+                          <span>File Upload</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setImageMode('url');
+                            setErrorMessage('');
+                          }}
+                          className={`px-2.5 py-1 rounded-md text-[10px] font-bold flex items-center gap-1 transition-all ${
+                            imageMode === 'url'
+                              ? 'bg-orange-600 text-white shadow'
+                              : 'text-slate-400 hover:text-slate-200'
+                          }`}
+                        >
+                          <LinkIcon className="w-3 h-3" />
+                          <span>Image URL</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {imageMode === 'upload' ? (
+                      <div className="space-y-1.5">
+                        <input
+                          type="file"
+                          accept=".jpg,.jpeg,image/jpeg"
+                          onChange={handleFileChange}
+                          className="w-full text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-slate-800 file:text-white file:cursor-pointer hover:file:bg-slate-700"
+                        />
+                        <p className="text-[10px] text-amber-400/90 font-medium">
+                          <strong>Strict Requirements:</strong> .jpg or .jpeg format only • Max size: <strong>150 KB</strong>
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="space-y-1.5">
+                        <input
+                          type="url"
+                          placeholder="https://example.com/images/medical-camp-gaya.jpg"
+                          value={imageUrlInput}
+                          onChange={(e) => handleUrlInputChange(e.target.value)}
+                          className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500 font-mono text-xs"
+                        />
+                        <p className="text-[10px] text-slate-400 font-medium">
+                          Enter direct web image link starting with <code>http://</code> or <code>https://</code>
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Image Preview Box */}
+                    {formData.imageUrl && (
+                      <div className="pt-2 flex items-center gap-3 border-t border-slate-800">
                         <img
                           src={getFullImageUrl(formData.imageUrl)}
-                          alt="Preview"
-                          className="w-14 h-12 object-cover rounded-lg border border-slate-700 shrink-0"
+                          alt="Camp Preview"
+                          className="w-20 h-14 object-cover rounded-lg border border-slate-700 shrink-0 bg-slate-900"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800';
+                          }}
                         />
-                      )}
-                    </div>
+                        <div className="flex-1 space-y-1">
+                          <p className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
+                            ✓ Image ready for website display
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setFormData((prev) => ({ ...prev, imageUrl: '' }));
+                              setImageUrlInput('');
+                            }}
+                            className="text-[10px] text-rose-400 hover:text-rose-300 underline font-semibold"
+                          >
+                            Remove Image
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
+
                   <div className="flex items-center gap-2 pt-1">
                     <input
                       type="checkbox"

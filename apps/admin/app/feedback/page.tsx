@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { adminApiClient } from '../../lib/api-client';
 import { AdminSidebar } from '../../components/AdminSidebar';
 import { AdminHeader } from '../../components/AdminHeader';
-import { Star, Check, X } from 'lucide-react';
+import { Star, Check, X, Trash2 } from 'lucide-react';
 
 export default function AdminFeedbackPage() {
   const [feedbackList, setFeedbackList] = useState<any[]>([]);
@@ -24,6 +24,12 @@ export default function AdminFeedbackPage() {
       method: 'PUT',
       body: JSON.stringify({ status }),
     });
+    if (res.success) fetchFeedback();
+  };
+
+  const deleteFeedback = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this feedback review permanently?')) return;
+    const res = await adminApiClient(`/feedback/${id}`, { method: 'DELETE' });
     if (res.success) fetchFeedback();
   };
 
@@ -127,25 +133,35 @@ export default function AdminFeedbackPage() {
                       "{f.message}"
                     </p>
                   </div>
-                  <div className="flex justify-end gap-2 pt-3 border-t border-slate-800/80">
-                    {f.status !== 'approved' && (
-                      <button
-                        onClick={() => updateStatus(f._id, 'approved')}
-                        className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold flex items-center gap-1.5 transition-colors shadow-sm"
-                      >
-                        <Check className="w-3.5 h-3.5" />
-                        <span>Approve</span>
-                      </button>
-                    )}
-                    {f.status !== 'rejected' && (
-                      <button
-                        onClick={() => updateStatus(f._id, 'rejected')}
-                        className="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-500 text-white rounded-xl font-bold flex items-center gap-1.5 transition-colors shadow-sm"
-                      >
-                        <X className="w-3.5 h-3.5" />
-                        <span>Reject</span>
-                      </button>
-                    )}
+                  <div className="flex justify-between items-center pt-3 border-t border-slate-800/80">
+                    <button
+                      onClick={() => deleteFeedback(f._id)}
+                      className="p-1.5 bg-slate-800 hover:bg-rose-950/40 text-slate-400 hover:text-rose-400 rounded-xl transition-all border border-slate-700/50"
+                      title="Delete feedback review"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+
+                    <div className="flex gap-2">
+                      {f.status !== 'approved' && (
+                        <button
+                          onClick={() => updateStatus(f._id, 'approved')}
+                          className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+                        >
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Approve</span>
+                        </button>
+                      )}
+                      {f.status !== 'rejected' && (
+                        <button
+                          onClick={() => updateStatus(f._id, 'rejected')}
+                          className="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-500 text-white rounded-xl font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+                        >
+                          <X className="w-3.5 h-3.5" />
+                          <span>Reject</span>
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

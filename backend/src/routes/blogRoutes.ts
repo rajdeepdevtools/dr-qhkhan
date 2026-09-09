@@ -12,5 +12,7 @@ router.get('/:slug', BlogController.getBlogBySlug);
 
 router.get('/admin/all', authenticateJWT, authorizeRoles('admin', 'super_admin'), BlogController.getAllBlogsAdmin);
 router.post('/admin', authenticateJWT, authorizeRoles('admin', 'super_admin'), validateRequest(blogSchema), BlogController.createBlog);
+router.put('/admin/:id', authenticateJWT, authorizeRoles('admin', 'super_admin'), BlogController.updateBlog);
+router.delete('/admin/:id', authenticateJWT, authorizeRoles('admin', 'super_admin'), BlogController.deleteBlog);
 
 export default router;

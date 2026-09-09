@@ -34,11 +34,21 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     try {
       const res = await adminApiClient('/auth/me');
       if (res.success && res.data && ['admin', 'super_admin', 'receptionist'].includes(res.data.user.role)) {
+        if (res.data.token) {
+          localStorage.setItem('adminToken', res.data.token);
+        }
+        if (res.data.refreshToken) {
+          localStorage.setItem('adminRefreshToken', res.data.refreshToken);
+        }
         setAdminUser(res.data.user);
       } else {
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminRefreshToken');
         setAdminUser(null);
       }
     } catch {
+      localStorage.removeItem('adminToken');
+      localStorage.removeItem('adminRefreshToken');
       setAdminUser(null);
     } finally {
       setIsLoading(false);
@@ -50,6 +60,12 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   }, []);
 
   const loginAdmin = (data: any) => {
+    if (data.token) {
+      localStorage.setItem('adminToken', data.token);
+    }
+    if (data.refreshToken) {
+      localStorage.setItem('adminRefreshToken', data.refreshToken);
+    }
     setAdminUser(data.user);
   };
 
@@ -59,6 +75,8 @@ export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     } catch (err) {
       console.error('Logout request failed:', err);
     }
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminRefreshToken');
     setAdminUser(null);
     window.location.href = '/login';
   };

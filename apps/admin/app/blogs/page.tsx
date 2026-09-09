@@ -4,11 +4,13 @@ import React, { useEffect, useState } from 'react';
 import { adminApiClient } from '../../lib/api-client';
 import { AdminSidebar } from '../../components/AdminSidebar';
 import { AdminHeader } from '../../components/AdminHeader';
-import { Plus } from 'lucide-react';
+import { Plus, Edit3, Trash2 } from 'lucide-react';
 
 export default function AdminBlogsPage() {
   const [blogs, setBlogs] = useState<any[]>([]);
   const [showModal, setShowModal] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const [formData, setFormData] = useState({
     title: '',
@@ -28,15 +30,58 @@ export default function AdminBlogsPage() {
     fetchBlogs();
   }, []);
 
-  const handleCreate = async (e: React.FormEvent) => {
+  const handleOpenCreate = () => {
+    setEditingId(null);
+    setFormData({
+      title: '',
+      excerpt: '',
+      content: '',
+      author: 'Dr. Q.H. Khan',
+      category: 'Homoeopathy Guidance',
+      isPublished: true,
+    });
+    setErrorMessage('');
+    setShowModal(true);
+  };
+
+  const handleOpenEdit = (b: any) => {
+    setEditingId(b._id);
+    setFormData({
+      title: b.title || '',
+      excerpt: b.excerpt || '',
+      content: b.content || '',
+      author: b.author || 'Dr. Q.H. Khan',
+      category: b.category || 'Homoeopathy Guidance',
+      isPublished: b.isPublished ?? true,
+    });
+    setErrorMessage('');
+    setShowModal(true);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await adminApiClient('/blogs/admin', {
-      method: 'POST',
+    setErrorMessage('');
+
+    const method = editingId ? 'PUT' : 'POST';
+    const endpoint = editingId ? `/blogs/admin/${editingId}` : '/blogs/admin';
+
+    const res = await adminApiClient(endpoint, {
+      method,
       body: JSON.stringify(formData),
     });
 
     if (res.success) {
       setShowModal(false);
+      fetchBlogs();
+    } else {
+      setErrorMessage(res.message || 'Failed to save blog post.');
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this blog post?')) return;
+    const res = await adminApiClient(`/blogs/admin/${id}`, { method: 'DELETE' });
+    if (res.success) {
       fetchBlogs();
     }
   };
@@ -53,8 +98,8 @@ export default function AdminBlogsPage() {
               <p className="text-xs text-slate-400">Publish articles and patient educational resources</p>
             </div>
             <button
-              onClick={() => setShowModal(true)}
-              className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-bold text-xs rounded-xl shadow flex items-center gap-1.5"
+              onClick={handleOpenCreate}
+              className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-xs rounded-xl shadow flex items-center gap-1.5 transition-all"
             >
               <Plus className="w-4 h-4" /> Create Blog Post
             </button>
@@ -68,17 +113,44 @@ export default function AdminBlogsPage() {
                   <th className="p-3">Category</th>
                   <th className="p-3">Author</th>
                   <th className="p-3">Status</th>
+                  <th className="p-3 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800 text-slate-300">
-                {blogs.map((b) => (
-                  <tr key={b._id} className="hover:bg-slate-800/40">
-                    <td className="p-3 font-bold text-white">{b.title}</td>
-                    <td className="p-3">{b.category}</td>
-                    <td className="p-3">{b.author}</td>
-                    <td className="p-3 font-bold text-emerald-400">{b.isPublished ? 'Published' : 'Draft'}</td>
+                {blogs.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="p-4 text-center text-slate-500">No blog posts found.</td>
                   </tr>
-                ))}
+                ) : (
+                  blogs.map((b) => (
+                    <tr key={b._id} className="hover:bg-slate-800/40">
+                      <td className="p-3 font-bold text-white max-w-xs truncate">{b.title}</td>
+                      <td className="p-3">{b.category}</td>
+                      <td className="p-3">{b.author}</td>
+                      <td className="p-3">
+                        <span className={`px-2 py-0.5 rounded font-bold uppercase text-[10px] ${b.isPublished ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-slate-850 text-slate-500 border border-slate-800'}`}>
+                          {b.isPublished ? 'Published' : 'Draft'}
+                        </span>
+                      </td>
+                      <td className="p-3 text-right space-x-2">
+                        <button
+                          onClick={() => handleOpenEdit(b)}
+                          className="p-1.5 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors"
+                          title="Edit Blog Post"
+                        >
+                          <Edit3 className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(b._id)}
+                          className="p-1.5 bg-rose-950/30 text-rose-400 rounded hover:bg-rose-900 hover:text-white transition-colors"
+                          title="Delete Blog Post"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -86,38 +158,90 @@ export default function AdminBlogsPage() {
           {showModal && (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
               <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-lg space-y-4 text-xs">
-                <h3 className="font-bold text-white text-base">Create Blog Post</h3>
-                <form onSubmit={handleCreate} className="space-y-3">
-                  <input
-                    type="text"
-                    required
-                    placeholder="Blog Title"
-                    value={formData.title}
-                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white"
-                  />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Short Excerpt"
-                    value={formData.excerpt}
-                    onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                    className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white"
-                  />
-                  <textarea
-                    rows={4}
-                    required
-                    placeholder="Full Content"
-                    value={formData.content}
-                    onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                    className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white"
-                  />
+                <h3 className="font-bold text-white text-base">
+                  {editingId ? 'Edit Blog Post' : 'Create Blog Post'}
+                </h3>
+                {errorMessage && (
+                  <div className="p-3 bg-rose-950/40 border border-rose-900 rounded-xl text-rose-400 font-bold">
+                    {errorMessage}
+                  </div>
+                )}
+                <form onSubmit={handleSubmit} className="space-y-3">
+                  <div>
+                    <label className="block text-[10px] text-slate-400 uppercase font-semibold mb-1">Blog Title</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Blog Title"
+                      value={formData.title}
+                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[10px] text-slate-400 uppercase font-semibold mb-1">Author</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Author"
+                        value={formData.author}
+                        onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] text-slate-400 uppercase font-semibold mb-1">Category</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Category"
+                        value={formData.category}
+                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] text-slate-400 uppercase font-semibold mb-1">Short Excerpt</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Short Excerpt"
+                      value={formData.excerpt}
+                      onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] text-slate-400 uppercase font-semibold mb-1">Full Content</label>
+                    <textarea
+                      rows={4}
+                      required
+                      placeholder="Full Content"
+                      value={formData.content}
+                      onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2 pt-1">
+                    <input
+                      type="checkbox"
+                      id="isPublished"
+                      checked={formData.isPublished}
+                      onChange={(e) => setFormData({ ...formData, isPublished: e.target.checked })}
+                      className="w-4 h-4 rounded bg-slate-800 accent-orange-600 cursor-pointer"
+                    />
+                    <label htmlFor="isPublished" className="text-slate-300 font-medium cursor-pointer">
+                      Publish Immediately on Website
+                    </label>
+                  </div>
                   <div className="flex justify-end space-x-2 pt-2">
-                    <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-slate-800 text-slate-300 rounded-xl">
+                    <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold transition-colors">
                       Cancel
                     </button>
-                    <button type="submit" className="px-4 py-2 bg-orange-600 text-white font-bold rounded-xl">
-                      Publish Blog
+                    <button type="submit" className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold rounded-xl shadow transition-colors">
+                      {editingId ? 'Save Changes' : 'Publish Blog'}
                     </button>
                   </div>
                 </form>

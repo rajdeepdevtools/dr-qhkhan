@@ -143,4 +143,33 @@ export class ReportController {
       res.status(550).json({ success: false, message: error.message });
     }
   }
+
+  static async getAllReportsAdmin(req: AuthRequest, res: Response): Promise<void> {
+    const reports = await Report.find()
+      .populate('patient', 'name patientId email phone')
+      .populate('doctor', 'name specialization')
+      .sort({ createdAt: -1 });
+    res.status(200).json({ success: true, data: reports });
+  }
+
+  static async deleteReport(req: AuthRequest, res: Response): Promise<void> {
+    const { id } = req.params;
+    const report = await Report.findByIdAndDelete(id);
+    if (!report) {
+      res.status(404).json({ success: false, message: 'Report not found' });
+      return;
+    }
+
+    await AuditService.logAction({
+      actorId: req.user!.userId,
+      actorEmail: req.user!.email,
+      actorRole: req.user!.role,
+      action: 'ADMIN_DELETE_REPORT',
+      resourceType: 'Report',
+      resourceId: report.reportId,
+      ipAddress: req.ip,
+    });
+
+    res.status(200).json({ success: true, message: 'Report deleted successfully' });
+  }
 }

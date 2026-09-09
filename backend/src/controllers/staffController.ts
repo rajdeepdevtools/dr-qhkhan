@@ -53,4 +53,58 @@ export class StaffController {
     const staff = await ReceptionistProfile.find().populate('user', 'email isActive createdAt').sort({ createdAt: -1 });
     res.status(200).json({ success: true, data: staff });
   }
+
+  static async updateReceptionist(req: AuthRequest, res: Response): Promise<void> {
+    const { id } = req.params;
+    const { name, phone, shift } = req.body;
+
+    const profile = await ReceptionistProfile.findById(id);
+    if (!profile) {
+      res.status(404).json({ success: false, message: 'Staff profile not found' });
+      return;
+    }
+
+    profile.name = name ?? profile.name;
+    profile.phone = phone ?? profile.phone;
+    profile.shift = shift ?? profile.shift;
+
+    await profile.save();
+
+    await AuditService.logAction({
+      actorId: req.user!.userId,
+      actorEmail: req.user!.email,
+      actorRole: req.user!.role,
+      action: 'ADMIN_UPDATE_STAFF',
+      resourceType: 'ReceptionistProfile',
+      resourceId: profile.employeeId,
+      ipAddress: req.ip,
+    });
+
+    res.status(200).json({ success: true, message: 'Staff profile updated', data: profile });
+  }
+
+  static async deleteReceptionist(req: AuthRequest, res: Response): Promise<void> {
+    const { id } = req.params;
+    const profile = await ReceptionistProfile.findByIdAndDelete(id);
+    if (!profile) {
+      res.status(404).json({ success: false, message: 'Staff profile not found' });
+      return;
+    }
+
+    if (profile.user) {
+      await User.findByIdAndDelete(profile.user);
+    }
+
+    await AuditService.logAction({
+      actorId: req.user!.userId,
+      actorEmail: req.user!.email,
+      actorRole: req.user!.role,
+      action: 'ADMIN_DELETE_STAFF',
+      resourceType: 'ReceptionistProfile',
+      resourceId: profile.employeeId,
+      ipAddress: req.ip,
+    });
+
+    res.status(200).json({ success: true, message: 'Staff profile and user account deleted' });
+  }
 }

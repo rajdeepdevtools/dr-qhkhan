@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { AdminSidebar } from '../../components/AdminSidebar';
 import { AdminHeader } from '../../components/AdminHeader';
-import { Printer, QrCode, Globe, Info, Sparkles } from 'lucide-react';
+import { Printer, QrCode, Globe, Info, MapPin, Phone, Star, Sparkles } from 'lucide-react';
 
 export default function AdminQrCodePage() {
   const [targetUrl, setTargetUrl] = useState('http://localhost:3000/#review-form');
@@ -12,9 +12,8 @@ export default function AdminQrCodePage() {
     window.print();
   };
 
-  // Construct QR API URL
-  // Uses qrserver.com to generate a high quality 350x350 QR code in clinic-indigo color (Hex: 2e1065 -> RGB color code is not needed, hex is fine, but hex without # is preferred by qrserver API or urlencoded)
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=350x350&color=471891&data=${encodeURIComponent(targetUrl)}`;
+  // High quality pure black QR Code for crisp scanning on light paper
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&color=000000&data=${encodeURIComponent(targetUrl)}`;
 
   return (
     <div className="flex min-h-screen">
@@ -27,19 +26,19 @@ export default function AdminQrCodePage() {
         <div className="print:hidden">
           <AdminHeader />
         </div>
-        <main className="p-6 space-y-6 flex-1 overflow-y-auto print:p-0 print:m-0 print:bg-white">
+        <main className="p-6 space-y-6 flex-1 overflow-y-auto print:p-0 print:m-0 print:bg-white print:overflow-visible">
           
           {/* Controls section - hidden during print */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 print:hidden">
             <div>
-              <h1 className="text-2xl font-bold text-white">Patient Feedback QR Code</h1>
-              <p className="text-xs text-slate-400">Generate and print an attractive QR Standee for the clinic front desk</p>
+              <h1 className="text-2xl font-bold text-white">Patient Feedback QR Standee & Poster</h1>
+              <p className="text-xs text-slate-400">Generate & print premium light QR Standee (Patrick's Blue & American Yellow theme with Official Logo)</p>
             </div>
             <button
               onClick={handlePrint}
-              className="px-5 py-2.5 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-xs rounded-xl shadow-md flex items-center gap-2 transition-all hover:scale-[1.02]"
+              className="px-6 py-3 bg-gradient-to-r from-[#1F0270] via-[#2A0596] to-[#1F0270] hover:from-[#2A0596] hover:to-[#1F0270] text-[#F4C430] font-black text-xs rounded-xl shadow-lg flex items-center gap-2 transition-all hover:scale-[1.02] border border-[#F4C430]/40"
             >
-              <Printer className="w-4 h-4" /> Print Standee Poster
+              <Printer className="w-4.5 h-4.5 text-[#F4C430]" /> Print Premium Standee
             </button>
           </div>
 
@@ -48,111 +47,155 @@ export default function AdminQrCodePage() {
             {/* Configuration Panel - hidden during print */}
             <div className="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4 text-xs print:hidden">
               <h3 className="font-bold text-white text-sm flex items-center gap-2">
-                <Globe className="w-4 h-4 text-indigo-400" /> Standee Link Configuration
+                <Globe className="w-4 h-4 text-[#F4C430]" /> Destination Link Settings
               </h3>
               
-              <div className="p-4 bg-slate-800/40 border border-slate-700/40 rounded-2xl text-slate-300 space-y-2 leading-relaxed">
-                <p className="flex items-center gap-1.5 font-bold text-white"><Info className="w-4 h-4 text-amber-500 shrink-0" /> Front Desk Printout</p>
+              <div className="p-4 bg-slate-800/60 border border-slate-700/60 rounded-2xl text-slate-300 space-y-2 leading-relaxed">
+                <p className="flex items-center gap-1.5 font-bold text-white"><Info className="w-4 h-4 text-[#F4C430] shrink-0" /> Front Desk Standee Guide</p>
                 <p>
-                  Place this printed standee at the reception desk, outpatient department (OPD), or dispensary counter.
+                  Print this light theme standee featuring the official website logo to place at your reception desk or consultation room.
                 </p>
                 <p>
-                  Patients can scan it with their smartphones to open the feedback form and leave verified reviews instantly.
+                  Featuring <strong>Patrick's Blue (#1F0270)</strong> & <strong>American Yellow (#F4C430)</strong> styling with generous spacing and solid <strong>black QR code</strong> for high precision scanning.
                 </p>
               </div>
 
               <div className="space-y-2">
-                <label className="block text-[10px] text-slate-400 uppercase font-extrabold tracking-wider">QR Destination URL</label>
+                <label className="block text-[10px] text-slate-400 uppercase font-extrabold tracking-wider">Target Review Form URL</label>
                 <input
                   type="url"
                   value={targetUrl}
                   onChange={(e) => setTargetUrl(e.target.value)}
                   placeholder="e.g. http://localhost:3000/#review-form"
-                  className="w-full p-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-indigo-500 font-semibold"
+                  className="w-full p-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-[#F4C430] font-semibold"
                 />
                 <span className="text-[10px] text-slate-500 block">
-                  Update this URL when deploying to production (e.g. <code>https://drqhkhanclinic.com/#review-form</code>) to automatically regenerate the QR code.
+                  Change this to your website URL (e.g. <code>https://drqhkhanclinic.com/#review-form</code>) when deploying to production.
                 </span>
               </div>
             </div>
 
-            {/* Poster Standee Preview - centered & optimized for print */}
-            <div className="lg:col-span-7 flex justify-center print:block print:w-full">
+            {/* Poster Standee Preview - spacious & 1-page premium light print optimized */}
+            <div className="lg:col-span-7 flex justify-center print:block print:w-full print:m-0">
               
-              {/* Standee Flyer Wrapper */}
+              {/* Premium Light Standee Poster Printable Box */}
               <div 
                 id="printable-standee"
-                className="w-full max-w-[420px] bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-950 border-4 border-double border-amber-500/60 rounded-3xl p-8 shadow-2xl space-y-6 text-center relative overflow-hidden print:border-slate-800 print:bg-white print:text-slate-900 print:shadow-none print:w-[100%] print:max-w-none print:h-screen print:flex print:flex-col print:justify-center print:p-12 print:my-0 print:mx-auto"
+                className="w-full max-w-[460px] bg-gradient-to-b from-[#FFFDF9] via-[#FAF7F0] to-[#F4EFE6] border-4 border-double border-[#1F0270] rounded-3xl p-7 sm:p-9 shadow-2xl space-y-6 text-center relative overflow-hidden text-slate-900 print:w-full print:max-w-[100%] print:border-4 print:border-[#1F0270] print:rounded-none print:shadow-none print:p-7 print:m-0 print:space-y-6"
               >
                 
-                {/* Visual Glow elements - hidden during print */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-orange-600/5 rounded-full blur-3xl print:hidden" />
-                <div className="absolute bottom-0 right-0 w-32 h-32 bg-indigo-600/10 rounded-full blur-2xl print:hidden" />
+                {/* Background Texture & Glow Elements */}
+                <div className="absolute inset-0 opacity-[0.05] bg-[radial-gradient(#1F0270_1.2px,transparent_1.2px)] [background-size:20px_20px] pointer-events-none" />
+                <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-[#F4C430]/30 via-[#1F0270]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-tr from-[#1F0270]/15 via-[#F4C430]/20 to-transparent rounded-full blur-3xl pointer-events-none" />
 
-                {/* Header Logo & Clinic Details */}
-                <div className="space-y-2">
+                {/* Watermark Background Logo from Website */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 opacity-[0.08] pointer-events-none flex items-center justify-center">
                   <img
                     src="/images/logo.png"
-                    alt="Dr. Q.H. Khan Clinic Logo"
-                    className="mx-auto w-12 h-12 rounded-2xl shadow-lg border border-white/10 print:border-slate-300 object-cover"
+                    alt="Clinic Watermark Logo"
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
                   />
-                  <h2 className="font-extrabold text-lg text-white leading-tight uppercase tracking-wider print:text-slate-900">
-                    DR. Q.H. KHAN
-                  </h2>
-                  <p className="text-[10px] text-amber-400 font-extrabold uppercase tracking-widest print:text-amber-650">
-                    CLASSICAL HOMOEOPATHIC CLINIC
-                  </p>
-                  <div className="flex items-center justify-center gap-1.5 text-[9px] text-slate-400 font-semibold print:text-slate-500">
-                    <span>Est. 1958</span>
-                    <span>•</span>
-                    <span>Gaya, Bihar, India</span>
+                </div>
+
+                <div className="relative z-10 space-y-6">
+                  
+                  {/* Header Brand Banner with Website Logo */}
+                  <div className="space-y-3">
+                    {/* Centered Website Logo Box */}
+                    <div className="w-20 h-20 rounded-2xl bg-white border-2 border-[#1F0270] p-2 shadow-md mx-auto flex items-center justify-center">
+                      <img
+                        src="/images/logo.png"
+                        alt="Clinic Website Logo"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+
+                    <div className="pt-1 space-y-1">
+                      <h2 className="font-black text-2.5xl text-[#1F0270] leading-none uppercase tracking-tight">
+                        DR. Q.H. KHAN
+                      </h2>
+                      <div className="inline-block bg-[#1F0270] text-[#F4C430] text-[10px] font-black uppercase tracking-widest px-3.5 py-1 rounded-full shadow-xs">
+                        CLASSICAL HOMOEOPATHIC CLINIC
+                      </div>
+                      <p className="text-[9.5px] text-[#1F0270] font-extrabold tracking-wider pt-0.5">
+                        Est. 1958 • 68+ Years of Heritage & Trust
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                {/* Divider Line */}
-                <div className="w-16 h-0.5 bg-gradient-to-r from-orange-500 to-amber-500 mx-auto" />
+                  {/* Real Clinic Address & Doctor Credentials Box */}
+                  <div className="bg-white/95 border-2 border-[#1F0270]/25 p-3.5 rounded-2xl space-y-2 text-[10px] font-bold text-slate-800 backdrop-blur-sm shadow-sm my-2">
+                    <div className="flex items-center justify-center gap-1.5 text-[#1F0270] font-black">
+                      <MapPin className="w-4 h-4 text-[#DD0200] shrink-0" />
+                      <span>Nagmatia Road, Gaya, Bihar, India</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-1 text-slate-700 text-[9.5px]">
+                      <Phone className="w-3.5 h-3.5 text-[#1F0270] shrink-0" />
+                      <span>Helpline: 9709786669 | 9135404090 | 9097211989</span>
+                    </div>
+                    <div className="text-[9px] text-[#1F0270] font-extrabold pt-1.5 border-t border-[#1F0270]/15 flex justify-center gap-3">
+                      <span>Dr. I. Khan (Reg. 33454)</span>
+                      <span>•</span>
+                      <span>Dr. Adeeba Farheen (Reg. 31319)</span>
+                    </div>
+                  </div>
 
-                {/* Invitation Text */}
-                <div className="space-y-1">
-                  <h3 className="text-base font-extrabold text-white tracking-wide print:text-slate-800 flex items-center justify-center gap-1.5">
-                    <Sparkles className="w-4 h-4 text-amber-500" /> Share Your Experience!
-                  </h3>
-                  <p className="text-[11px] text-slate-300 leading-relaxed max-w-xs mx-auto print:text-slate-650">
-                    Your valuable review helps others in Gaya find safe, natural, and constitutional healing.
+                  {/* Call to Action Box - American Yellow & Patrick's Blue Accent */}
+                  <div className="space-y-1.5 bg-gradient-to-r from-[#F4C430] via-[#F5CB45] to-[#F4C430] border-2 border-[#1F0270] p-4 rounded-2xl shadow-md text-[#1F0270] my-2">
+                    <div className="flex items-center justify-center gap-1">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star key={s} className="w-4 h-4 fill-[#1F0270] text-[#1F0270]" />
+                      ))}
+                    </div>
+                    <h3 className="text-sm font-black tracking-wider uppercase flex items-center justify-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-[#1F0270]" />
+                      Share Your Recovery Review
+                    </h3>
+                    <p className="text-[10px] text-[#1F0270] leading-snug font-bold max-w-xs mx-auto">
+                      Your valuable feedback helps patients across Gaya discover authentic, natural healing.
+                    </p>
+                  </div>
+
+                  {/* Pure Black QR Code Container on White Background */}
+                  <div className="bg-white p-4 rounded-2xl max-w-[215px] mx-auto shadow-xl border-3 border-[#1F0270] flex flex-col items-center justify-center my-3">
+                    <img
+                      src={qrCodeUrl}
+                      alt="Clinic Feedback QR Code"
+                      className="w-full aspect-square object-contain"
+                    />
+                    <div className="mt-2.5 text-[10px] font-black text-white bg-[#1F0270] uppercase tracking-wider flex items-center gap-1.5 px-3.5 py-1 rounded-full shadow-sm">
+                      <QrCode className="w-3.5 h-3.5 text-[#F4C430]" />
+                      <span>SCAN CODE TO REVIEW</span>
+                    </div>
+                  </div>
+
+                  {/* Easy Steps Instructions with Generous Spacing */}
+                  <div className="grid grid-cols-3 gap-2.5 text-[9px] font-extrabold text-[#1F0270] pt-1">
+                    <div className="bg-white border border-[#1F0270]/20 p-2.5 rounded-xl shadow-xs">
+                      <span className="block text-[#1F0270] font-black text-xs mb-0.5">1</span>
+                      <span>Open Camera</span>
+                    </div>
+                    <div className="bg-white border border-[#1F0270]/20 p-2.5 rounded-xl shadow-xs">
+                      <span className="block text-[#1F0270] font-black text-xs mb-0.5">2</span>
+                      <span>Scan QR Link</span>
+                    </div>
+                    <div className="bg-white border border-[#1F0270]/20 p-2.5 rounded-xl shadow-xs">
+                      <span className="block text-[#1F0270] font-black text-xs mb-0.5">3</span>
+                      <span>Post Review</span>
+                    </div>
+                  </div>
+
+                  {/* Footer Note */}
+                  <p className="text-[8.5px] text-slate-600 font-bold pt-1">
+                    Verified patient reviews are displayed on clinic website. Thank you for your trust!
                   </p>
+
                 </div>
 
-                {/* QR Code Container */}
-                <div className="bg-white p-4 rounded-2xl max-w-[200px] mx-auto shadow-xl border border-indigo-900/10 flex flex-col items-center justify-center print:border-slate-350">
-                  <img
-                    src={qrCodeUrl}
-                    alt="Clinic Feedback QR Code"
-                    className="w-full aspect-square"
-                  />
-                  <span className="text-[9px] text-indigo-950 font-bold uppercase tracking-wider mt-2.5 flex items-center gap-1">
-                    <QrCode className="w-3.5 h-3.5" /> Scan to Review
-                  </span>
-                </div>
-
-                {/* Star rating graphics */}
-                <div className="flex items-center justify-center gap-1 text-amber-400">
-                  {[1, 2, 3, 4, 5].map((s) => (
-                    <span key={s} className="text-lg">★</span>
-                  ))}
-                </div>
-
-                {/* Instructions */}
-                <div className="space-y-1 text-[10px] text-slate-400 leading-relaxed print:text-slate-500">
-                  <p className="font-bold text-white print:text-slate-800">Easy Steps:</p>
-                  <p>1. Open your phone camera or QR scanner.</p>
-                  <p>2. Scan this QR code and click the link.</p>
-                  <p>3. Post your ratings & clinical recovery feedback.</p>
-                </div>
-
-                {/* Footer Disclaimer */}
-                <div className="pt-4 border-t border-slate-800/60 text-[9px] text-slate-500 leading-normal max-w-xs mx-auto print:text-slate-450 print:border-slate-200">
-                  Reviews are saved securely in our databases and displayed after moderation check. Thank you!
-                </div>
               </div>
             </div>
 
@@ -160,15 +203,24 @@ export default function AdminQrCodePage() {
         </main>
       </div>
 
-      {/* Global CSS to handle printing cleanly */}
+      {/* Global Print Stylesheet guaranteeing single-page A4 print in premium light colors */}
       <style jsx global>{`
         @media print {
-          body {
-            background-color: white !important;
-            color: black !important;
+          @page {
+            size: A4 portrait;
+            margin: 0;
           }
-          /* Hide all UI elements except the printable poster container */
-          .print\\:hidden, 
+          html, body {
+            background: #ffffff !important;
+            color: #1f0270 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            height: 100% !important;
+            overflow: hidden !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          .print\\:hidden,
           aside,
           header,
           button,
@@ -178,33 +230,30 @@ export default function AdminQrCodePage() {
           main {
             padding: 0 !important;
             margin: 0 !important;
+            background: #ffffff !important;
           }
           #printable-standee {
-            border: 2px solid #cbd5e1 !important;
-            background: white !important;
-            color: #0f172a !important;
+            border: 4px double #1f0270 !important;
+            background: linear-gradient(180deg, #fffdf9 0%, #faf7f0 50%, #f4efe6 100%) !important;
+            color: #1f0270 !important;
             box-shadow: none !important;
-            width: 100vw !important;
-            height: 100vh !important;
-            max-width: none !important;
-            margin: 0 auto !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: center !important;
-            align-items: center !important;
-            padding: 2rem !important;
+            width: 88% !important;
+            max-width: 480px !important;
+            margin: 16px auto !important;
+            padding: 24px !important;
+            border-radius: 24px !important;
+            page-break-inside: avoid !important;
+            page-break-after: avoid !important;
+            page-break-before: avoid !important;
           }
-          #printable-standee h2,
-          #printable-standee h3,
-          #printable-standee p,
-          #printable-standee span {
-            color: #0f172a !important;
-          }
-          #printable-standee p {
-            color: #475569 !important;
+          #printable-standee * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
           }
         }
       `}</style>
     </div>
   );
 }
+
+
