@@ -23,9 +23,11 @@ import {
   BookOpen,
   Calendar,
   ThumbsUp,
-  Map,
   Tag,
-  Sparkles
+  MapIcon as Map,
+  Sparkles,
+  CheckCircle2,
+  User
 } from 'lucide-react';
 
 export default function HomePage() {
@@ -931,12 +933,19 @@ const DEFAULT_VIDEOS = [
             </div>
           ) : (
             feedback.map((fb, idx) => {
-              const avatars = [
-                "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=100",
-                "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=100",
-                "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=100"
+              const getInitial = (name: string) => {
+                if (!name) return 'P';
+                return name.trim().charAt(0).toUpperCase();
+              };
+
+              const gradients = [
+                'from-[#55100D] via-[#7A1814] to-[#DD0200]',
+                'from-[#1F0270] via-[#2A0596] to-[#1F0270]',
+                'from-[#0F5132] via-[#157347] to-[#198754]',
+                'from-[#78350F] via-[#9A3412] to-[#C2410C]',
               ];
-              const avatarUrl = avatars[idx % avatars.length];
+              const bgGradient = gradients[idx % gradients.length];
+              const initialLetter = getInitial(fb.patientName);
 
               return (
                 <div
@@ -944,10 +953,18 @@ const DEFAULT_VIDEOS = [
                   className="text-sm border border-[#D9D9D9] pb-6 rounded-2xl bg-white shadow-[0px_4px_15px_0px] shadow-black/5 overflow-hidden flex flex-col justify-between space-y-4 hover:border-[#55100D]/40 hover:shadow-lg transition-all duration-300"
                 >
                   <div className="flex items-center gap-4 px-5 py-4 bg-[#55100D]/5 border-b border-[#55100D]/10">
-                    <img className="h-12 w-12 rounded-full object-cover" src={avatarUrl} alt={fb.patientName} />
+                    <div className="relative shrink-0">
+                      <div className={`h-12 w-12 rounded-2xl bg-gradient-to-br ${bgGradient} text-white flex items-center justify-center font-black text-lg shadow-md border-2 border-white`}>
+                        {initialLetter}
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 fill-emerald-100" />
+                      </div>
+                    </div>
                     <div>
                       <h1 className="text-sm font-black text-[#1A0706] leading-none">{fb.patientName}</h1>
-                      <p className="text-[10px] text-[#55100D] font-black uppercase tracking-wider mt-1.5">
+                      <p className="text-[10px] text-[#55100D] font-black uppercase tracking-wider mt-1.5 flex items-center gap-1">
+                        <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 inline shrink-0" />
                         {lang === 'hi' ? 'सत्यापित रोगी' : 'Verified Patient'}
                       </p>
                     </div>
