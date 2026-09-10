@@ -196,7 +196,7 @@ export default function HomePage() {
       specialization: 'General Physician, Female Disorders (PCOD, Breast Lumps) & Normal Delivery Care',
       designation: 'Consultant Physician & Female Health Specialist',
       bio: 'General Physician and Female Healthcare consultant experienced in PCOD/PCOS, breast tumours/lumps, female health disorders, normal delivery consultation, and general medical conditions.',
-      image: '/images/dr-adeeba-farheen.png',
+      image: '/images/doctors/dr-adeeba-farheen.jpg',
     },
   ];
 
@@ -230,7 +230,7 @@ export default function HomePage() {
       specialization: 'सामान्य फिजिशियन, महिला स्वास्थ्य (PCOD, स्तन गांठ/ट्यूमर) एवं सामान्य प्रसव परामर्श',
       designation: 'कंसल्टेंट फिजिशियन एवं महिला स्वास्थ्य विशेषज्ञ',
       bio: 'सामान्य फिजिशियन एवं महिला स्वास्थ्य परामर्शदाता, जो PCOD/PCOS, स्तन गांठ व ट्यूमर, महिला रोगों, सामान्य प्रसव मार्गदर्शन एवं सभी सामान्य बीमारियों के उपचार में अनुभवी हैं।',
-      image: '/images/dr-adeeba-farheen.png',
+      image: '/images/doctors/dr-adeeba-farheen.jpg',
     },
   ];
 
@@ -279,9 +279,9 @@ export default function HomePage() {
               descHi: 'सामाजिक स्वास्थ्य सेवा'
             }
           ].map((item, idx) => (
-            <div key={idx} className="bg-white border border-slate-200 rounded-2xl p-6 hover:border-[#F5B800] hover:shadow-lg transition-all duration-300 shadow-sm group">
-              <p className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#1F0270] via-[#2E0AB0] to-[#120146] group-hover:scale-105 transition-transform">{item.count}</p>
-              <p className="text-xs font-black text-[#120146] mt-1.5">{lang === 'hi' ? item.labelHi : item.labelEn}</p>
+            <div key={idx} className="bg-white border border-[#D9D9D9] rounded-2xl p-6 hover:border-[#55100D]/50 hover:shadow-md transition-all duration-300 shadow-sm">
+              <p className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#55100D] to-[#DD0200]">{item.count}</p>
+              <p className="text-xs font-black text-[#1A0706] mt-1.5">{lang === 'hi' ? item.labelHi : item.labelEn}</p>
               <p className="text-[10px] text-slate-500 mt-0.5 font-bold">{lang === 'hi' ? item.descHi : item.descEn}</p>
             </div>
           ))}
@@ -290,20 +290,20 @@ export default function HomePage() {
 
       {/* 3. FOUNDER'S MEMORIAL & LEGACY TIMELINE */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-[#F8FAFC] via-[#F1F5F9] to-[#E2E8F0] text-[#120146] rounded-3xl p-6 sm:p-10 lg:p-12 border border-[#1F0270]/15 shadow-xl relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#FFFDF9] via-[#FAF4ED] to-[#F5ECE2] text-[#1A0706] rounded-3xl p-6 sm:p-10 lg:p-12 border border-[#E0D0C0] shadow-xl relative overflow-hidden">
           
           {/* Subtle Royal Accent Lighting Orbs */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#1F0270]/10 via-[#F5B800]/15 to-transparent rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-[#F5B800]/10 to-transparent rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#DD0200]/10 via-amber-400/15 to-transparent rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-amber-500/10 to-transparent rounded-full blur-2xl pointer-events-none" />
 
           <div className="relative z-10 space-y-10">
             
             {/* Header Title Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border-b border-slate-300/80 pb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border-b border-[#E6D8C8] pb-8">
               
               <div className="lg:col-span-8 space-y-4">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1F0270]/10 border border-[#1F0270]/20 text-[#1F0270] text-xs font-black uppercase tracking-wider shadow-xs">
-                  <Award className="w-4 h-4 text-[#F5B800]" />
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#55100D]/5 border border-[#55100D]/20 text-[#55100D] text-xs font-black uppercase tracking-wider shadow-xs">
+                  <Award className="w-4 h-4 text-[#DD0200]" />
                   <span>
                     {lang === 'hi'
                       ? '31 दिसंबर 1934 – 3 जून • 1958 से मगध प्रमंडल की अटूट धरोहर'
@@ -311,11 +311,11 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-sans font-black text-[#120146] leading-tight tracking-tight">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1A0706] leading-tight tracking-tight">
                   {lang === 'hi' ? (
                     <>
                       हमारी ऐतिहासिक धरोहर:{' '}
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1F0270] via-[#2E0AB0] to-[#120146]">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#55100D] via-[#DD0200] to-[#B30000]">
                         स्वर्गीय डॉ. क्यू. एच. खान
                       </span>{' '}
                       का जीवन चरित्र एवं समाज सेवा
@@ -323,7 +323,7 @@ export default function HomePage() {
                   ) : (
                     <>
                       Our Heritage:{' '}
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1F0270] via-[#2E0AB0] to-[#120146]">
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#55100D] via-[#DD0200] to-[#B30000]">
                         Late Dr. Q.H. Khan’s
                       </span>{' '}
                       Life Biography & Legacy
@@ -331,7 +331,7 @@ export default function HomePage() {
                   )}
                 </h2>
 
-                <p className="text-slate-700 text-xs sm:text-sm leading-relaxed font-semibold max-w-3xl">
+                <p className="text-[#4A3533] text-xs sm:text-sm leading-relaxed font-semibold max-w-3xl">
                   {lang === 'hi'
                     ? '31 दिसंबर 1934 को ग्राम कालवाना, पोस्ट चेरकी (गया) में जन्मे स्वर्गीय डॉ. क्यू. एच. खान ने बचपन नाना जी के संरक्षण में बिताया तथा कोलकाता से होम्योपैथिक डॉक्टर की उपाधि अर्जित की। 1958 में नगमटिया रोड, गया में क्लिनिक की स्थापना के साथ उन्होंने अनाथ बच्चियों हेतु "The Gaya Muslim Girls Orphanage" एवं धर्मार्थ अस्पताल की शुरुआत की।'
                     : 'Born on 31st Dec 1934 in Kalwana, Cherki (Gaya), Late Dr. Q.H. Khan completed medical studies in Kolkata and established Dr. Q.H. Khan Clinic at Nagmatia Road in 1958. A visionary philanthropist who also founded The Gaya Muslim Girls Orphanage.'}
@@ -340,22 +340,22 @@ export default function HomePage() {
                 <div className="pt-2">
                   <Link
                     href="/doctors/dr-q-h-khan"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#1F0270] via-[#120146] to-[#2E0AB0] hover:from-[#120146] hover:to-[#1F0270] text-white text-xs font-black shadow-lg transition-all hover:-translate-y-0.5 tracking-wider uppercase border border-[#F5B800]/30"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white text-xs font-black shadow-lg transition-all hover:-translate-y-0.5 tracking-wider uppercase"
                   >
                     <span>{lang === 'hi' ? 'संस्थापक की संपूर्ण जीवनी (Biography) पढ़ें' : 'Read Full Founder Biography'}</span>
-                    <ArrowRight className="w-4 h-4 text-[#F5B800]" />
+                    <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
               </div>
 
               {/* Founder Portrait & Memorial Card */}
               <div className="lg:col-span-4 flex flex-col items-center justify-center">
-                <div className="bg-white border border-[#1F0270]/20 p-6 rounded-3xl shadow-xl text-center space-y-3 w-full max-w-sm relative overflow-hidden">
+                <div className="bg-white border border-[#E5D5C5] p-6 rounded-3xl shadow-xl text-center space-y-3 w-full max-w-sm relative overflow-hidden">
                   
                   {/* Decorative Gold Header Bar */}
-                  <div className="h-1.5 bg-gradient-to-r from-[#1F0270] via-[#F5B800] to-[#120146] absolute top-0 left-0 right-0" />
+                  <div className="h-1.5 bg-gradient-to-r from-[#55100D] via-amber-400 to-[#DD0200] absolute top-0 left-0 right-0" />
 
-                  <div className="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto rounded-2xl overflow-hidden border-2 border-[#F5B800] shadow-lg group mt-2">
+                  <div className="relative w-36 h-36 sm:w-44 sm:h-44 mx-auto rounded-2xl overflow-hidden border-2 border-amber-400/80 shadow-lg group mt-2">
                     <img
                       src="/images/dr-qh-khan.png"
                       alt="Late Dr. Q.H. Khan"
@@ -364,20 +364,20 @@ export default function HomePage() {
                         (e.target as HTMLImageElement).src = '/images/dr-qh-khan.png';
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#120146]/80 via-transparent to-transparent" />
-                    <span className="absolute bottom-2 left-2 right-2 text-[9px] font-black uppercase tracking-wider bg-[#F5B800] text-[#120146] py-0.5 px-2 rounded-md shadow-xs">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                    <span className="absolute bottom-2 left-2 right-2 text-[9px] font-black uppercase tracking-wider bg-[#DD0200] text-white py-0.5 px-2 rounded-md shadow-xs">
                       31 DEC 1934 – 3 JUNE
                     </span>
                   </div>
 
                   <div>
-                    <h3 className="font-sans font-black text-[#120146] text-lg sm:text-xl">
+                    <h3 className="font-black text-[#1A0706] text-base sm:text-lg">
                       {lang === 'hi' ? 'स्वर्गीय डॉ. क्यू. एच. खान' : 'Late Dr. Q.H. Khan'}
                     </h3>
-                    <p className="text-[#1F0270] text-xs font-black mt-0.5">
+                    <p className="text-[#55100D] text-xs font-black mt-0.5">
                       {lang === 'hi' ? 'कोलकाता मेडिसिन • संस्थापक (1958)' : 'Kolkata Graduate • Founder (1958)'}
                     </p>
-                    <p className="text-slate-700 text-[11px] font-semibold italic mt-2.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <p className="text-[#5A4543] text-[11px] font-semibold italic mt-2.5 bg-[#FAF3EC] p-3 rounded-xl border border-[#E8DCD0]">
                       {lang === 'hi'
                         ? '"चिकित्सा केवल आजीविका नहीं, बल्कि पीड़ित मानवता एवं अनाथ बच्चों की निस्वार्थ सेवा है।"'
                         : '"Medical treatment is not a commercial enterprise; it is a sacred duty to relieve human suffering."'}
@@ -390,83 +390,83 @@ export default function HomePage() {
 
             {/* 4 Milestone Pillars */}
             <div className="space-y-4">
-              <h3 className="text-xs font-black uppercase tracking-widest text-[#1F0270] flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#F5B800]" />
+              <h3 className="text-xs font-black uppercase tracking-widest text-[#55100D] flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-[#DD0200]" />
                 <span>{lang === 'hi' ? 'ऐतिहासिक विकास यात्रा के 4 मुख्य स्तंभ' : '4 HISTORICAL MILESTONES OF OUR LEGACY'}</span>
               </h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 
-                <div className="bg-white border border-slate-200 hover:border-[#1F0270]/50 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
+                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
                   <div className="flex items-center justify-between">
-                    <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#1F0270] to-[#120146] text-[#F5B800] font-black text-xs flex items-center justify-center shadow-xs">
+                    <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black text-xs flex items-center justify-center shadow-xs">
                       1934
                     </span>
-                    <span className="text-[10px] font-black text-[#120146] bg-amber-50 px-2 py-0.5 rounded border border-amber-200 uppercase tracking-wider">
+                    <span className="text-[10px] font-black text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 uppercase tracking-wider">
                       {lang === 'hi' ? 'जन्म एवं शिक्षा' : 'Birth & Studies'}
                     </span>
                   </div>
-                  <h4 className="font-black text-[#120146] text-sm">
+                  <h4 className="font-black text-[#1A0706] text-sm">
                     {lang === 'hi' ? 'कालवाना (गया) से कोलकाता' : 'Kalwana to Kolkata'}
                   </h4>
-                  <p className="text-slate-600 text-xs font-medium leading-relaxed">
+                  <p className="text-[#5A4543] text-xs font-medium leading-relaxed">
                     {lang === 'hi'
                       ? '31 दिसंबर 1934 को जन्म। कोलकाता से होम्योपैथिक डॉक्टर की उच्च शिक्षा हासिल की।'
                       : 'Born 31st Dec 1934. Earned Homoeopathic doctor degree from Kolkata.'}
                   </p>
                 </div>
 
-                <div className="bg-white border border-slate-200 hover:border-[#1F0270]/50 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
+                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
                   <div className="flex items-center justify-between">
-                    <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#1F0270] to-[#120146] text-[#F5B800] font-black text-xs flex items-center justify-center shadow-xs">
+                    <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black text-xs flex items-center justify-center shadow-xs">
                       1958
                     </span>
-                    <span className="text-[10px] font-black text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 uppercase tracking-wider">
+                    <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 uppercase tracking-wider">
                       {lang === 'hi' ? 'क्लिनिक स्थापना' : 'Clinic Est.'}
                     </span>
                   </div>
-                  <h4 className="font-black text-[#120146] text-sm">
+                  <h4 className="font-black text-[#1A0706] text-sm">
                     {lang === 'hi' ? 'नगमटिया रोड क्लिनिक' : 'Nagmatia Road Clinic'}
                   </h4>
-                  <p className="text-slate-600 text-xs font-medium leading-relaxed">
+                  <p className="text-[#5A4543] text-xs font-medium leading-relaxed">
                     {lang === 'hi'
                       ? 'गया में क्लासिकल होम्योपैथी एवं निशुल्क ग्रामीण चिकित्सा शिविरों की ऐतिहासिक शुरुआत।'
                       : 'Established the historic classical homoeopathy clinic at Nagmatia Road, Gaya.'}
                   </p>
                 </div>
 
-                <div className="bg-white border border-slate-200 hover:border-[#1F0270]/50 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
+                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
                   <div className="flex items-center justify-between">
-                    <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#1F0270] to-[#120146] text-[#F5B800] font-black text-xs flex items-center justify-center shadow-xs">
+                    <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black text-xs flex items-center justify-center shadow-xs">
                       Orphan
                     </span>
-                    <span className="text-[10px] font-black text-sky-800 bg-sky-50 px-2 py-0.5 rounded border border-sky-200 uppercase tracking-wider">
+                    <span className="text-[10px] font-black text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200 uppercase tracking-wider">
                       {lang === 'hi' ? 'समाज सुधार' : 'Social Welfare'}
                     </span>
                   </div>
-                  <h4 className="font-black text-[#120146] text-sm">
+                  <h4 className="font-black text-[#1A0706] text-sm">
                     {lang === 'hi' ? 'Gaya Muslim Girls Orphanage' : 'Girls Orphanage Founder'}
                   </h4>
-                  <p className="text-slate-600 text-xs font-medium leading-relaxed">
+                  <p className="text-[#5A4543] text-xs font-medium leading-relaxed">
                     {lang === 'hi'
                       ? 'अनाथ बच्चियों के आश्रय व शिक्षा हेतु कालवाना (चेरकी, गया) में अनाथालय की स्थापना।'
                       : 'Founded The Gaya Muslim Girls Orphanage at Kalwana (Cherki, Gaya).'}
                   </p>
                 </div>
 
-                <div className="bg-white border border-slate-200 hover:border-[#1F0270]/50 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
+                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
                   <div className="flex items-center justify-between">
-                    <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#1F0270] to-[#120146] text-[#F5B800] font-black text-xs flex items-center justify-center shadow-xs">
+                    <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black text-xs flex items-center justify-center shadow-xs">
                       Today
                     </span>
-                    <span className="text-[10px] font-black text-indigo-800 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200 uppercase tracking-wider">
+                    <span className="text-[10px] font-black text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200 uppercase tracking-wider">
                       {lang === 'hi' ? 'अमर धरोहर' : 'Living Legacy'}
                     </span>
                   </div>
-                  <h4 className="font-black text-[#120146] text-sm">
+                  <h4 className="font-black text-[#1A0706] text-sm">
                     {lang === 'hi' ? 'डॉ. आई. खान (प्रबंध निदेशक)' : 'Dr. I. Khan (MD)'}
                   </h4>
-                  <p className="text-slate-600 text-xs font-medium leading-relaxed">
+                  <p className="text-[#5A4543] text-xs font-medium leading-relaxed">
                     {lang === 'hi'
                       ? '70 वर्ष की आयु में 3 जून को दुर्घटना उपरांत निधन के बाद सुपुत्र डॉ. आई. खान द्वारा संस्था का सफल संचालन।'
                       : 'MD Dr. I. Khan continuing the legacy after his father’s tragic demise on 3rd June at age 70.'}
@@ -477,9 +477,9 @@ export default function HomePage() {
             </div>
 
             {/* Bottom Legacy Quote & MD Message Card */}
-            <div className="bg-gradient-to-r from-[#1F0270] via-[#120146] to-[#2E0AB0] text-white border border-[#F5B800]/30 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
+            <div className="bg-gradient-to-r from-[#55100D] via-[#701511] to-[#DD0200] text-white border border-[#55100D]/30 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-lg">
               <div className="space-y-1">
-                <span className="text-[10px] font-black text-[#F5B800] uppercase tracking-wider block">
+                <span className="text-[10px] font-black text-amber-300 uppercase tracking-wider block">
                   {lang === 'hi' ? 'प्रबंध निदेशक का संकल्प संदेश' : 'MANAGING DIRECTOR’S LEGACY COMMITMENT'}
                 </span>
                 <p className="text-xs sm:text-sm text-slate-100 font-semibold italic">
@@ -490,7 +490,7 @@ export default function HomePage() {
               </div>
               <div className="shrink-0 text-right">
                 <strong className="block text-white font-black text-sm">Dr. I. Khan</strong>
-                <span className="text-[11px] font-bold text-[#F5B800]">
+                <span className="text-[11px] font-bold text-amber-300">
                   {lang === 'hi' ? 'प्रबंध निदेशक एवं जनरल फिजिशियन' : 'Managing Director & General Physician'}
                 </span>
               </div>
@@ -503,10 +503,10 @@ export default function HomePage() {
       {/* 4. ACTIVE CLINICAL SPECIALISTS */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
         <div className="text-center space-y-2">
-          <span className="text-xs font-black text-[#1F0270] uppercase tracking-wider">
+          <span className="text-xs font-black text-[#55100D] uppercase tracking-wider">
             {lang === 'hi' ? 'सक्रिय चिकित्सा टीम' : 'Active Clinical Team'}
           </span>
-          <h2 className="text-3xl sm:text-4xl font-sans font-black text-[#120146] tracking-tight">
+          <h2 className="text-3xl font-black text-[#1A0706] tracking-tight">
             {lang === 'hi' ? 'हमारे अनुभवी विशेषज्ञों से परामर्श लें' : 'Consult Our Experienced Specialists'}
           </h2>
           <p className="text-xs text-slate-600 font-semibold max-w-xl mx-auto">
@@ -526,10 +526,10 @@ export default function HomePage() {
       {/* CONSTITUTIONAL CARE PROCESS */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
         <div className="text-center space-y-2">
-          <span className="text-xs font-black text-[#1F0270] uppercase tracking-wider">
+          <span className="text-xs font-black text-[#55100D] uppercase tracking-wider">
             {lang === 'hi' ? 'हमारी उपचार प्रक्रिया' : 'Our Clinical Method'}
           </span>
-          <h2 className="text-2xl sm:text-3xl font-sans font-black text-[#120146] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-black text-[#1A0706] tracking-tight">
             {lang === 'hi' ? 'संवैधानिक होम्योपैथिक उपचार मार्ग' : 'Constitutional Care Consultation Process'}
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm max-w-2xl mx-auto font-semibold">
@@ -570,10 +570,10 @@ export default function HomePage() {
               descHi: 'बीमारी में सुधार की गति की जांच करने और दवा की मात्रा में आवश्यक बदलाव हेतु फॉलो-अप।'
             }
           ].map((item, idx) => (
-            <div key={idx} className="bg-white border border-slate-200 rounded-2xl p-5 hover:border-[#1F0270]/50 hover:shadow-md transition-all duration-300 relative">
+            <div key={idx} className="bg-white border border-[#D9D9D9] rounded-2xl p-5 hover:border-[#55100D]/50 hover:shadow-md transition-all duration-300 relative">
               <span className="absolute -top-3 right-5 text-4xl font-black text-slate-200 select-none">{item.step}</span>
-              <h3 className="font-extrabold text-[#120146] text-sm mt-2">{lang === 'hi' ? item.titleHi : item.titleEn}</h3>
-              <p className="text-slate-600 mt-2 leading-relaxed text-[11px] font-semibold">{lang === 'hi' ? item.descHi : item.descEn}</p>
+              <h3 className="font-extrabold text-[#1A0706] text-sm mt-2">{lang === 'hi' ? item.titleHi : item.titleEn}</h3>
+              <p className="text-slate-650 mt-2 leading-relaxed text-[11px] font-semibold">{lang === 'hi' ? item.descHi : item.descEn}</p>
             </div>
           ))}
         </div>
@@ -581,15 +581,15 @@ export default function HomePage() {
 
       {/* 5. COMMUNITY CAMPS & FREE SHIVIR GALLERY */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="bg-gradient-to-br from-[#F8FAFC] via-white to-[#F1F5F9] border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm">
+        <div className="bg-gradient-to-br from-[#FFFDF9] via-white to-[#FAF3EC] border border-[#E8DCD0] rounded-3xl p-6 sm:p-8 space-y-6 shadow-sm">
           
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-200 pb-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-[#E6D8C8] pb-6">
             <div className="space-y-1.5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1F0270]/10 border border-[#1F0270]/20 text-[#1F0270] text-xs font-black uppercase tracking-wider">
-                <HeartPulse className="w-3.5 h-3.5 text-[#F5B800]" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#55100D]/5 border border-[#55100D]/20 text-[#55100D] text-xs font-black uppercase tracking-wider">
+                <HeartPulse className="w-3.5 h-3.5 text-[#DD0200]" />
                 <span>{lang === 'hi' ? 'निःशुल्क चिकित्सा शिविर एवं समाज सेवा (FREE SHIVIR DRIVES)' : 'FREE MEDICINE SHIVIR & COMMUNITY OUTREACH'}</span>
               </div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-sans font-black text-[#120146] tracking-tight">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#1A0706] tracking-tight">
                 {lang === 'hi' ? 'निःशुल्क चिकित्सा शिविर आयोजन एवं स्थल सूची' : 'Free Homeopathic Shivir & Location Register'}
               </h2>
               <p className="text-xs sm:text-sm text-slate-600 font-semibold max-w-3xl">
@@ -612,18 +612,18 @@ export default function HomePage() {
           </div>
 
           {/* Location Summary Badges Strip */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-bold text-[#120146]">
-            <div className="bg-white border border-slate-200 p-3 rounded-xl flex items-center gap-2.5 shadow-2xs">
-              <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-[#F5B800] shrink-0 font-black">
-                <MapPin className="w-4 h-4 text-[#1F0270]" />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-bold text-[#1A0706]">
+            <div className="bg-white border border-[#E5D5C5] p-3 rounded-xl flex items-center gap-2.5 shadow-2xs">
+              <div className="w-8 h-8 rounded-lg bg-orange-50 border border-orange-200 flex items-center justify-center text-orange-600 shrink-0 font-black">
+                <MapPin className="w-4 h-4" />
               </div>
               <div>
                 <p className="text-[10px] text-slate-500 uppercase tracking-wider font-extrabold">{lang === 'hi' ? 'मुख्य शिविर स्थल' : 'Primary Location'}</p>
-                <p className="font-black text-[#1F0270] text-xs">Karmauni, Gaya</p>
+                <p className="font-black text-[#55100D] text-xs">Karmauni, Gaya</p>
               </div>
             </div>
 
-            <div className="bg-white border border-slate-200 p-3 rounded-xl flex items-center gap-2.5 shadow-2xs">
+            <div className="bg-white border border-[#E5D5C5] p-3 rounded-xl flex items-center gap-2.5 shadow-2xs">
               <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0 font-black">
                 <ShieldCheck className="w-4 h-4" />
               </div>
@@ -633,7 +633,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="bg-white border border-slate-200 p-3 rounded-xl flex items-center gap-2.5 shadow-2xs">
+            <div className="bg-white border border-[#E5D5C5] p-3 rounded-xl flex items-center gap-2.5 shadow-2xs">
               <div className="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600 shrink-0 font-black">
                 <Clock className="w-4 h-4" />
               </div>
@@ -643,13 +643,13 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="bg-white border border-slate-200 p-3 rounded-xl flex items-center gap-2.5 shadow-2xs">
-              <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-[#F5B800] shrink-0 font-black">
+            <div className="bg-white border border-[#E5D5C5] p-3 rounded-xl flex items-center gap-2.5 shadow-2xs">
+              <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 shrink-0 font-black">
                 <Tag className="w-4 h-4" />
               </div>
               <div>
                 <p className="text-[10px] text-slate-500 uppercase tracking-wider font-extrabold">{lang === 'hi' ? 'विशेष परामर्श' : 'Specialization'}</p>
-                <p className="font-black text-[#120146] text-xs">Skin & General Care</p>
+                <p className="font-black text-amber-900 text-xs">Skin & General Care</p>
               </div>
             </div>
           </div>
@@ -757,10 +757,10 @@ export default function HomePage() {
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-slate-200 pb-4">
           <div className="space-y-1">
-            <span className="text-xs font-black text-[#1F0270] uppercase tracking-wider">
+            <span className="text-xs font-black text-[#55100D] uppercase tracking-wider">
               {lang === 'hi' ? 'विशेषज्ञ परामर्श क्षेत्र (पुरुष, महिला एवं बाल रोग)' : 'SPECIALIZED CLINICAL CONSULTATIONS'}
             </span>
-            <h2 className="text-2xl sm:text-3xl font-sans font-black text-[#120146] tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black text-[#1A0706] tracking-tight">
               {lang === 'hi'
                 ? 'पुरुष, महिला और बच्चों के स्वास्थ्य एवं क्रोनिक रोग परामर्श'
                 : 'Healthcare Consultations for Men, Women & Children'}
@@ -773,10 +773,10 @@ export default function HomePage() {
           </div>
           <Link
             href="/treatments"
-            className="text-xs font-black text-[#1F0270] hover:text-[#120146] inline-flex items-center gap-1 uppercase tracking-wider shrink-0"
+            className="text-xs font-black text-[#55100D] hover:text-[#DD0200] inline-flex items-center gap-1 uppercase tracking-wider shrink-0"
           >
             <span>{lang === 'hi' ? 'सभी रोग एवं उपचार देखें' : 'View All Conditions'}</span>
-            <ArrowRight className="w-4 h-4 text-[#F5B800]" />
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
@@ -814,10 +814,10 @@ export default function HomePage() {
       {/* 7. FAQ ACCORDION SECTION */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 space-y-4">
         <div className="text-center space-y-2">
-          <span className="text-xs font-black text-[#1F0270] uppercase tracking-wider">
+          <span className="text-xs font-black text-[#55100D] uppercase tracking-wider">
             {lang === 'hi' ? 'सहायक जानकारी' : 'HELPFUL KNOWLEDGE'}
           </span>
-          <h2 className="text-2xl sm:text-3xl font-sans font-black text-[#120146] tracking-tight">
+          <h2 className="text-3xl font-black text-[#1A0706] tracking-tight">
             {lang === 'hi' ? 'अक्सर पूछे जाने वाले प्रश्न' : 'Frequently Asked Questions'}
           </h2>
         </div>
@@ -848,10 +848,10 @@ export default function HomePage() {
       {/* 8. PATIENT WRITTEN TESTIMONIALS */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="text-center space-y-2">
-          <span className="text-xs font-black text-[#1F0270] uppercase tracking-wider">
+          <span className="text-xs font-black text-[#55100D] uppercase tracking-wider">
             {lang === 'hi' ? 'मरीजों की राय' : 'PATIENT VERDICTS'}
           </span>
-          <h2 className="text-2xl sm:text-3xl font-sans font-black text-[#120146] tracking-tight">
+          <h2 className="text-3xl font-black text-[#1A0706] tracking-tight">
             {lang === 'hi' ? 'हमारे मरीजों के अनुभव' : 'What Our Patients Say'}
           </h2>
         </div>
@@ -913,10 +913,10 @@ export default function HomePage() {
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-slate-200 pb-4">
           <div>
-            <span className="text-xs font-black text-[#1F0270] uppercase tracking-wider">
+            <span className="text-xs font-black text-[#55100D] uppercase tracking-wider">
               {lang === 'hi' ? 'वीडियो डायरी और हाइलाइट्स' : 'VIDEO DIARIES & HIGHLIGHTS'}
             </span>
-            <h2 className="text-2xl font-sans font-black text-[#120146] tracking-tight">
+            <h2 className="text-2xl font-black text-[#1A0706] tracking-tight">
               {lang === 'hi' ? 'यूट्यूब वीडियो गैलरी' : 'YouTube Video Gallery'}
             </h2>
           </div>

@@ -37,30 +37,27 @@ export const Header: React.FC = () => {
   return (
     <>
       {/* 1. Static Top Helpline Bar */}
-      <div className="bg-[#1F0270] text-white text-xs py-2 px-4 no-print border-b border-[#F5B800]/20">
+      <div className="bg-clinic-indigo text-white text-xs py-2 px-4 no-print">
         <div className="max-w-[1600px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex items-center space-x-4">
-            <span className="font-bold tracking-wide flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#F5B800] animate-pulse" />
+            <span className="font-semibold tracking-wide">
               DR. Q.H. KHAN CLINIC (ESTD. 1958) • GAYA, BIHAR
             </span>
           </div>
           <div className="flex items-center space-x-4">
-            <a href="tel:9135404090" className="flex items-center gap-1.5 text-[#F5B800] font-extrabold hover:text-amber-200 transition-colors">
-              <Phone className="w-3.5 h-3.5 text-[#F5B800]" />
+            <a href="tel:9135404090" className="flex items-center gap-1 hover:text-orange-300 transition-colors">
+              <Phone className="w-3.5 h-3.5" />
               <span>Helpline: 9135404090 / 9709786669</span>
             </a>
             <BilingualToggle currentLang={lang} onLanguageChange={setLang} />
           </div>
         </div>
-      </div>
-
-      {/* 2. Sticky Scroll-reactive Header */}
+      </div>      {/* 2. Sticky Scroll-reactive Header (based on template) */}
       <header
         className={`sticky top-0 z-50 w-full transition-all duration-500 no-print border-b ${
           isScrolled
-            ? 'bg-white/95 shadow-lg backdrop-blur-xl py-2.5 border-slate-200/80'
-            : 'bg-[#120146]/95 backdrop-blur-md py-3.5 border-white/10 shadow-[0_4px_25px_rgba(31,2,112,0.3)]'
+            ? 'bg-white/90 shadow-md backdrop-blur-lg py-2.5 border-slate-200/60'
+            : 'bg-[#131314]/95 backdrop-blur-md py-3.5 border-white/5 shadow-[0_4px_20px_rgba(0,0,0,0.08)]'
         }`}
       >
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -70,39 +67,39 @@ export const Header: React.FC = () => {
             <img
               src="/images/logo.png"
               alt="Dr. Q.H. Khan Clinic Logo"
-              className="w-9 h-9 rounded-xl shadow-md object-cover transition-transform group-hover:scale-105 duration-300 ring-2 ring-[#F5B800]/40"
+              className="w-9 h-9 rounded-xl shadow-md object-cover transition-transform group-hover:scale-105 duration-300"
             />
             <div>
-              <h1 className={`font-black text-base leading-tight transition-colors tracking-tight ${
-                isScrolled ? 'text-[#1F0270]' : 'text-white'
+              <h1 className={`font-black text-base leading-tight transition-colors ${
+                isScrolled ? 'text-[#1A0706]' : 'text-white'
               }`}>
                 DR. Q.H. KHAN
               </h1>
               <p className={`text-[10px] font-black tracking-wider uppercase bg-clip-text text-transparent bg-gradient-to-r ${
-                isScrolled ? 'from-[#1F0270] to-[#2E0AB0]' : 'from-[#F5B800] via-amber-200 to-amber-400'
+                isScrolled ? 'from-[#55100D] to-[#DD0200]' : 'from-rose-300 to-rose-500'
               }`}>
                 {lang === 'hi' ? 'क्लासिकल होम्योपैथिक क्लिनिक' : 'CLASSICAL HOMOEOPATHIC CLINIC'}
               </p>
             </div>
           </Link>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center space-x-7 text-xs font-bold">
+          {/* Desktop Nav (with slide-in hover effect from template) */}
+          <nav className="hidden md:flex items-center space-x-6 text-xs font-bold">
             {navLinks.map((link, idx) => {
               const isActive = pathname === link.path;
               return (
                 <Link
                   key={idx}
                   href={link.path}
-                  className={`group flex flex-col gap-1 transition-all ${
+                  className={`group flex flex-col gap-0.5 transition-all ${
                     isActive 
-                      ? (isScrolled ? 'text-[#1F0270] font-black tracking-wide' : 'text-[#F5B800] font-black tracking-wide') 
-                      : (isScrolled ? 'text-slate-700 hover:text-[#1F0270] font-bold tracking-wide' : 'text-slate-200 hover:text-[#F5B800] font-bold tracking-wide')
+                      ? (isScrolled ? 'text-clinic-indigo font-black tracking-wide' : 'text-white font-black tracking-wide') 
+                      : (isScrolled ? 'text-slate-700 hover:text-clinic-indigo font-bold tracking-wide' : 'text-[#D9D9D9] hover:text-white font-bold tracking-wide')
                   }`}
                 >
                   <span>{link.name}</span>
                   <div
-                    className={`h-0.5 transition-all duration-300 bg-[#F5B800] shadow-[0_0_10px_rgba(245,184,0,0.9)] ${
+                    className={`h-0.5 transition-all duration-300 bg-[#DD0200] shadow-[0_0_8px_rgba(221,2,0,0.85)] ${
                       isActive ? 'w-full' : 'w-0 group-hover:w-full'
                     }`}
                   />
@@ -123,7 +120,7 @@ export const Header: React.FC = () => {
                       : 'bg-white/10 text-white border border-white/20 hover:bg-white/25'
                   }`}
                 >
-                  <UserIcon className={`w-3.5 h-3.5 ${isScrolled ? 'text-[#1F0270]' : 'text-[#F5B800]'}`} />
+                  <UserIcon className={`w-3.5 h-3.5 ${isScrolled ? 'text-clinic-indigo' : 'text-indigo-300'}`} />
                   <span>Doctor Portal</span>
                 </Link>
                 <button
@@ -142,17 +139,17 @@ export const Header: React.FC = () => {
                     : 'bg-white/10 text-white border border-white/20 hover:bg-white/25'
                 }`}
               >
-                <UserIcon className={`w-3.5 h-3.5 ${isScrolled ? 'text-[#1F0270]' : 'text-[#F5B800]'}`} />
+                <UserIcon className={`w-3.5 h-3.5 ${isScrolled ? 'text-clinic-indigo' : 'text-white'}`} />
                 <span>{t.navLogin}</span>
               </Link>
             )}
 
             <Link
               href="/appointment"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#F5B800] via-[#F4C430] to-[#EAB308] hover:from-[#EAB308] hover:to-[#D99B00] text-[#120146] font-black shadow-md transition-all hover:scale-102 uppercase tracking-wide text-[11px]"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-rose-700 text-white font-black shadow-md hover:from-rose-500 hover:to-rose-600 transition-all hover:scale-102"
             >
-              <div className="w-2 h-2 rounded-full bg-[#120146] animate-ping" />
-              <Calendar className="w-4 h-4 shrink-0 text-[#120146]" />
+              <div className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
+              <Calendar className="w-4 h-4 shrink-0" />
               <span>{t.navAppointment}</span>
             </Link>
           </div>
@@ -161,14 +158,14 @@ export const Header: React.FC = () => {
           <div className="flex items-center gap-3 md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={`p-2 focus:outline-none ${isScrolled ? 'text-[#1F0270]' : 'text-[#F5B800]'}`}
+              className={`p-2 focus:outline-none ${isScrolled ? 'text-slate-855' : 'text-white'}`}
             >
               {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Slide-out Menu */}
+        {/* Mobile Slide-out Menu (based on template) */}
         <div
           className={`fixed top-0 left-0 w-full h-screen bg-white text-sm flex flex-col md:hidden items-center justify-center gap-6 font-bold text-slate-800 transition-all duration-500 z-50 ${
             isMenuOpen ? 'translate-x-0' : '-translate-x-full'
@@ -184,8 +181,8 @@ export const Header: React.FC = () => {
               key={i}
               href={link.path}
               onClick={() => setIsMenuOpen(false)}
-              className={`hover:text-[#1F0270] transition-colors ${
-                pathname === link.path ? 'text-[#1F0270] font-black' : ''
+              className={`hover:text-clinic-indigo transition-colors ${
+                pathname === link.path ? 'text-clinic-indigo font-black' : ''
               }`}
             >
               {link.name}
@@ -225,7 +222,7 @@ export const Header: React.FC = () => {
             <Link
               href="/appointment"
               onClick={() => setIsMenuOpen(false)}
-              className="py-3 rounded-xl bg-gradient-to-r from-[#F5B800] to-[#EAB308] text-[#120146] font-black shadow-md uppercase tracking-wider"
+              className="py-3 rounded-xl bg-clinic-crimson text-white font-black shadow-md hover:bg-amber-700 transition-colors"
             >
               {t.navAppointment}
             </Link>

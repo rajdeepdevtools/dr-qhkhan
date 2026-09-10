@@ -10,17 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         clinic: {
-          patrickBlue: '#1F0270', // Patrick's Royal Blue
-          patrickBlueDark: '#120146', // Deep Royal Navy
-          patrickBlueLight: '#2E0AB0', // Vibrant Royal Accent
-          americanYellow: '#F5B800', // American Yellow / Radiant Gold
-          americanYellowHover: '#D99B00', // Warm Gold Hover State
-          americanYellowLight: '#FFF9E6', // Soft Yellow Glow Tint
-          indigo: '#1F0270', // Primary Theme (Patrick's Blue)
-          violet: '#120146', // Coffee/Navy Accent
-          crimson: '#F5B800', // Accent Highlight (American Yellow)
-          lightBg: '#F8FAFC', // Slate-Pearl Base Tint
-          cardBorder: '#E2E8F0', // Soft Glass Border
+          indigo: '#55100D', // Black Cherry
+          violet: '#1A0706', // Coffee Bean
+          crimson: '#DD0200', // Racing Red
+          lightBg: '#F8F8F8', // Alabaster Base Tint
+          cardBorder: '#D9D9D9', // Alabaster Grey
         },
       },
     },

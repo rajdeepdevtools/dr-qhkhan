@@ -18,6 +18,10 @@ export const ENV = {
   JWT_REFRESH_EXPIRES_IN: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
   WEBSITE_URL: process.env.WEBSITE_URL || 'http://localhost:3000',
   ADMIN_URL: process.env.ADMIN_URL || 'http://localhost:3001',
+  PROD_WEBSITE_URL: process.env.PROD_WEBSITE_URL || 'https://dr-qhkhan-website.vercel.app',
+  PROD_ADMIN_URL: process.env.PROD_ADMIN_URL || 'https://dr-qhkhan-admin.vercel.app',
+  API_URL: process.env.API_URL || 'http://localhost:5000/api',
+  PROD_API_URL: process.env.PROD_API_URL || 'https://dr-qhkhan.onrender.com/api',
   STORAGE_PROVIDER: process.env.STORAGE_PROVIDER || 'local',
   STORAGE_BUCKET: process.env.STORAGE_BUCKET || 'medical-uploads',
 };
