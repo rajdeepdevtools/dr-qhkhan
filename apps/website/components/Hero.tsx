@@ -79,38 +79,38 @@ export const Hero: React.FC = () => {
       <div className="absolute w-[500px] h-[500px] bg-[#DD0200]/5 rounded-full blur-[130px] -bottom-40 -right-40 glow-sphere-crimson pointer-events-none" />
 
       {/* 3. MAIN HERO CONTENT */}
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-10">
+      <div className="max-w-[1600px] mx-auto px-3.5 sm:px-6 lg:px-8 relative z-10 space-y-8 sm:space-y-10">
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* LEFT COLUMN: Deep Clinical Details */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-left">
             
             {/* Top Heritage Badge */}
-            <div className="inline-flex flex-wrap items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#55100D]/5 border border-[#55100D]/15 text-[#55100D] text-xs font-black uppercase tracking-wider shadow-xs">
-              <Award className="w-4 h-4 text-[#DD0200]" />
+            <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-1.5 sm:gap-2.5 px-3 py-1.5 sm:px-4 sm:py-1.5 rounded-full bg-[#55100D]/5 border border-[#55100D]/15 text-[#55100D] text-[10px] sm:text-xs font-black uppercase tracking-tight sm:tracking-wider shadow-xs max-w-full">
+              <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#DD0200] shrink-0" />
               <span>
                 {lang === 'hi'
-                  ? 'स्थापना 1958 गया • 68 वर्षों से मगध प्रमंडल की सेवा में समर्पित'
-                  : 'ESTABLISHED 1958 GAYA • SERVING MAGADH DIVISION FOR 68+ YEARS'}
+                  ? 'स्थापना 1958 गया • 68+ वर्षों का अटूट विश्वास'
+                  : 'ESTABLISHED 1958 GAYA • SERVING 68+ YEARS'}
               </span>
-              <span className="inline-flex items-center gap-1 text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2 py-0.5 rounded-full ml-1 border border-emerald-200">
+              <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2 py-0.5 rounded-full border border-emerald-200 shrink-0">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-ping" />
-                {lang === 'hi' ? 'आज परामर्श हेतु खुला है' : 'OPEN FOR CONSULTATION TODAY'}
+                {lang === 'hi' ? 'आज खुला है' : 'OPEN TODAY'}
               </span>
             </div>
 
             {/* Clinic Main Title & Subtitle */}
-            <div className="space-y-2.5">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#1A0706] leading-none">
+            <div className="space-y-2">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-[#1A0706] leading-tight">
                 {lang === 'hi' ? 'डॉ. क्यू. एच. खान' : 'DR. Q.H. KHAN'}
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#55100D] via-[#8B1A17] to-[#DD0200] text-2xl sm:text-3.5xl lg:text-4xl font-black mt-2 tracking-wide">
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#55100D] via-[#8B1A17] to-[#DD0200] text-xl sm:text-3.5xl lg:text-4xl font-black mt-1.5 tracking-tight sm:tracking-wide">
                   {lang === 'hi' ? 'क्लासिकल होम्योपैथिक क्लिनिक' : 'CLASSICAL HOMOEOPATHIC CLINIC'}
                 </span>
               </h1>
               
-              <div className="flex items-center gap-2 text-xs font-black text-[#DD0200] tracking-widest uppercase">
-                <Zap className="w-4 h-4 text-[#DD0200] animate-pulse" />
+              <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-black text-[#DD0200] tracking-tight sm:tracking-widest uppercase">
+                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#DD0200] animate-pulse shrink-0" />
                 <span>
                   {lang === 'hi' 
                     ? '1958 से मगध प्रमंडल की सेवा में समर्पित क्लासिकल क्लिनिक' 
@@ -120,7 +120,7 @@ export const Hero: React.FC = () => {
             </div>
 
             {/* Solid Detailed Description Paragraph */}
-            <div className="bg-white/80 backdrop-blur-xs border border-slate-200 p-5 rounded-2xl shadow-xs space-y-3">
+            <div className="bg-white/90 backdrop-blur-xs border border-slate-200 p-4 sm:p-5 rounded-2xl shadow-xs space-y-3">
               <p className="text-slate-700 text-xs sm:text-sm leading-relaxed font-semibold">
                 {lang === 'hi'
                   ? 'स्वर्गीय डॉ. क्यू. एच. खान द्वारा 1958 में स्थापित, हमारा क्लिनिक पिछले 68 से अधिक वर्षों से गया, औरंगाबाद, नवादा, जहानाबाद, अरवल एवं संपूर्ण मगध प्रमंडल (Magadh Division) के लोगों की निस्वार्थ चिकित्सा सेवा में समर्पित रहा है। हम क्रोनिक त्वचा विकारों (सोरियासिस, एक्जिमा), विटिलिगो (सफेद दाग), मानसिक एवं मस्तिष्क रोगों (तनाव, अवसाद/डिप्रेशन, माइग्रेन), पुरुष स्वास्थ्य (प्रोस्टेट, बांझपन), महिला स्वास्थ्य (गर्भाशय विकार, PCOD, फाइब्रॉइड) और बाल रोगों (टॉन्सिल, एडेनोइड्स, बिस्तर गीला करना) के लिए प्रामाणिक संवैधानिक होम्योपैथिक परामर्श प्रदान करते हैं।'
@@ -128,95 +128,85 @@ export const Hero: React.FC = () => {
               </p>
 
               {/* Magadh Division Regional Trust Badge */}
-              <div className="bg-[#55100D]/5 border border-[#55100D]/12 p-3 rounded-xl flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-[#55100D] text-white flex items-center justify-center font-black text-xs shrink-0 shadow-xs">
+              <div className="bg-[#55100D]/5 border border-[#55100D]/12 p-2.5 sm:p-3 rounded-xl flex items-center gap-2.5 sm:gap-3">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#55100D] text-white flex items-center justify-center font-black text-xs shrink-0 shadow-xs">
                   🏛️
                 </div>
                 <div className="text-xs">
-                  <strong className="font-extrabold text-[#55100D] block text-[11px]">
-                    {lang === 'hi' ? 'मगध प्रमंडल का ऐतिहासिक एवं भरोसेमंद चिकित्सा संस्थान (Est. 1958)' : 'Historical Institution of Magadh Division (Est. 1958)'}
+                  <strong className="font-extrabold text-[#55100D] block text-[10.5px] sm:text-[11px]">
+                    {lang === 'hi' ? 'मगध प्रमंडल का ऐतिहासिक चिकित्सा संस्थान (Est. 1958)' : 'Historical Institution of Magadh Division (Est. 1958)'}
                   </strong>
-                  <p className="text-slate-600 font-semibold text-[11px] leading-snug">
+                  <p className="text-slate-600 font-semibold text-[10px] sm:text-[11px] leading-snug">
                     {lang === 'hi'
-                      ? 'गया, औरंगाबाद, नवादा, जहानाबाद और अरवल जिलों के परिवारों का 68 वर्षों का अटूट विश्वास।'
-                      : 'Trusted by thousands of families across Gaya, Aurangabad, Nawada, Jehanabad & Arwal districts.'}
+                      ? 'गया, औरंगाबाद, नवादा, जहानाबाद और अरवल जिलों का अटूट विश्वास।'
+                      : 'Trusted by thousands of families across Gaya, Aurangabad, Nawada, Jehanabad & Arwal.'}
                   </p>
                 </div>
               </div>
               
-              <div className="flex flex-wrap items-center gap-4 pt-1 text-[11px] font-bold text-slate-600 border-t border-slate-100">
-                <span className="flex items-center gap-1.5 text-[#55100D]">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#DD0200]" />
-                  {lang === 'hi' ? '100% गोपनीय केस अध्ययन' : '100% Confidential Case Intake'}
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4 pt-1 text-[10px] sm:text-[11px] font-bold text-slate-600 border-t border-slate-100">
+                <span className="flex items-center gap-1 text-[#55100D]">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#DD0200] shrink-0" />
+                  {lang === 'hi' ? '100% गोपनीय' : '100% Confidential'}
                 </span>
-                <span className="flex items-center gap-1.5 text-[#55100D]">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#DD0200]" />
-                  {lang === 'hi' ? 'पंजीकृत योग्य विशेषज्ञ टीम' : 'Registered Clinical Specialists'}
+                <span className="flex items-center gap-1 text-[#55100D]">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#DD0200] shrink-0" />
+                  {lang === 'hi' ? 'पंजीकृत विशेषज्ञ टीम' : 'Registered Specialists'}
                 </span>
-                <span className="flex items-center gap-1.5 text-[#55100D]">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#DD0200]" />
-                  {lang === 'hi' ? 'संवैधानिक होम्योपैथिक नुस्खे' : 'Constitutional Homoeopathic Remedies'}
+                <span className="flex items-center gap-1 text-[#55100D]">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#DD0200] shrink-0" />
+                  {lang === 'hi' ? 'संवैधानिक होम्योपैथी' : 'Constitutional Care'}
                 </span>
               </div>
             </div>
 
             {/* Action CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-1">
+            <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 sm:gap-3 pt-1">
               <Link
                 href="/appointment"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#55100D] via-[#701511] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white font-black text-xs shadow-lg transition-all hover:-translate-y-0.5 tracking-wide shrink-0"
+                className="col-span-2 sm:col-auto inline-flex items-center justify-center gap-2 px-5 py-3 sm:px-6 sm:py-3.5 rounded-xl bg-gradient-to-r from-[#55100D] via-[#701511] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white font-black text-xs shadow-lg transition-all tracking-wide"
               >
                 <div className="w-2.5 h-2.5 rounded-full bg-white pulse-dot shrink-0" />
                 <Calendar className="w-4 h-4" />
-                <span>{lang === 'hi' ? 'अपॉइंटमेंट बुक करें' : 'Book Consultation Appointment'}</span>
+                <span>{lang === 'hi' ? 'अपॉइंटमेंट बुक करें' : 'Book Consultation'}</span>
               </Link>
 
               <a
                 href="tel:9135404090"
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white border border-[#D9D9D9] hover:bg-slate-50 text-[#1A0706] font-extrabold text-xs transition-all hover:-translate-y-0.5 shadow-sm hover:border-[#55100D]/50 shrink-0"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 sm:px-5 sm:py-3.5 rounded-xl bg-white border border-[#D9D9D9] hover:bg-slate-50 text-[#1A0706] font-extrabold text-xs transition-all shadow-xs"
               >
-                <Phone className="w-4 h-4 text-emerald-600" />
-                <span>{lang === 'hi' ? 'हेल्पलाइन कॉल करें' : 'Call Helpline'}</span>
+                <Phone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>{lang === 'hi' ? 'कॉल करें' : 'Call Helpline'}</span>
               </a>
 
               <a
                 href={`https://wa.me/91${clinicConfig.whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white border border-[#D9D9D9] hover:bg-slate-50 text-[#1A0706] font-extrabold text-xs transition-all hover:-translate-y-0.5 shadow-sm hover:border-[#55100D]/50 shrink-0"
+                className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 sm:px-5 sm:py-3.5 rounded-xl bg-white border border-[#D9D9D9] hover:bg-slate-50 text-[#1A0706] font-extrabold text-xs transition-all shadow-xs"
               >
-                <MessageSquare className="w-4 h-4 text-emerald-600" />
-                <span>{lang === 'hi' ? 'व्हाट्सएप कंसल्ट' : 'WhatsApp Consultation'}</span>
-              </a>
-
-              <a
-                href={clinicConfig.googleMapsDirectionsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl bg-white border border-[#D9D9D9] hover:bg-slate-50 text-[#1A0706] font-extrabold text-xs transition-all hover:-translate-y-0.5 shadow-sm hover:border-[#55100D]/50 shrink-0"
-              >
-                <MapPin className="w-4 h-4 text-[#DD0200]" />
-                <span>{lang === 'hi' ? 'नगमटिया रोड गया' : 'Location Directions'}</span>
+                <MessageSquare className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>{lang === 'hi' ? 'व्हाट्सएप' : 'WhatsApp'}</span>
               </a>
             </div>
 
             {/* Operating Schedule Card */}
-            <div className="bg-[#1A0706] text-white rounded-2xl p-4 sm:p-5 space-y-2 text-xs border border-white/10 shadow-lg">
+            <div className="bg-[#1A0706] text-white rounded-2xl p-3.5 sm:p-5 space-y-2 text-xs border border-white/10 shadow-lg">
               <div className="flex items-center justify-between border-b border-white/15 pb-2">
-                <div className="flex items-center gap-2 text-[#DD0200]">
-                  <Clock className="w-4 h-4 text-[#DD0200]" />
-                  <span className="font-black uppercase tracking-wider text-white">
-                    {lang === 'hi' ? 'क्लिनिक परामर्श समय (Timing Schedule)' : 'Clinic Operating Schedule'}
+                <div className="flex items-center gap-1.5 text-[#DD0200]">
+                  <Clock className="w-3.5 h-3.5 text-[#DD0200] shrink-0" />
+                  <span className="font-black uppercase tracking-wider text-white text-[11px] sm:text-xs">
+                    {lang === 'hi' ? 'क्लिनिक समय (Timing Schedule)' : 'Clinic Operating Schedule'}
                   </span>
                 </div>
-                <span className="text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full">
-                  {lang === 'hi' ? 'रविवार को भी खुला' : 'Open All 7 Days'}
+                <span className="text-[9.5px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full shrink-0">
+                  {lang === 'hi' ? 'रविवार खुला' : 'Open All 7 Days'}
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-0.5 text-xs">
                 <div>
-                  <span className="text-slate-400 font-bold block text-[11px]">
+                  <span className="text-slate-400 font-bold block text-[10.5px] sm:text-[11px]">
                     {lang === 'hi' ? 'सोमवार - शनिवार (Mon - Sat):' : 'Monday to Saturday:'}
                   </span>
                   <p className="font-extrabold text-white text-xs mt-0.5">
@@ -226,7 +216,7 @@ export const Hero: React.FC = () => {
                   </p>
                 </div>
                 <div>
-                  <span className="text-emerald-400 font-bold block text-[11px]">
+                  <span className="text-emerald-400 font-bold block text-[10.5px] sm:text-[11px]">
                     {lang === 'hi' ? 'रविवार का विशेष समय (Sunday):' : 'Sunday Schedule:'}
                   </span>
                   <p className="font-extrabold text-emerald-300 text-xs mt-0.5">

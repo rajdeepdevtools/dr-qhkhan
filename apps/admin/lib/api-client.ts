@@ -1,19 +1,31 @@
-const getApiBaseUrl = () => {
+export function getApiBaseUrl(): string {
+  // 1. Explicit NEXT_PUBLIC_API_URL environment variable
   if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL;
+    return process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, '');
   }
-  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+
+  // 2. Server-side environment check (Vercel Serverless / SSR / Edge)
+  if (typeof window === 'undefined') {
+    if (process.env.VERCEL || process.env.VERCEL_URL || process.env.NODE_ENV === 'production') {
+      return 'https://dr-qhkhan.onrender.com/api';
+    }
+    return 'http://localhost:5000/api';
+  }
+
+  // 3. Client-side browser execution (CSR)
+  const hostname = window.location.hostname;
+  if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
     return 'https://dr-qhkhan.onrender.com/api';
   }
-  return 'http://localhost:5000/api';
-};
 
-const API_BASE_URL = getApiBaseUrl();
+  return 'http://localhost:5000/api';
+}
 
 async function refreshAccessToken(): Promise<string | null> {
   try {
+    const baseUrl = getApiBaseUrl();
     const refreshToken = typeof window !== 'undefined' ? localStorage.getItem('adminRefreshToken') : null;
-    const res = await fetch(`${API_BASE_URL}/auth/refresh`, {
+    const res = await fetch(`${baseUrl}/auth/refresh`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -45,7 +57,8 @@ export async function adminApiClient<T = any>(
   options: RequestInit = {},
   isRetry = false
 ): Promise<{ success: boolean; message?: string; data?: T; errors?: any[]; code?: string }> {
-  const url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+  const baseUrl = getApiBaseUrl();
+  const url = `${baseUrl}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
 
   const defaultHeaders: Record<string, string> = {};
 
@@ -102,5 +115,3 @@ export async function adminApiClient<T = any>(
     };
   }
 }
-
-

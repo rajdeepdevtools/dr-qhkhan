@@ -9,6 +9,27 @@ import { useLanguage } from '../lib/language-context';
 export const DoctorCard: React.FC<{ doctor: Partial<IDoctorProfile> }> = ({ doctor }) => {
   const { lang } = useLanguage();
 
+  const getDoctorImageSrc = () => {
+    const rawImg = (doctor as any).image || (doctor as any).imageUrl || (doctor as any).photo;
+    if (rawImg && typeof rawImg === 'string' && rawImg.trim() !== '') {
+      if (rawImg.startsWith('/') || rawImg.startsWith('http://') || rawImg.startsWith('https://') || rawImg.startsWith('data:')) {
+        return rawImg;
+      }
+    }
+
+    if (doctor.slug === 'dr-adeeba-farheen' || doctor.name?.includes('Adeeba') || doctor.name?.includes('अदीबा')) {
+      return '/images/dr-adeeba-farheen.png';
+    }
+    if (doctor.isDeceased || doctor.slug === 'dr-q-h-khan' || doctor.name?.includes('Q.H.')) {
+      return '/images/dr-qh-khan.png';
+    }
+    if (doctor.slug === 'dr-i-khan' || doctor.name?.includes('I. Khan') || doctor.name?.includes('Irfan')) {
+      return '/images/dr-i-khan.png';
+    }
+
+    return '/images/dr-i-khan.png';
+  };
+
   return (
     <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md hover:border-slate-300 transition-all space-y-4 flex flex-col justify-between text-xs font-semibold">
       <div className="space-y-4">
@@ -16,25 +37,17 @@ export const DoctorCard: React.FC<{ doctor: Partial<IDoctorProfile> }> = ({ doct
         {/* Professional Portrait Container */}
         <div className="relative w-full h-64 bg-slate-50 rounded-xl overflow-hidden border border-slate-200/60 shadow-inner group">
           <img
-            src={
-              (doctor as any).image ||
-              (doctor.slug === 'dr-q-h-khan' || doctor.isDeceased
-                ? '/images/dr-qh-khan.png'
-                : doctor.slug === 'dr-i-khan'
-                ? '/images/dr-i-khan.png'
-                : '/images/doctors/placeholder.jpg')
-            }
-            alt={doctor.name}
+            src={getDoctorImageSrc()}
+            alt={doctor.name || 'Doctor'}
             className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
             onError={(e) => {
-              if (doctor.isDeceased || doctor.slug === 'dr-q-h-khan') {
-                (e.target as HTMLImageElement).src = '/images/dr-qh-khan.png';
-              } else if (doctor.slug === 'dr-i-khan') {
-                (e.target as HTMLImageElement).src = '/images/dr-i-khan.png';
-              } else if (doctor.name?.includes('Adeeba') || doctor.name?.includes('अदीबा')) {
-                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1594824813573-246434de83fb?q=80&w=350&auto=format&fit=crop';
+              const target = e.target as HTMLImageElement;
+              if (doctor.slug === 'dr-adeeba-farheen' || doctor.name?.includes('Adeeba') || doctor.name?.includes('अदीबा')) {
+                target.src = '/images/dr-adeeba-farheen.png';
+              } else if (doctor.isDeceased || doctor.slug === 'dr-q-h-khan' || doctor.name?.includes('Q.H.')) {
+                target.src = '/images/dr-qh-khan.png';
               } else {
-                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=350&auto=format&fit=crop';
+                target.src = '/images/dr-i-khan.png';
               }
             }}
           />

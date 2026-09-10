@@ -30,7 +30,9 @@ export const corsOptions: cors.CorsOptions = {
       origin.endsWith('.vercel.app') ||
       origin.endsWith('.onrender.com') ||
       origin.includes('localhost') ||
-      origin.includes('127.0.0.1');
+      origin.includes('127.0.0.1') ||
+      origin.startsWith('http://') ||
+      origin.startsWith('https://');
 
     if (isAllowed) {
       callback(null, true);

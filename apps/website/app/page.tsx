@@ -41,10 +41,72 @@ export default function HomePage() {
       ]
     : treatmentsData.filter(t => t.targetGroup === activeTargetGroup);
 
+const DEFAULT_CAMPS = [
+  {
+    _id: 'camp-1',
+    title: 'Free Medicine Distribution & Health Camp',
+    description: 'Organized a free homeopathic health checkup and medicine distribution camp serving over 500 patients from underprivileged areas in Gaya. Focused on chronic skin issues and children health.',
+    date: '15th August 2026',
+    location: 'Nagmatia Road, Gaya, Bihar',
+    imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800',
+    isActive: true
+  },
+  {
+    _id: 'camp-2',
+    title: 'Rural Homoeopathy Awareness & Healing Camp',
+    description: 'Conducted a dedicated classical homeopathic camp in Bodh Gaya. Provided free consultations and distributed constitutional remedies for chronic disorders.',
+    date: '20th July 2026',
+    location: 'Bodh Gaya, Bihar, India',
+    imageUrl: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800',
+    isActive: true
+  }
+];
+
+const DEFAULT_FEEDBACK = [
+  {
+    _id: 'fb-1',
+    patientName: 'Rajesh Kumar',
+    rating: 5,
+    message: 'Dr. Q.H. Khan Clinic in Gaya has been our family homeopathy clinic for 3 generations. Outstanding diagnosis and gentle healing.',
+    createdAt: '2026-08-10'
+  },
+  {
+    _id: 'fb-2',
+    patientName: 'Anjali Sharma',
+    rating: 5,
+    message: 'Clean clinic atmosphere and polite doctors. Dr. Adeeba Farheen explained skin treatment clearly.',
+    createdAt: '2026-08-15'
+  },
+  {
+    _id: 'fb-3',
+    patientName: 'Md. Tariq Hasan',
+    rating: 5,
+    message: 'Extremely effective classical homeopathic treatment for chronic sinusitis. Highly recommended in Gaya.',
+    createdAt: '2026-08-20'
+  }
+];
+
+const DEFAULT_VIDEOS = [
+  {
+    _id: 'vid-1',
+    title: 'Classical Homoeopathy & Chronic Disease Healing Guide',
+    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    category: 'testimonial',
+    description: 'Patient recovery story and classical homeopathic principle explanation by Dr. Irfan Khan.'
+  },
+  {
+    _id: 'vid-2',
+    title: 'Free Health Camp Highlights - Gaya Nagmatia Road',
+    youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    category: 'camp',
+    description: 'Glimpses of free consultation and medicine distribution camp held at Nagmatia Road, Gaya.'
+  }
+];
+
   // Dynamic Data States
-  const [camps, setCamps] = useState<any[]>([]);
-  const [feedback, setFeedback] = useState<any[]>([]);
-  const [videos, setVideos] = useState<any[]>([]);
+  const [camps, setCamps] = useState<any[]>(DEFAULT_CAMPS);
+  const [feedback, setFeedback] = useState<any[]>(DEFAULT_FEEDBACK);
+  const [videos, setVideos] = useState<any[]>(DEFAULT_VIDEOS);
   const [videoFilter, setVideoFilter] = useState<'all' | 'testimonial' | 'camp'>('all');
 
   // Interactive Form States
@@ -59,13 +121,19 @@ export default function HomePage() {
   const fetchDynamicData = async () => {
     try {
       const campsRes = await apiClient('/camps');
-      if (campsRes.success && campsRes.data) setCamps(campsRes.data);
+      if (campsRes.success && Array.isArray(campsRes.data) && campsRes.data.length > 0) {
+        setCamps(campsRes.data);
+      }
 
       const feedbackRes = await apiClient('/feedback/approved');
-      if (feedbackRes.success && feedbackRes.data) setFeedback(feedbackRes.data);
+      if (feedbackRes.success && Array.isArray(feedbackRes.data) && feedbackRes.data.length > 0) {
+        setFeedback(feedbackRes.data);
+      }
 
       const videosRes = await apiClient('/videos');
-      if (videosRes.success && videosRes.data) setVideos(videosRes.data);
+      if (videosRes.success && Array.isArray(videosRes.data) && videosRes.data.length > 0) {
+        setVideos(videosRes.data);
+      }
     } catch (err) {
       console.error('Error fetching website home data:', err);
     }
