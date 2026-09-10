@@ -83,14 +83,14 @@ export const UpcomingShivirPopup: React.FC = () => {
       <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2">
         <button
           onClick={handleOpen}
-          className="group relative flex items-center gap-2.5 sm:gap-3 bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-900 hover:from-emerald-600 hover:to-teal-600 text-white font-bold px-3 py-2.5 sm:px-4 sm:py-3 rounded-full shadow-[0_10px_25px_rgba(16,185,129,0.35)] transform hover:-translate-y-1 transition-all duration-300 border border-emerald-400/40"
+          className="group relative flex items-center gap-2.5 sm:gap-3 bg-gradient-to-r from-[#55100D] via-[#1A0706] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white font-bold px-3 py-2.5 sm:px-4 sm:py-3 rounded-full shadow-[0_10px_25px_rgba(221,2,0,0.35)] transform hover:-translate-y-1 transition-all duration-300 border border-[#DD0200]/40"
           aria-label="View Upcoming Free Shivir Details"
         >
           {/* Glowing aura */}
-          <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-emerald-400 to-teal-400 opacity-40 blur-md group-hover:opacity-80 transition duration-300 animate-pulse"></span>
+          <span className="absolute -inset-1 rounded-full bg-gradient-to-r from-[#DD0200] to-[#55100D] opacity-40 blur-md group-hover:opacity-80 transition duration-300 animate-pulse"></span>
           
           <span className="relative flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-400 text-slate-950 font-black shadow-md shrink-0">
-            <Megaphone className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-bounce" />
+            <Megaphone className="w-3.5 h-3.5 sm:w-4 sm:h-4 animate-bounce text-[#55100D]" />
           </span>
           <div className="relative text-left pr-0.5 hidden sm:block">
             <div className="text-[9.5px] uppercase tracking-widest font-black text-amber-300 leading-none">
@@ -116,15 +116,15 @@ export const UpcomingShivirPopup: React.FC = () => {
           onClick={handleClose}
         >
           <div
-            className="relative w-full max-w-2xl bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-slate-100 rounded-3xl shadow-[0_25px_70px_rgba(0,0,0,0.7)] border border-emerald-500/30 overflow-hidden max-h-[92vh] flex flex-col transform transition-all animate-scaleUp"
+            className="relative w-full max-w-2xl bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-slate-100 rounded-3xl shadow-[0_25px_70px_rgba(0,0,0,0.7)] border border-[#DD0200]/30 overflow-hidden max-h-[92vh] flex flex-col transform transition-all animate-scaleUp"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Ambient Background Gradient Accent */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#DD0200]/10 rounded-full blur-3xl pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
             {/* Top Premium Banner */}
-            <div className="bg-gradient-to-r from-emerald-950 via-teal-900 to-emerald-950 px-6 py-4 border-b border-emerald-500/30 relative flex items-center justify-between gap-4">
+            <div className="bg-gradient-to-r from-[#55100D] via-[#1A0706] to-[#55100D] px-6 py-4 border-b border-[#DD0200]/30 relative flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <span className="bg-amber-400/15 border border-amber-400/40 text-amber-300 p-2 rounded-xl shadow-inner">
                   <Sparkles className="w-5 h-5" />
@@ -171,7 +171,7 @@ export const UpcomingShivirPopup: React.FC = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 {/* Date */}
                 <div className="bg-slate-800/70 hover:bg-slate-800/90 border border-slate-700/70 rounded-2xl p-3.5 flex items-start gap-3 transition-colors shadow-sm">
-                  <div className="p-2.5 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 text-emerald-400 shrink-0">
+                  <div className="p-2.5 rounded-xl bg-gradient-to-br from-[#DD0200]/20 to-[#55100D]/30 border border-[#DD0200]/30 text-rose-400 shrink-0">
                     <Calendar className="w-5 h-5" />
                   </div>
                   <div>
@@ -185,7 +185,7 @@ export const UpcomingShivirPopup: React.FC = () => {
                 {/* Timing */}
                 {camp.timing && (
                   <div className="bg-slate-800/70 hover:bg-slate-800/90 border border-slate-700/70 rounded-2xl p-3.5 flex items-start gap-3 transition-colors shadow-sm">
-                    <div className="p-2.5 rounded-xl bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border border-teal-500/30 text-teal-400 shrink-0">
+                    <div className="p-2.5 rounded-xl bg-gradient-to-br from-[#55100D]/30 to-[#DD0200]/20 border border-[#DD0200]/30 text-amber-400 shrink-0">
                       <Clock className="w-5 h-5" />
                     </div>
                     <div>
@@ -242,9 +242,9 @@ export const UpcomingShivirPopup: React.FC = () => {
               {camp.helplinePhone ? (
                 <a
                   href={`tel:${camp.helplinePhone}`}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-xs border border-slate-700 hover:border-emerald-500/50 transition-all shadow-sm group"
+                  className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-semibold text-xs border border-slate-700 hover:border-amber-500/50 transition-all shadow-sm group"
                 >
-                  <PhoneCall className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
+                  <PhoneCall className="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform" />
                   <span className="font-mono">Call Helpline: {camp.helplinePhone}</span>
                 </a>
               ) : (
@@ -261,7 +261,7 @@ export const UpcomingShivirPopup: React.FC = () => {
                 <Link
                   href="/appointment"
                   onClick={handleClose}
-                  className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-emerald-950/50 border border-emerald-400/30 transform hover:-translate-y-0.5 transition-all duration-300 group"
+                  className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#DD0200] via-[#55100D] to-[#DD0200] hover:from-[#55100D] hover:to-[#DD0200] text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-red-950/50 border border-[#DD0200]/40 transform hover:-translate-y-0.5 transition-all duration-300 group"
                 >
                   <span className="font-hindi-heading font-extrabold">Book Appointment / Appointment लें</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
