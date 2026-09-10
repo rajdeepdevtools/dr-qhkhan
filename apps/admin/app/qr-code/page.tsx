@@ -6,7 +6,17 @@ import { AdminHeader } from '../../components/AdminHeader';
 import { Printer, QrCode, Globe, Info, MapPin, Phone, Star, Sparkles } from 'lucide-react';
 
 export default function AdminQrCodePage() {
-  const [targetUrl, setTargetUrl] = useState('http://localhost:3000/#review-form');
+  const getDefaultTargetUrl = () => {
+    if (process.env.NEXT_PUBLIC_WEBSITE_URL) {
+      return `${process.env.NEXT_PUBLIC_WEBSITE_URL.replace(/\/+$/, '')}/feedback`;
+    }
+    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      return 'https://dr-qhkhan-website.vercel.app/feedback';
+    }
+    return 'http://localhost:3000/feedback';
+  };
+
+  const [targetUrl, setTargetUrl] = useState(getDefaultTargetUrl());
 
   const handlePrint = () => {
     window.print();
@@ -56,21 +66,21 @@ export default function AdminQrCodePage() {
                   Print this light theme standee featuring the official website logo to place at your reception desk or consultation room.
                 </p>
                 <p>
-                  Featuring <strong>Patrick's Blue (#1F0270)</strong> & <strong>American Yellow (#F4C430)</strong> styling with generous spacing and solid <strong>black QR code</strong> for high precision scanning.
+                  Scanning this QR code immediately opens the <strong>Patient Star Rating & Review Form</strong> (`/feedback`).
                 </p>
               </div>
 
               <div className="space-y-2">
-                <label className="block text-[10px] text-slate-400 uppercase font-extrabold tracking-wider">Target Review Form URL</label>
+                <label className="block text-[10px] text-slate-400 uppercase font-extrabold tracking-wider">Target Review & Feedback URL</label>
                 <input
                   type="url"
                   value={targetUrl}
                   onChange={(e) => setTargetUrl(e.target.value)}
-                  placeholder="e.g. http://localhost:3000/#review-form"
+                  placeholder="e.g. https://dr-qhkhan-website.vercel.app/feedback"
                   className="w-full p-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-[#F4C430] font-semibold"
                 />
                 <span className="text-[10px] text-slate-500 block">
-                  Change this to your website URL (e.g. <code>https://drqhkhanclinic.com/#review-form</code>) when deploying to production.
+                  Scanned QR code links directly to your rate & feedback page (e.g. <code>https://dr-qhkhan-website.vercel.app/feedback</code>).
                 </span>
               </div>
             </div>
