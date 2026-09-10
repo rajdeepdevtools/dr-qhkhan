@@ -5,13 +5,20 @@ import Link from 'next/link';
 import { UserCheck, Calendar, ShieldCheck, Award } from 'lucide-react';
 import { IDoctorProfile } from '@hospital/shared-types';
 import { useLanguage } from '../lib/language-context';
+import { getApiBaseUrl } from '../lib/api-client';
 
 export const DoctorCard: React.FC<{ doctor: Partial<IDoctorProfile> }> = ({ doctor }) => {
   const { lang } = useLanguage();
 
   const getDoctorImageSrc = () => {
-    const rawImg = (doctor as any).image || (doctor as any).imageUrl || (doctor as any).photo;
+    let rawImg = (doctor as any).image || (doctor as any).imageUrl || (doctor as any).photo;
     if (rawImg && typeof rawImg === 'string' && rawImg.trim() !== '') {
+      rawImg = rawImg.trim();
+      if (rawImg.includes('localhost:5000') || rawImg.includes('127.0.0.1:5000')) {
+        const apiBase = getApiBaseUrl();
+        const backendOrigin = apiBase.replace(/\/api\/?$/, '');
+        rawImg = rawImg.replace(/http:\/\/(localhost|127\.0\.0\.1):5000/g, backendOrigin);
+      }
       if (rawImg.startsWith('/') || rawImg.startsWith('http://') || rawImg.startsWith('https://') || rawImg.startsWith('data:')) {
         return rawImg;
       }

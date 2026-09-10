@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { adminApiClient } from '../../lib/api-client';
-import { AdminSidebar } from '../../components/AdminSidebar';
-import { AdminHeader } from '../../components/AdminHeader';
+import { AdminShell } from '../../components/AdminShell';
 import { Search, Plus, Edit3, Trash2 } from 'lucide-react';
 
 export default function AdminPatientsPage() {
@@ -91,38 +90,34 @@ export default function AdminPatientsPage() {
   };
 
   return (
-    <div className="flex min-h-screen">
-      <AdminSidebar />
-      <div className="flex-1 flex flex-col min-w-0">
-        <AdminHeader />
-        <main className="p-6 space-y-6 flex-1 overflow-y-auto">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-2xl font-bold text-white">Patient Records Directory</h1>
-              <p className="text-xs text-slate-400">Search and manage patient IDs (HOSP-2026-XXXX)</p>
-            </div>
-            <button
-              onClick={handleOpenCreate}
-              className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-xs rounded-xl shadow flex items-center gap-1.5 transition-all"
-            >
-              <Plus className="w-4 h-4" /> Create Patient Record
-            </button>
-          </div>
+    <AdminShell>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold text-[#1A0706]">Patient Records Directory</h1>
+          <p className="text-xs text-slate-500">Search and manage patient IDs (HOSP-2026-XXXX)</p>
+        </div>
+        <button
+          onClick={handleOpenCreate}
+          className="px-4 py-2 bg-gradient-to-r from-[#55100D] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white font-bold text-xs rounded-xl shadow flex items-center gap-1.5 transition-all shrink-0"
+        >
+          <Plus className="w-4 h-4" /> Create Patient Record
+        </button>
+      </div>
 
-          {/* Search bar */}
-          <div className="relative w-full max-w-md">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by Patient ID, Name, or Phone..."
-              className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
-            />
-          </div>
+      {/* Search bar */}
+      <div className="relative w-full max-w-md">
+        <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search by Patient ID, Name, or Phone..."
+          className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#DD0200]/30 font-medium"
+        />
+      </div>
 
-          {/* Table */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden text-xs font-medium">
+      {/* Table Container */}
+      <div className="bg-white border border-[#D9D9D9] rounded-2xl overflow-x-auto text-xs font-medium shadow-sm">
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-slate-800/60 text-slate-400 border-b border-slate-800 uppercase font-semibold">
@@ -314,8 +309,6 @@ export default function AdminPatientsPage() {
               </div>
             </div>
           )}
-        </main>
-      </div>
-    </div>
+    </AdminShell>
   );
 }

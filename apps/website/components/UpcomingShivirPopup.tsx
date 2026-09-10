@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { apiClient } from '../lib/api-client';
+import { apiClient, getApiBaseUrl } from '../lib/api-client';
 import { Megaphone, X, Calendar, Clock, MapPin, UserCheck, PhoneCall, ArrowRight, Sparkles, HeartHandshake } from 'lucide-react';
 
 interface Camp {
@@ -21,12 +21,12 @@ interface Camp {
 
 const DEFAULT_CAMP: Camp = {
   _id: 'default-shivir-popup',
-  title: 'निःशुल्क होमियोपैथिक परामर्श एवं दवा वितरण शिविर',
-  date: 'आगामी रविवार / Special Free Shivir',
-  timing: 'सुबह 10:00 बजे से दोपहर 2:00 बजे तक',
-  location: 'डॉ. क्यू.एच. खान क्लिनिक, नगमतिया रोड, गया, बिहार',
-  doctor: 'डॉ. क्यू.एच. खान एवं विशेषज्ञ चिकित्सक',
-  description: 'डॉ. क्यू.एच. खान क्लासिकल होमियोपैथिक क्लिनिक (स्थापना 1958) द्वारा आयोजित विशेष स्वास्थ्य परामर्श शिविर। असाध्य एवं जटिल रोगों का अनुभवी चिकित्सकों द्वारा परामर्श एवं दवा वितरण।',
+  title: 'निःशुल्क होमियोपैथिक चिकित्सा एवं दवा वितरण शिविर',
+  date: '16 August 2026',
+  timing: '9:00 AM - 5:00 PM',
+  location: 'Gahlour Ghat, Gaya, Bihar',
+  doctor: 'Dr. I. Khan',
+  description: 'निःशुल्क चिकित्सा परामर्श एवं स्वास्थ्य जांच शिविर। अनुभवी चिकित्सक द्वारा मरीजों की जांच एवं स्वास्थ्य संबंधी परामर्श दिया जाएगा। जरूरतमंद एवं पात्र मरीजों को निःशुल्क होमियोपैथिक दवाएं उपलब्ध कराई जाएंगी। सभी जरूरतमंद लोग शिविर में आकर स्वास्थ्य परामर्श एवं निःशुल्क दवा का लाभ उठा सकते हैं।',
   imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800',
   helplinePhone: '9135404090',
   isUpcomingPopup: true,
@@ -38,11 +38,18 @@ export const UpcomingShivirPopup: React.FC = () => {
 
   const getFullImageUrl = (path?: string) => {
     if (!path) return '';
-    if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
-      return path;
+    let trimmed = path.trim();
+    if (trimmed.includes('localhost:5000') || trimmed.includes('127.0.0.1:5000')) {
+      const apiBase = getApiBaseUrl();
+      const backendOrigin = apiBase.replace(/\/api\/?$/, '');
+      trimmed = trimmed.replace(/http:\/\/(localhost|127\.0\.0\.1):5000/g, backendOrigin);
     }
-    const backendOrigin = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').replace(/\/api\/?$/, '');
-    return `${backendOrigin}${path.startsWith('/') ? path : `/${path}`}`;
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('data:')) {
+      return trimmed;
+    }
+    const apiBase = getApiBaseUrl();
+    const backendOrigin = apiBase.replace(/\/api\/?$/, '');
+    return `${backendOrigin}${trimmed.startsWith('/') ? trimmed : `/${trimmed}`}`;
   };
 
   useEffect(() => {
