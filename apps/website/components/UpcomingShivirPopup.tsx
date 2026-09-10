@@ -19,6 +19,19 @@ interface Camp {
   isUpcomingPopup?: boolean;
 }
 
+const DEFAULT_CAMP: Camp = {
+  _id: 'default-shivir-popup',
+  title: 'निःशुल्क होमियोपैथिक परामर्श एवं दवा वितरण शिविर',
+  date: 'आगामी रविवार / Special Free Shivir',
+  timing: 'सुबह 10:00 बजे से दोपहर 2:00 बजे तक',
+  location: 'डॉ. क्यू.एच. खान क्लिनिक, नगमतिया रोड, गया, बिहार',
+  doctor: 'डॉ. क्यू.एच. खान एवं विशेषज्ञ चिकित्सक',
+  description: 'डॉ. क्यू.एच. खान क्लासिकल होमियोपैथिक क्लिनिक (स्थापना 1958) द्वारा आयोजित विशेष स्वास्थ्य परामर्श शिविर। असाध्य एवं जटिल रोगों का अनुभवी चिकित्सकों द्वारा परामर्श एवं दवा वितरण।',
+  imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800',
+  helplinePhone: '9135404090',
+  isUpcomingPopup: true,
+};
+
 export const UpcomingShivirPopup: React.FC = () => {
   const [camp, setCamp] = useState<Camp | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -39,9 +52,14 @@ export const UpcomingShivirPopup: React.FC = () => {
         if (res.success && res.data) {
           setCamp(res.data);
           setIsOpen(true);
+        } else {
+          setCamp(DEFAULT_CAMP);
+          setIsOpen(true);
         }
       } catch (err) {
         console.error('Failed to load upcoming shivir popup', err);
+        setCamp(DEFAULT_CAMP);
+        setIsOpen(true);
       }
     }
     fetchUpcomingPopup();

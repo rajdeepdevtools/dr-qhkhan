@@ -263,6 +263,7 @@ const seedDatabase = async () => {
       location: 'Nagmatia Road, Gaya, Bihar',
       imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800',
       isActive: true,
+      isUpcomingPopup: true,
     },
     {
       title: 'Rural Homoeopathy Awareness & Healing Camp',
