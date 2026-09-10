@@ -10,7 +10,7 @@
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
     "seed": "ts-node src/seed/seed.ts",
-    "test": "ts-node tests/security.test.ts"
+    "test": "ts-node tests/security.test.ts && ts-node tests/health.test.ts"
   },
   "dependencies": {
     "@hospital/shared-types": "workspace:*",

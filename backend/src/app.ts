@@ -7,6 +7,7 @@ import { corsOptions } from './config/cors';
 import { apiRateLimiter } from './middleware/rateLimiter';
 import { errorHandler } from './middleware/errorHandler';
 
+import healthRoutes from './routes/healthRoutes';
 import authRoutes from './routes/authRoutes';
 import patientRoutes from './routes/patientRoutes';
 import doctorRoutes from './routes/doctorRoutes';
@@ -36,10 +37,9 @@ export const createApp = (): express.Application => {
 
   app.use('/api', apiRateLimiter);
 
-  // Health check endpoint
-  app.get('/health', (req, res) => {
-    res.status(200).json({ status: 'UP', timestamp: new Date().toISOString() });
-  });
+  // Health check routes (mounted at /health and /api/health for full compatibility)
+  app.use('/health', healthRoutes);
+  app.use('/api/health', healthRoutes);
 
   // Mount Modular Routes
   app.use('/api/auth', authRoutes);

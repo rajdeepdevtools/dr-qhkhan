@@ -407,7 +407,9 @@ export default function DoctorDetailPage({ params }: { params: { slug: string } 
                 alt={docName}
                 className="w-full h-full object-cover object-top"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/images/doctors/placeholder.jpg';
+                  const target = e.target as HTMLImageElement;
+                  target.onerror = null;
+                  target.src = doctor.photo || '/images/dr-adeeba-farheen.png';
                 }}
               />
             </div>

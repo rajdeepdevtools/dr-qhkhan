@@ -24,4 +24,7 @@ export const ENV = {
   PROD_API_URL: process.env.PROD_API_URL || 'https://dr-qhkhan.onrender.com/api',
   STORAGE_PROVIDER: process.env.STORAGE_PROVIDER || 'local',
   STORAGE_BUCKET: process.env.STORAGE_BUCKET || 'medical-uploads',
+  KEEP_ALIVE_ENABLED: process.env.KEEP_ALIVE_ENABLED !== 'false',
+  KEEP_ALIVE_INTERVAL_MINUTES: parseInt(process.env.KEEP_ALIVE_INTERVAL_MINUTES || '10', 10),
+  KEEP_ALIVE_URL: process.env.KEEP_ALIVE_URL || '',
 };

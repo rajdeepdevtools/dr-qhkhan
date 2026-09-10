@@ -12,6 +12,11 @@ export const DoctorCard: React.FC<{ doctor: Partial<IDoctorProfile> }> = ({ doct
 
   const getDoctorImageSrc = () => {
     let rawImg = (doctor as any).image || (doctor as any).imageUrl || (doctor as any).photo;
+
+    if (doctor.slug === 'dr-adeeba-farheen' || doctor.name?.includes('Adeeba') || doctor.name?.includes('अदीबा')) {
+      return '/images/dr-adeeba-farheen.png';
+    }
+
     if (rawImg && typeof rawImg === 'string' && rawImg.trim() !== '') {
       rawImg = rawImg.trim();
       if (rawImg.includes('localhost:5000') || rawImg.includes('127.0.0.1:5000')) {
@@ -19,14 +24,14 @@ export const DoctorCard: React.FC<{ doctor: Partial<IDoctorProfile> }> = ({ doct
         const backendOrigin = apiBase.replace(/\/api\/?$/, '');
         rawImg = rawImg.replace(/http:\/\/(localhost|127\.0\.0\.1):5000/g, backendOrigin);
       }
+      if (rawImg.includes('dr-adeeba-farheen')) {
+        return '/images/dr-adeeba-farheen.png';
+      }
       if (rawImg.startsWith('/') || rawImg.startsWith('http://') || rawImg.startsWith('https://') || rawImg.startsWith('data:')) {
         return rawImg;
       }
     }
 
-    if (doctor.slug === 'dr-adeeba-farheen' || doctor.name?.includes('Adeeba') || doctor.name?.includes('अदीबा')) {
-      return '/images/dr-adeeba-farheen.png';
-    }
     if (doctor.isDeceased || doctor.slug === 'dr-q-h-khan' || doctor.name?.includes('Q.H.')) {
       return '/images/dr-qh-khan.png';
     }
