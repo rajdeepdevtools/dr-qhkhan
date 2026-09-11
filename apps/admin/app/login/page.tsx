@@ -94,10 +94,10 @@ export default function AdminLoginPage() {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#DD0200]/10 border border-[#DD0200]/30 text-[#DD0200] text-[10px] font-black uppercase tracking-wider">
               <Activity className="w-3.5 h-3.5" /> High Security EMR Gateway
             </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-800 tracking-tight leading-tight">
               Enterprise Suite for Clinical Operations
             </h1>
-            <p className="text-slate-300 font-medium leading-relaxed text-xs sm:text-sm">
+            <p className="text-slate-600 font-medium leading-relaxed text-xs sm:text-sm">
               Secure digital EMR dashboard, active case register maintenance, consultation routing, and real-time patient inquiry management.
             </p>
           </div>
@@ -106,20 +106,20 @@ export default function AdminLoginPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
             <div className="p-3.5 bg-white/[0.03] border border-white/10 rounded-2xl backdrop-blur-md hover:bg-white/[0.05] transition-all">
               <ShieldCheck className="w-5 h-5 text-emerald-400 mb-2" />
-              <h3 className="font-extrabold text-white text-xs">Role-Based Access</h3>
-              <p className="text-[10px] text-slate-400 mt-0.5">Strict RBAC controls protecting patient medical histories.</p>
+              <h3 className="font-extrabold text-slate-800 text-xs">Role-Based Access</h3>
+              <p className="text-[10px] text-slate-500 mt-0.5">Strict RBAC controls protecting patient medical histories.</p>
             </div>
             <div className="p-3.5 bg-white/[0.03] border border-white/10 rounded-2xl backdrop-blur-md hover:bg-white/[0.05] transition-all">
               <Server className="w-5 h-5 text-[#DD0200] mb-2" />
-              <h3 className="font-extrabold text-white text-xs">Real-Time Routing</h3>
-              <p className="text-[10px] text-slate-400 mt-0.5">Direct sync for online booking queues & shift timelines.</p>
+              <h3 className="font-extrabold text-slate-800 text-xs">Real-Time Routing</h3>
+              <p className="text-[10px] text-slate-500 mt-0.5">Direct sync for online booking queues & shift timelines.</p>
             </div>
             <div className="p-3.5 bg-white/[0.03] border border-white/10 rounded-2xl backdrop-blur-md hover:bg-white/[0.05] transition-all sm:col-span-2">
               <div className="flex items-center gap-3">
                 <FileKey className="w-5 h-5 text-amber-400 shrink-0" />
                 <div>
-                  <h3 className="font-extrabold text-white text-xs">Cryptographic Audit Logging</h3>
-                  <p className="text-[10px] text-slate-400 mt-0.5">All staff transactions and prescription prints are logged for compliance.</p>
+                  <h3 className="font-extrabold text-slate-800 text-xs">Cryptographic Audit Logging</h3>
+                  <p className="text-[10px] text-slate-500 mt-0.5">All staff transactions and prescription prints are logged for compliance.</p>
                 </div>
               </div>
             </div>
@@ -150,7 +150,7 @@ export default function AdminLoginPage() {
               <Lock className="w-7 h-7 text-[#DD0200]" />
             </div>
             <h2 className="text-xl font-black text-white tracking-tight">Staff Portal Sign-In</h2>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Enter authorized credentials to continue</p>
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Enter authorized credentials to continue</p>
           </div>
 
           {errorMsg && (
@@ -161,7 +161,7 @@ export default function AdminLoginPage() {
           )}
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4 font-bold text-slate-300">
+          <form onSubmit={handleSubmit} className="space-y-4 font-bold text-slate-600">
             
             <div className="space-y-1.5">
               <label className="block text-slate-400 text-[10px] uppercase tracking-wider">Staff Email Address</label>
@@ -193,7 +193,7 @@ export default function AdminLoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-3.5 text-slate-500 hover:text-slate-300 transition-colors focus:outline-none"
+                  className="absolute right-3.5 top-3.5 text-slate-500 hover:text-slate-600 transition-colors focus:outline-none"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>

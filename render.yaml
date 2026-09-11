@@ -16,6 +16,6 @@ services:
       - key: JWT_REFRESH_SECRET
         generateValue: true
       - key: WEBSITE_URL
-        value: "https://dr-qhkhan-website.vercel.app"
+        value: "https://www.theqhkhanclinic.com"
       - key: ADMIN_URL
         value: "https://dr-qhkhan-admin.vercel.app"

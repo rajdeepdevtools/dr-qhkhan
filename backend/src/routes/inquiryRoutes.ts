@@ -9,8 +9,8 @@ const router = Router();
 
 router.post('/', validateRequest(inquirySchema), InquiryController.submitInquiry);
 
-router.get('/admin', authenticateJWT, authorizeRoles('admin', 'super_admin'), InquiryController.getAllInquiriesAdmin);
-router.put('/:id/status', authenticateJWT, authorizeRoles('admin', 'super_admin'), InquiryController.updateInquiryStatus);
-router.delete('/:id', authenticateJWT, authorizeRoles('admin', 'super_admin'), InquiryController.deleteInquiry);
+router.get('/admin', authenticateJWT, authorizeRoles('admin', 'super_admin', 'receptionist'), InquiryController.getAllInquiriesAdmin);
+router.put('/:id/status', authenticateJWT, authorizeRoles('admin', 'super_admin', 'receptionist'), InquiryController.updateInquiryStatus);
+router.delete('/:id', authenticateJWT, authorizeRoles('admin', 'super_admin', 'receptionist'), InquiryController.deleteInquiry);
 
 export default router;

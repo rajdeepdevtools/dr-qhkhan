@@ -91,8 +91,8 @@ export default function AdminStaffPage() {
         <main className="p-6 space-y-6 flex-1 overflow-y-auto">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-bold text-white">Receptionist & Staff Account Management</h1>
-              <p className="text-xs text-slate-400">Create login credentials for clinic reception desk staff</p>
+              <h1 className="text-2xl font-bold text-slate-800">Receptionist & Staff Account Management</h1>
+              <p className="text-xs text-slate-500">Create login credentials for clinic reception desk staff</p>
             </div>
             <button
               onClick={handleOpenCreate}
@@ -103,10 +103,10 @@ export default function AdminStaffPage() {
           </div>
 
           {/* Table */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden text-xs">
+          <div className="bg-white shadow-sm border border-slate-200 rounded-2xl overflow-hidden text-xs">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-800/60 text-slate-400 border-b border-slate-800 uppercase font-semibold">
+                <tr className="bg-slate-50 text-slate-400 border-b border-slate-200 uppercase font-semibold">
                   <th className="p-3">Employee ID</th>
                   <th className="p-3">Staff Name</th>
                   <th className="p-3">Login Email</th>
@@ -115,23 +115,23 @@ export default function AdminStaffPage() {
                   <th className="p-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800 text-slate-300">
+              <tbody className="divide-y divide-slate-100 text-slate-600">
                 {staffList.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="p-4 text-center text-slate-500">No staff user accounts found.</td>
                   </tr>
                 ) : (
                   staffList.map((stf) => (
-                    <tr key={stf._id} className="hover:bg-slate-800/40">
+                    <tr key={stf._id} className="hover:bg-slate-50 transition-colors">
                       <td className="p-3 font-mono font-bold text-amber-400">{stf.employeeId}</td>
-                      <td className="p-3 font-bold text-white">{stf.name}</td>
+                      <td className="p-3 font-bold text-slate-900">{stf.name}</td>
                       <td className="p-3">{stf.user?.email || 'N/A'}</td>
                       <td className="p-3">{stf.phone}</td>
                       <td className="p-3">{stf.shift}</td>
                       <td className="p-3 text-right space-x-2">
                         <button
                           onClick={() => handleOpenEdit(stf)}
-                          className="p-1.5 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors"
+                          className="p-1.5 bg-slate-50 text-slate-600 rounded hover:bg-slate-700 hover:text-white transition-colors"
                           title="Edit Staff Account"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
@@ -154,8 +154,8 @@ export default function AdminStaffPage() {
           {/* Modal */}
           {showModal && (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-md space-y-4 text-xs">
-                <h3 className="font-bold text-white text-base">
+              <div className="bg-white shadow-sm border border-slate-200 rounded-2xl p-6 w-full max-w-md space-y-4 text-xs">
+                <h3 className="font-bold text-slate-800 text-base">
                   {editingId ? 'Edit Staff Account' : 'Create Receptionist Login Account'}
                 </h3>
                 {errorMessage && (
@@ -172,7 +172,7 @@ export default function AdminStaffPage() {
                       placeholder="e.g. Ramesh Singh"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                     />
                   </div>
 
@@ -186,7 +186,7 @@ export default function AdminStaffPage() {
                           placeholder="staff@drqhkhanclinic.com"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                          className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                         />
                       </div>
 
@@ -199,7 +199,7 @@ export default function AdminStaffPage() {
                           placeholder="Minimum 8 characters"
                           value={formData.password}
                           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                          className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                          className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                         />
                       </div>
                     </>
@@ -213,7 +213,7 @@ export default function AdminStaffPage() {
                       placeholder="9135404090"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                     />
                   </div>
 
@@ -225,12 +225,12 @@ export default function AdminStaffPage() {
                       placeholder="e.g. General Shift (8:00 AM - 8:00 PM)"
                       value={formData.shift}
                       onChange={(e) => setFormData({ ...formData, shift: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                     />
                   </div>
 
                   <div className="flex justify-end space-x-2 pt-2">
-                    <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold transition-colors">
+                    <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-slate-50 hover:bg-slate-700 text-slate-600 rounded-xl font-bold transition-colors">
                       Cancel
                     </button>
                     <button type="submit" className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold rounded-xl shadow transition-colors">

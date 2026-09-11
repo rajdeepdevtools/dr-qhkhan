@@ -52,7 +52,7 @@ export default function AdminSettingsPage() {
         <main className="p-6 space-y-6 flex-1 overflow-y-auto">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-black text-[#1A0706]">Centralized Clinic Configuration</h1>
+              <h1 className="text-2xl font-black text-slate-800">Centralized Clinic Configuration</h1>
               <p className="text-xs text-slate-500 font-bold">Modify clinic timings, helpline numbers, address, and medical disclaimers</p>
             </div>
           </div>

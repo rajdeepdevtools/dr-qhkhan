@@ -10,8 +10,8 @@ const router = Router();
 router.get('/approved', FeedbackController.getApprovedFeedback);
 router.post('/', validateRequest(feedbackSchema), FeedbackController.submitFeedback);
 
-router.get('/admin', authenticateJWT, authorizeRoles('admin', 'super_admin'), FeedbackController.getAllFeedbackAdmin);
-router.put('/:id/status', authenticateJWT, authorizeRoles('admin', 'super_admin'), FeedbackController.updateFeedbackStatus);
-router.delete('/:id', authenticateJWT, authorizeRoles('admin', 'super_admin'), FeedbackController.deleteFeedback);
+router.get('/admin', authenticateJWT, authorizeRoles('admin', 'super_admin', 'receptionist'), FeedbackController.getAllFeedbackAdmin);
+router.put('/:id/status', authenticateJWT, authorizeRoles('admin', 'super_admin', 'receptionist'), FeedbackController.updateFeedbackStatus);
+router.delete('/:id', authenticateJWT, authorizeRoles('admin', 'super_admin', 'receptionist'), FeedbackController.deleteFeedback);
 
 export default router;

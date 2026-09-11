@@ -194,8 +194,8 @@ export default function AdminBillingPage() {
           <main className="p-6 space-y-6 flex-1 overflow-y-auto">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-2xl font-bold text-white">Patient Billing & Invoices</h1>
-                <p className="text-xs text-slate-400">Generate bills, track patient payments, and print receipts</p>
+                <h1 className="text-2xl font-bold text-slate-800">Patient Billing & Invoices</h1>
+                <p className="text-xs text-slate-500">Generate bills, track patient payments, and print receipts</p>
               </div>
               <button
                 onClick={handleOpenCreate}
@@ -206,7 +206,7 @@ export default function AdminBillingPage() {
             </div>
 
             {/* Actions & Filters */}
-            <div className="flex items-center gap-3 bg-slate-900/60 p-4 border border-slate-800 rounded-2xl">
+            <div className="flex items-center gap-3 bg-white shadow-sm/60 p-4 border border-slate-200 rounded-2xl">
               <div className="relative flex-1 max-w-sm">
                 <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-500" />
                 <input
@@ -214,7 +214,7 @@ export default function AdminBillingPage() {
                   placeholder="Search by Patient Name or Invoice ID..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-1.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-slate-700"
+                  className="w-full pl-9 pr-4 py-1.5 bg-white shadow-sm border border-slate-200 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-slate-300"
                 />
               </div>
             </div>
@@ -223,14 +223,14 @@ export default function AdminBillingPage() {
             {loading ? (
               <p className="text-xs text-slate-500 text-center py-12">Loading invoice logs...</p>
             ) : invoices.length === 0 ? (
-              <div className="text-center p-12 bg-slate-900 border border-slate-800 rounded-2xl text-slate-500 font-medium text-xs">
+              <div className="text-center p-12 bg-white shadow-sm border border-slate-200 rounded-2xl text-slate-500 font-medium text-xs">
                 No billing records found.
               </div>
             ) : (
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden text-xs">
+              <div className="bg-white shadow-sm border border-slate-200 rounded-2xl overflow-hidden text-xs">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="bg-slate-800/60 text-slate-400 border-b border-slate-800 uppercase font-semibold">
+                    <tr className="bg-slate-50 text-slate-400 border-b border-slate-200 uppercase font-semibold">
                       <th className="p-3">Invoice ID</th>
                       <th className="p-3">Patient Name</th>
                       <th className="p-3">Date</th>
@@ -240,11 +240,11 @@ export default function AdminBillingPage() {
                       <th className="p-3 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800 text-slate-300">
+                  <tbody className="divide-y divide-slate-100 text-slate-600">
                     {invoices.map((inv) => (
-                      <tr key={inv._id} className="hover:bg-slate-800/40">
+                      <tr key={inv._id} className="hover:bg-slate-50 transition-colors">
                         <td className="p-3 font-mono font-bold text-amber-400">{inv.invoiceId}</td>
-                        <td className="p-3 font-bold text-white">
+                        <td className="p-3 font-bold text-slate-900">
                           {inv.patientName}
                           <span className="text-slate-500 block font-normal text-[10px]">
                             ID: {inv.patient?.patientId || 'N/A'} • {inv.patient?.phone || '—'}
@@ -269,7 +269,7 @@ export default function AdminBillingPage() {
                         <td className="p-3 text-right space-x-2">
                           <button
                             onClick={() => handleOpenEdit(inv)}
-                            className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-bold transition-colors inline-flex items-center gap-1"
+                            className="px-2.5 py-1 bg-slate-50 hover:bg-slate-700 text-slate-600 rounded font-bold transition-colors inline-flex items-center gap-1"
                             title="Edit Invoice"
                           >
                             <Edit3 className="w-3 h-3" /> Edit
@@ -300,9 +300,9 @@ export default function AdminBillingPage() {
       {/* 2. Create Invoice Modal (hidden when printing) */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 no-print text-xs font-semibold">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 space-y-4 text-slate-300">
-            <div className="flex justify-between items-center border-b border-slate-800 pb-3">
-              <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+          <div className="bg-white shadow-sm border border-slate-200 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 space-y-4 text-slate-600">
+            <div className="flex justify-between items-center border-b border-slate-200 pb-3">
+              <h3 className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
                 <Receipt className="w-4 h-4 text-clinic-indigo" /> {editingId ? 'Edit Patient Invoice' : 'Create Patient Invoice'}
               </h3>
               <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-white">
@@ -324,7 +324,7 @@ export default function AdminBillingPage() {
                   <select
                     value={selectedPatientId}
                     onChange={(e) => setSelectedPatientId(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:border-slate-700"
+                    className="w-full px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300"
                   >
                     {patients.map((p) => (
                       <option key={p._id} value={p._id}>
@@ -342,7 +342,7 @@ export default function AdminBillingPage() {
                     required
                     value={invoiceDate}
                     onChange={(e) => setInvoiceDate(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:border-slate-700"
+                    className="w-full px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300"
                   />
                 </div>
               </div>
@@ -354,7 +354,7 @@ export default function AdminBillingPage() {
                   <button
                     type="button"
                     onClick={handleAddItem}
-                    className="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg flex items-center gap-1 font-bold"
+                    className="px-2 py-1 bg-slate-50 hover:bg-slate-700 text-white rounded-lg flex items-center gap-1 font-bold"
                   >
                     <Plus className="w-3.5 h-3.5" /> Add Line
                   </button>
@@ -368,7 +368,7 @@ export default function AdminBillingPage() {
                       required
                       value={item.description}
                       onChange={(e) => handleItemChange(idx, 'description', e.target.value)}
-                      className="flex-1 px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:border-slate-700"
+                      className="flex-1 px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300"
                     />
                     <input
                       type="number"
@@ -377,7 +377,7 @@ export default function AdminBillingPage() {
                       min="0"
                       value={item.price || ''}
                       onChange={(e) => handleItemChange(idx, 'price', e.target.value)}
-                      className="w-24 px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:border-slate-700 text-center"
+                      className="w-24 px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300 text-center"
                     />
                     <input
                       type="number"
@@ -386,7 +386,7 @@ export default function AdminBillingPage() {
                       min="1"
                       value={item.quantity || ''}
                       onChange={(e) => handleItemChange(idx, 'quantity', e.target.value)}
-                      className="w-16 px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:border-slate-700 text-center"
+                      className="w-16 px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300 text-center"
                     />
                     {items.length > 1 && (
                       <button
@@ -402,7 +402,7 @@ export default function AdminBillingPage() {
               </div>
 
               {/* Calculations & Methods */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-slate-800">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-slate-200">
                 {/* Payment Fields */}
                 <div className="space-y-3">
                   <div>
@@ -410,7 +410,7 @@ export default function AdminBillingPage() {
                     <select
                       value={paymentStatus}
                       onChange={(e) => setPaymentStatus(e.target.value as any)}
-                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:border-slate-700"
+                      className="w-full px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300"
                     >
                       <option value="paid">Paid</option>
                       <option value="partially_paid">Partially Paid</option>
@@ -423,7 +423,7 @@ export default function AdminBillingPage() {
                     <select
                       value={paymentMethod}
                       onChange={(e) => setPaymentMethod(e.target.value as any)}
-                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white outline-none focus:border-slate-700"
+                      className="w-full px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300"
                     >
                       <option value="cash">Cash</option>
                       <option value="upi">UPI (GPay / PhonePe / Paytm)</option>
@@ -434,7 +434,7 @@ export default function AdminBillingPage() {
                 </div>
 
                 {/* Subtotals */}
-                <div className="bg-slate-950 p-4 border border-slate-800 rounded-2xl flex flex-col justify-center space-y-2">
+                <div className="bg-slate-950 p-4 border border-slate-200 rounded-2xl flex flex-col justify-center space-y-2">
                   <div className="flex justify-between">
                     <span className="text-slate-400">Subtotal Amount:</span>
                     <strong className="text-white">₹{totalAmount}</strong>
@@ -447,7 +447,7 @@ export default function AdminBillingPage() {
                       max={totalAmount}
                       value={discountAmount || ''}
                       onChange={(e) => setDiscountAmount(parseFloat(e.target.value) || 0)}
-                      className="w-20 px-2 py-1 bg-slate-900 border border-slate-800 rounded text-center text-white"
+                      className="w-20 px-2 py-1 bg-white shadow-sm border border-slate-200 rounded text-center text-white"
                     />
                   </div>
                   <hr className="border-slate-850" />

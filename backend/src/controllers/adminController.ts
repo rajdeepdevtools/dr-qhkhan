@@ -50,6 +50,19 @@ export class AdminController {
       };
     }
 
+    if (req.user!.role === 'doctor') {
+      const doctorProfile = await DoctorProfile.findOne({ user: req.user!.userId });
+      if (doctorProfile) {
+        const patientIds = await Appointment.distinct('patient', { doctor: doctorProfile._id });
+        query = {
+          $and: [
+            query,
+            { $or: [{ _id: { $in: patientIds } }, { primaryDoctor: doctorProfile._id }] }
+          ]
+        };
+      }
+    }
+
     const patients = await Patient.find(query).populate('primaryDoctor', 'name specialization').sort({ createdAt: -1 });
     res.status(200).json({ success: true, data: patients });
   }
@@ -177,7 +190,7 @@ export class AdminController {
 
   static async updateDoctor(req: AuthRequest, res: Response): Promise<void> {
     const { id } = req.params;
-    const { name, degrees, registrationNumber, specialization, designation, bio, clinicSchedule, isActive } = req.body;
+    const { name, email, password, degrees, registrationNumber, specialization, designation, bio, clinicSchedule, isActive } = req.body;
 
     const doctor = await DoctorProfile.findById(id);
     if (!doctor) {
@@ -196,6 +209,21 @@ export class AdminController {
     doctor.bio = bio ?? doctor.bio;
     doctor.clinicSchedule = clinicSchedule ?? doctor.clinicSchedule;
     if (typeof isActive === 'boolean') doctor.isActive = isActive;
+
+    if (email || password) {
+      if (doctor.user) {
+        const user = await User.findById(doctor.user);
+        if (user) {
+          if (email) user.email = email;
+          if (password) user.password = await AuthService.hashPassword(password);
+          await user.save();
+        }
+      } else if (email && password) {
+        const hashedPassword = await AuthService.hashPassword(password);
+        const userObj = await User.create({ email, password: hashedPassword, role: 'doctor' });
+        doctor.user = userObj._id as any;
+      }
+    }
 
     await doctor.save();
 
@@ -240,6 +268,13 @@ export class AdminController {
     if (status) query.status = status;
     if (doctor) query.doctor = doctor;
     if (date) query.preferredDate = date;
+
+    if (req.user!.role === 'doctor') {
+      const doctorProfile = await DoctorProfile.findOne({ user: req.user!.userId });
+      if (doctorProfile) {
+        query.doctor = doctorProfile._id;
+      }
+    }
 
     const appointments = await Appointment.find(query)
       .populate('doctor', 'name specialization')

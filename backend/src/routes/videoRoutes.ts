@@ -11,7 +11,7 @@ const router = Router();
 router.get('/', VideoController.getActiveVideos);
 
 // Admin only routes
-router.use(authenticateJWT, authorizeRoles('admin', 'super_admin'));
+router.use(authenticateJWT, authorizeRoles('admin', 'super_admin', 'receptionist'));
 router.get('/admin', VideoController.getAllVideosAdmin);
 router.post('/', validateRequest(videoSchema), VideoController.createVideo);
 router.put('/:id', validateRequest(videoSchema), VideoController.updateVideo);

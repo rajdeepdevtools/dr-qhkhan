@@ -12,7 +12,7 @@ router.get('/', CampController.getActiveCamps);
 router.get('/upcoming-popup', CampController.getUpcomingPopupCamp);
 
 // Admin only routes
-router.use(authenticateJWT, authorizeRoles('admin', 'super_admin'));
+router.use(authenticateJWT, authorizeRoles('admin', 'super_admin', 'receptionist'));
 router.get('/admin', CampController.getAllCampsAdmin);
 router.post('/', validateRequest(campSchema), CampController.createCamp);
 router.put('/:id', validateRequest(campSchema), CampController.updateCamp);

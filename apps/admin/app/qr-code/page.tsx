@@ -11,7 +11,7 @@ export default function AdminQrCodePage() {
       return `${process.env.NEXT_PUBLIC_WEBSITE_URL.replace(/\/+$/, '')}/feedback`;
     }
     if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-      return 'https://dr-qhkhan-website.vercel.app/feedback';
+      return 'https://www.theqhkhanclinic.com/feedback';
     }
     return 'http://localhost:3000/feedback';
   };
@@ -41,8 +41,8 @@ export default function AdminQrCodePage() {
           {/* Controls section - hidden during print */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 print:hidden">
             <div>
-              <h1 className="text-2xl font-bold text-white">Patient Feedback QR Standee & Poster</h1>
-              <p className="text-xs text-slate-400">Generate & print premium light QR Standee (Patrick's Blue & American Yellow theme with Official Logo)</p>
+              <h1 className="text-2xl font-bold text-slate-800">Patient Feedback QR Standee & Poster</h1>
+              <p className="text-xs text-slate-500">Generate & print premium light QR Standee (Patrick's Blue & American Yellow theme with Official Logo)</p>
             </div>
             <button
               onClick={handlePrint}
@@ -55,12 +55,12 @@ export default function AdminQrCodePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start print:block">
             
             {/* Configuration Panel - hidden during print */}
-            <div className="lg:col-span-5 bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-4 text-xs print:hidden">
-              <h3 className="font-bold text-white text-sm flex items-center gap-2">
+            <div className="lg:col-span-5 bg-white shadow-sm border border-slate-200 rounded-3xl p-6 space-y-4 text-xs print:hidden">
+              <h3 className="font-bold text-slate-800 text-sm flex items-center gap-2">
                 <Globe className="w-4 h-4 text-[#F4C430]" /> Destination Link Settings
               </h3>
               
-              <div className="p-4 bg-slate-800/60 border border-slate-700/60 rounded-2xl text-slate-300 space-y-2 leading-relaxed">
+              <div className="p-4 bg-slate-50 border border-slate-300/60 rounded-2xl text-slate-600 space-y-2 leading-relaxed">
                 <p className="flex items-center gap-1.5 font-bold text-white"><Info className="w-4 h-4 text-[#F4C430] shrink-0" /> Front Desk Standee Guide</p>
                 <p>
                   Print this light theme standee featuring the official website logo to place at your reception desk or consultation room.
@@ -76,11 +76,11 @@ export default function AdminQrCodePage() {
                   type="url"
                   value={targetUrl}
                   onChange={(e) => setTargetUrl(e.target.value)}
-                  placeholder="e.g. https://dr-qhkhan-website.vercel.app/feedback"
-                  className="w-full p-3 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-[#F4C430] font-semibold"
+                  placeholder="e.g. https://www.theqhkhanclinic.com/feedback"
+                  className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-white outline-none focus:border-[#F4C430] font-semibold"
                 />
                 <span className="text-[10px] text-slate-500 block">
-                  Scanned QR code links directly to your rate & feedback page (e.g. <code>https://dr-qhkhan-website.vercel.app/feedback</code>).
+                  Scanned QR code links directly to your rate & feedback page (e.g. <code>https://www.theqhkhanclinic.com/feedback</code>).
                 </span>
               </div>
             </div>
@@ -177,7 +177,7 @@ export default function AdminQrCodePage() {
                       alt="Clinic Feedback QR Code"
                       className="w-full aspect-square object-contain"
                     />
-                    <div className="mt-2.5 text-[10px] font-black text-white bg-[#1F0270] uppercase tracking-wider flex items-center gap-1.5 px-3.5 py-1 rounded-full shadow-sm">
+                    <div className="mt-2.5 text-[10px] font-black text-slate-800 bg-[#1F0270] uppercase tracking-wider flex items-center gap-1.5 px-3.5 py-1 rounded-full shadow-sm">
                       <QrCode className="w-3.5 h-3.5 text-[#F4C430]" />
                       <span>SCAN CODE TO REVIEW</span>
                     </div>

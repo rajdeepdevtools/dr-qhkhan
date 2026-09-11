@@ -66,13 +66,13 @@ export default function AdminFeedbackPage() {
         <main className="p-6 space-y-6 flex-1 overflow-y-auto">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-bold text-white">Patient Feedback Moderation</h1>
-              <p className="text-xs text-slate-400">Review and moderate patient reviews before public display</p>
+              <h1 className="text-2xl font-bold text-slate-800">Patient Feedback Moderation</h1>
+              <p className="text-xs text-slate-500">Review and moderate patient reviews before public display</p>
             </div>
           </div>
 
           {/* Tabs Filter Bar */}
-          <div className="flex flex-wrap gap-2 border-b border-slate-800 pb-3 font-semibold text-xs">
+          <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-3 font-semibold text-xs">
             {(['all', 'pending', 'approved', 'rejected'] as const).map((tab) => {
               const active = statusFilter === tab;
               const count = getCounts(tab);
@@ -83,13 +83,13 @@ export default function AdminFeedbackPage() {
                   className={`px-4 py-2 rounded-xl transition-all capitalize flex items-center gap-1.5 ${
                     active
                       ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-md font-bold'
-                      : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white'
+                      : 'bg-white shadow-sm border border-slate-200 text-slate-400 hover:text-white'
                   }`}
                 >
                   <span>{tab}</span>
                   <span
                     className={`px-1.5 py-0.5 rounded-full text-[10px] ${
-                      active ? 'bg-white/20 text-white' : 'bg-slate-800 text-slate-400'
+                      active ? 'bg-white/20 text-white' : 'bg-slate-50 text-slate-400'
                     }`}
                   >
                     {count}
@@ -101,7 +101,7 @@ export default function AdminFeedbackPage() {
 
           {/* Cards Grid */}
           {filteredFeedback.length === 0 ? (
-            <div className="p-12 text-center bg-slate-900 border border-slate-800 rounded-2xl text-slate-500 font-medium text-xs">
+            <div className="p-12 text-center bg-white shadow-sm border border-slate-200 rounded-2xl text-slate-500 font-medium text-xs">
               No feedback records found in this category.
             </div>
           ) : (
@@ -109,12 +109,12 @@ export default function AdminFeedbackPage() {
               {filteredFeedback.map((f) => (
                 <div
                   key={f._id}
-                  className="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between gap-4 hover:border-slate-700 transition-colors shadow-sm"
+                  className="bg-white shadow-sm border border-slate-200 rounded-2xl p-5 flex flex-col justify-between gap-4 hover:border-slate-300 transition-colors shadow-sm"
                 >
                   <div className="space-y-2">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="font-bold text-white text-sm">{f.patientName}</h3>
+                        <h3 className="font-bold text-slate-800 text-sm">{f.patientName}</h3>
                         <div className="mt-1">{renderStars(f.rating)}</div>
                       </div>
                       <span
@@ -129,14 +129,14 @@ export default function AdminFeedbackPage() {
                         {f.status}
                       </span>
                     </div>
-                    <p className="text-slate-300 leading-relaxed text-xs italic">
+                    <p className="text-slate-600 leading-relaxed text-xs italic">
                       "{f.message}"
                     </p>
                   </div>
-                  <div className="flex justify-between items-center pt-3 border-t border-slate-800/80">
+                  <div className="flex justify-between items-center pt-3 border-t border-slate-200/80">
                     <button
                       onClick={() => deleteFeedback(f._id)}
-                      className="p-1.5 bg-slate-800 hover:bg-rose-950/40 text-slate-400 hover:text-rose-400 rounded-xl transition-all border border-slate-700/50"
+                      className="p-1.5 bg-slate-50 hover:bg-rose-950/40 text-slate-400 hover:text-rose-400 rounded-xl transition-all border border-slate-300/50"
                       title="Delete feedback review"
                     >
                       <Trash2 className="w-4 h-4" />

@@ -93,7 +93,7 @@ export default function AdminPatientsPage() {
     <AdminShell>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-[#1A0706]">Patient Records Directory</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800">Patient Records Directory</h1>
           <p className="text-xs text-slate-500">Search and manage patient IDs (HOSP-2026-XXXX)</p>
         </div>
         <button
@@ -120,7 +120,7 @@ export default function AdminPatientsPage() {
       <div className="bg-white border border-[#D9D9D9] rounded-2xl overflow-x-auto text-xs font-medium shadow-sm">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-800/60 text-slate-400 border-b border-slate-800 uppercase font-semibold">
+                <tr className="bg-slate-50 text-slate-400 border-b border-slate-200 uppercase font-semibold">
                   <th className="p-3">Patient ID</th>
                   <th className="p-3">Name</th>
                   <th className="p-3">Contact</th>
@@ -131,16 +131,16 @@ export default function AdminPatientsPage() {
                   <th className="p-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800 text-slate-300">
+              <tbody className="divide-y divide-slate-100 text-slate-600">
                 {patients.length === 0 ? (
                   <tr>
                     <td colSpan={8} className="p-4 text-center text-slate-500">No patient records found.</td>
                   </tr>
                 ) : (
                   patients.map((p) => (
-                    <tr key={p._id} className="hover:bg-slate-800/40">
+                    <tr key={p._id} className="hover:bg-slate-50 transition-colors">
                       <td className="p-3 font-mono font-bold text-amber-400">{p.patientId}</td>
-                      <td className="p-3 font-bold text-white">{p.name}</td>
+                      <td className="p-3 font-bold text-slate-900">{p.name}</td>
                       <td className="p-3">
                         <div>{p.phone}</div>
                         <div className="text-slate-500 text-[10px]">{p.email}</div>
@@ -157,7 +157,7 @@ export default function AdminPatientsPage() {
                       <td className="p-3">
                         {p.primaryDoctor ? (
                           <div>
-                            <div className="font-semibold text-white">{p.primaryDoctor.name}</div>
+                            <div className="font-semibold text-slate-800">{p.primaryDoctor.name}</div>
                             <div className="text-[10px] text-slate-500">{p.primaryDoctor.specialization}</div>
                           </div>
                         ) : (
@@ -167,7 +167,7 @@ export default function AdminPatientsPage() {
                       <td className="p-3 text-right space-x-2">
                         <button
                           onClick={() => handleOpenEdit(p)}
-                          className="p-1.5 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors"
+                          className="p-1.5 bg-slate-50 text-slate-600 rounded hover:bg-slate-700 hover:text-white transition-colors"
                           title="Edit Patient Record"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
@@ -190,8 +190,8 @@ export default function AdminPatientsPage() {
           {/* Modal */}
           {showModal && (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-md space-y-4 text-xs">
-                <h3 className="font-bold text-white text-base">
+              <div className="bg-white shadow-sm border border-slate-200 rounded-2xl p-6 w-full max-w-md space-y-4 text-xs">
+                <h3 className="font-bold text-slate-800 text-base">
                   {editingId ? 'Edit Patient Record' : 'Create Patient Record'}
                 </h3>
                 <form onSubmit={handleSubmit} className="space-y-3">
@@ -203,7 +203,7 @@ export default function AdminPatientsPage() {
                       placeholder="e.g. Rahul Sharma"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                     />
                   </div>
                   <div>
@@ -214,7 +214,7 @@ export default function AdminPatientsPage() {
                       placeholder="patient@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                     />
                   </div>
                   <div>
@@ -225,7 +225,7 @@ export default function AdminPatientsPage() {
                       placeholder="9876543210"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-2">
@@ -236,7 +236,7 @@ export default function AdminPatientsPage() {
                         placeholder="Age"
                         value={formData.age}
                         onChange={(e) => setFormData({ ...formData, age: parseInt(e.target.value) || 0 })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       />
                     </div>
                     <div>
@@ -244,7 +244,7 @@ export default function AdminPatientsPage() {
                       <select
                         value={formData.gender}
                         onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       >
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
@@ -258,7 +258,7 @@ export default function AdminPatientsPage() {
                       <select
                         value={formData.bloodGroup}
                         onChange={(e) => setFormData({ ...formData, bloodGroup: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       >
                         <option value="">Blood Group (Optional)</option>
                         <option value="A+">A+</option>
@@ -276,7 +276,7 @@ export default function AdminPatientsPage() {
                       <select
                         value={formData.primaryDoctor}
                         onChange={(e) => setFormData({ ...formData, primaryDoctor: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       >
                         <option value="">Doctor (Optional)</option>
                         {doctors.map((d) => (
@@ -294,11 +294,11 @@ export default function AdminPatientsPage() {
                       placeholder="Patient Residence Address"
                       value={formData.address}
                       onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500 resize-none"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 resize-none"
                     />
                   </div>
                   <div className="flex justify-end space-x-2 pt-2">
-                    <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition-colors font-bold">
+                    <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-slate-50 hover:bg-slate-700 text-slate-600 rounded-xl transition-colors font-bold">
                       Cancel
                     </button>
                     <button type="submit" className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold rounded-xl transition-colors shadow">

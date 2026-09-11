@@ -109,6 +109,7 @@ const DEFAULT_VIDEOS = [
   const [camps, setCamps] = useState<any[]>(DEFAULT_CAMPS);
   const [feedback, setFeedback] = useState<any[]>(DEFAULT_FEEDBACK);
   const [videos, setVideos] = useState<any[]>(DEFAULT_VIDEOS);
+  const [dynamicDoctors, setDynamicDoctors] = useState<any[] | null>(null);
   const [videoFilter, setVideoFilter] = useState<'all' | 'testimonial' | 'camp'>('all');
 
   // Interactive Form States
@@ -135,6 +136,11 @@ const DEFAULT_VIDEOS = [
       const videosRes = await apiClient('/videos');
       if (videosRes.success && Array.isArray(videosRes.data) && videosRes.data.length > 0) {
         setVideos(videosRes.data);
+      }
+
+      const doctorsRes = await apiClient('/doctors');
+      if (doctorsRes.success && Array.isArray(doctorsRes.data) && doctorsRes.data.length > 0) {
+        setDynamicDoctors(doctorsRes.data);
       }
     } catch (err) {
       console.error('Error fetching website home data:', err);
@@ -304,7 +310,7 @@ const DEFAULT_VIDEOS = [
     },
   ];
 
-  const doctorsList = lang === 'hi' ? doctorsListHi : doctorsListEn;
+  const doctorsList = dynamicDoctors || (lang === 'hi' ? doctorsListHi : doctorsListEn);
 
   const filteredVideos = videoFilter === 'all'
     ? videos

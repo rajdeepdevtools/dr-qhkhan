@@ -163,8 +163,8 @@ export default function AdminReportsPage() {
         <main className="p-6 space-y-6 flex-1 overflow-y-auto">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-bold text-white">Clinical Medical Reports Audit</h1>
-              <p className="text-xs text-slate-400">View, create, and audit medical reports across all doctors</p>
+              <h1 className="text-2xl font-bold text-slate-800">Clinical Medical Reports Audit</h1>
+              <p className="text-xs text-slate-500">View, create, and audit medical reports across all doctors</p>
             </div>
             <button
               onClick={handleOpenCreate}
@@ -174,10 +174,10 @@ export default function AdminReportsPage() {
             </button>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden text-xs">
+          <div className="bg-white shadow-sm border border-slate-200 rounded-2xl overflow-hidden text-xs">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-800/60 text-slate-400 border-b border-slate-800 uppercase font-semibold">
+                <tr className="bg-slate-50 text-slate-400 border-b border-slate-200 uppercase font-semibold">
                   <th className="p-3">Report ID</th>
                   <th className="p-3">Patient Name</th>
                   <th className="p-3">Consulting Doctor</th>
@@ -187,16 +187,16 @@ export default function AdminReportsPage() {
                   <th className="p-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800 text-slate-300">
+              <tbody className="divide-y divide-slate-100 text-slate-600">
                 {reports.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="p-4 text-center text-slate-500">No medical reports found.</td>
                   </tr>
                 ) : (
                   reports.map((r) => (
-                    <tr key={r._id} className="hover:bg-slate-800/40">
+                    <tr key={r._id} className="hover:bg-slate-50 transition-colors">
                       <td className="p-3 font-mono font-bold text-amber-400">{r.reportId}</td>
-                      <td className="p-3 font-bold text-white">{r.patientName || r.patient?.name}</td>
+                      <td className="p-3 font-bold text-slate-900">{r.patientName || r.patient?.name}</td>
                       <td className="p-3">{r.doctorName || r.doctor?.name}</td>
                       <td className="p-3">{r.diagnosis}</td>
                       <td className="p-3 font-mono text-slate-400">{r.dateOfVisit}</td>
@@ -212,7 +212,7 @@ export default function AdminReportsPage() {
                       <td className="p-3 text-right space-x-2">
                         <button
                           onClick={() => handleOpenEdit(r)}
-                          className="p-1.5 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors"
+                          className="p-1.5 bg-slate-50 text-slate-600 rounded hover:bg-slate-700 hover:text-white transition-colors"
                           title="Edit Medical Report"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
@@ -235,8 +235,8 @@ export default function AdminReportsPage() {
           {/* Modal */}
           {showModal && (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-xl space-y-4 text-xs max-h-[90vh] overflow-y-auto">
-                <h3 className="font-bold text-white text-base flex items-center gap-2">
+              <div className="bg-white shadow-sm border border-slate-200 rounded-2xl p-6 w-full max-w-xl space-y-4 text-xs max-h-[90vh] overflow-y-auto">
+                <h3 className="font-bold text-slate-800 text-base flex items-center gap-2">
                   <FileText className="w-4 h-4 text-orange-500" />
                   {editingId ? 'Edit Medical Report' : 'Create Clinical Medical Report'}
                 </h3>
@@ -253,7 +253,7 @@ export default function AdminReportsPage() {
                         required
                         value={formData.patient}
                         onChange={(e) => setFormData({ ...formData, patient: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       >
                         <option value="">Choose Patient</option>
                         {patients.map((p) => (
@@ -269,7 +269,7 @@ export default function AdminReportsPage() {
                         required
                         value={formData.doctor}
                         onChange={(e) => setFormData({ ...formData, doctor: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       >
                         <option value="">Choose Doctor</option>
                         {doctors.map((d) => (
@@ -289,7 +289,7 @@ export default function AdminReportsPage() {
                         required
                         value={formData.dateOfVisit}
                         onChange={(e) => setFormData({ ...formData, dateOfVisit: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       />
                     </div>
                     <div>
@@ -297,7 +297,7 @@ export default function AdminReportsPage() {
                       <select
                         value={formData.status}
                         onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500 font-bold"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 font-bold"
                       >
                         <option value="draft">Draft</option>
                         <option value="finalized">Finalized</option>
@@ -313,7 +313,7 @@ export default function AdminReportsPage() {
                       placeholder="e.g. Fever, Dry Cough, Headaches"
                       value={formData.symptoms}
                       onChange={(e) => setFormData({ ...formData, symptoms: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                     />
                   </div>
 
@@ -325,12 +325,12 @@ export default function AdminReportsPage() {
                       placeholder="e.g. Acute Bronchial Asthma"
                       value={formData.diagnosis}
                       onChange={(e) => setFormData({ ...formData, diagnosis: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                     />
                   </div>
 
                   {/* Vitals Box */}
-                  <div className="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+                  <div className="p-3 bg-slate-950 border border-slate-200 rounded-xl space-y-2">
                     <span className="text-[10px] text-amber-400 uppercase font-bold block">Patient Vitals</span>
                     <div className="grid grid-cols-4 gap-2">
                       <input
@@ -338,21 +338,21 @@ export default function AdminReportsPage() {
                         placeholder="BP (120/80)"
                         value={formData.bloodPressure}
                         onChange={(e) => setFormData({ ...formData, bloodPressure: e.target.value })}
-                        className="p-2 bg-slate-800 border border-slate-700 rounded text-white text-[11px]"
+                        className="p-2 bg-slate-50 border border-slate-300 rounded text-white text-[11px]"
                       />
                       <input
                         type="number"
                         placeholder="Pulse Rate"
                         value={formData.pulseRate}
                         onChange={(e) => setFormData({ ...formData, pulseRate: Number(e.target.value) })}
-                        className="p-2 bg-slate-800 border border-slate-700 rounded text-white text-[11px]"
+                        className="p-2 bg-slate-50 border border-slate-300 rounded text-white text-[11px]"
                       />
                       <input
                         type="number"
                         placeholder="Weight (Kg)"
                         value={formData.weightKg}
                         onChange={(e) => setFormData({ ...formData, weightKg: Number(e.target.value) })}
-                        className="p-2 bg-slate-800 border border-slate-700 rounded text-white text-[11px]"
+                        className="p-2 bg-slate-50 border border-slate-300 rounded text-white text-[11px]"
                       />
                       <input
                         type="number"
@@ -360,13 +360,13 @@ export default function AdminReportsPage() {
                         placeholder="Temp (°F)"
                         value={formData.temperatureF}
                         onChange={(e) => setFormData({ ...formData, temperatureF: Number(e.target.value) })}
-                        className="p-2 bg-slate-800 border border-slate-700 rounded text-white text-[11px]"
+                        className="p-2 bg-slate-50 border border-slate-300 rounded text-white text-[11px]"
                       />
                     </div>
                   </div>
 
                   {/* Prescription Box */}
-                  <div className="p-3 bg-slate-950 border border-slate-800 rounded-xl space-y-2">
+                  <div className="p-3 bg-slate-950 border border-slate-200 rounded-xl space-y-2">
                     <span className="text-[10px] text-emerald-400 uppercase font-bold block">Homoeopathic Prescription</span>
                     <div className="grid grid-cols-2 gap-2">
                       <input
@@ -374,14 +374,14 @@ export default function AdminReportsPage() {
                         placeholder="Medicine Name"
                         value={formData.medicineName}
                         onChange={(e) => setFormData({ ...formData, medicineName: e.target.value })}
-                        className="p-2 bg-slate-800 border border-slate-700 rounded text-white text-[11px]"
+                        className="p-2 bg-slate-50 border border-slate-300 rounded text-white text-[11px]"
                       />
                       <input
                         type="text"
                         placeholder="Dosage (e.g. 4 pills)"
                         value={formData.dosage}
                         onChange={(e) => setFormData({ ...formData, dosage: e.target.value })}
-                        className="p-2 bg-slate-800 border border-slate-700 rounded text-white text-[11px]"
+                        className="p-2 bg-slate-50 border border-slate-300 rounded text-white text-[11px]"
                       />
                     </div>
                     <div className="grid grid-cols-2 gap-2">
@@ -390,14 +390,14 @@ export default function AdminReportsPage() {
                         placeholder="Timing (e.g. TDS before meals)"
                         value={formData.timing}
                         onChange={(e) => setFormData({ ...formData, timing: e.target.value })}
-                        className="p-2 bg-slate-800 border border-slate-700 rounded text-white text-[11px]"
+                        className="p-2 bg-slate-50 border border-slate-300 rounded text-white text-[11px]"
                       />
                       <input
                         type="number"
                         placeholder="Duration (Days)"
                         value={formData.durationDays}
                         onChange={(e) => setFormData({ ...formData, durationDays: Number(e.target.value) })}
-                        className="p-2 bg-slate-800 border border-slate-700 rounded text-white text-[11px]"
+                        className="p-2 bg-slate-50 border border-slate-300 rounded text-white text-[11px]"
                       />
                     </div>
                   </div>
@@ -409,12 +409,12 @@ export default function AdminReportsPage() {
                       placeholder="Doctor notes and diet restrictions..."
                       value={formData.doctorNotes}
                       onChange={(e) => setFormData({ ...formData, doctorNotes: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500 resize-none"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 resize-none"
                     />
                   </div>
 
                   <div className="flex justify-end space-x-2 pt-2">
-                    <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold transition-colors">
+                    <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-slate-50 hover:bg-slate-700 text-slate-600 rounded-xl font-bold transition-colors">
                       Cancel
                     </button>
                     <button type="submit" className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold rounded-xl shadow transition-colors">

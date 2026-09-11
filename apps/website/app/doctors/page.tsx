@@ -1,12 +1,22 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { DoctorCard } from '../../components/DoctorCard';
 import { UserCheck, FileText, CheckCircle2, ShieldCheck, Clock, Award, Landmark, Stethoscope } from 'lucide-react';
 import { useLanguage } from '../../lib/language-context';
+import { apiClient } from '../../lib/api-client';
 
 export default function DoctorsPage() {
   const { lang } = useLanguage();
+  const [dynamicDoctors, setDynamicDoctors] = useState<any[] | null>(null);
+
+  useEffect(() => {
+    apiClient('/doctors').then(res => {
+      if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+        setDynamicDoctors(res.data);
+      }
+    }).catch(err => console.error('Failed to fetch doctors', err));
+  }, []);
 
   const doctorsEn = [
     {
@@ -76,7 +86,7 @@ export default function DoctorsPage() {
     },
   ];
 
-  const doctors = lang === 'hi' ? doctorsHi : doctorsEn;
+  const doctors = dynamicDoctors || (lang === 'hi' ? doctorsHi : doctorsEn);
 
   const checklistItems = [
     {

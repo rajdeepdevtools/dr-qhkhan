@@ -94,8 +94,8 @@ export default function AdminBlogsPage() {
         <main className="p-6 space-y-6 flex-1 overflow-y-auto">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-bold text-white">Health Blog Management</h1>
-              <p className="text-xs text-slate-400">Publish articles and patient educational resources</p>
+              <h1 className="text-2xl font-bold text-slate-800">Health Blog Management</h1>
+              <p className="text-xs text-slate-500">Publish articles and patient educational resources</p>
             </div>
             <button
               onClick={handleOpenCreate}
@@ -105,10 +105,10 @@ export default function AdminBlogsPage() {
             </button>
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden text-xs">
+          <div className="bg-white shadow-sm border border-slate-200 rounded-2xl overflow-hidden text-xs">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-800/60 text-slate-400 border-b border-slate-800 uppercase font-semibold">
+                <tr className="bg-slate-50 text-slate-400 border-b border-slate-200 uppercase font-semibold">
                   <th className="p-3">Title</th>
                   <th className="p-3">Category</th>
                   <th className="p-3">Author</th>
@@ -116,26 +116,26 @@ export default function AdminBlogsPage() {
                   <th className="p-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800 text-slate-300">
+              <tbody className="divide-y divide-slate-100 text-slate-600">
                 {blogs.length === 0 ? (
                   <tr>
                     <td colSpan={5} className="p-4 text-center text-slate-500">No blog posts found.</td>
                   </tr>
                 ) : (
                   blogs.map((b) => (
-                    <tr key={b._id} className="hover:bg-slate-800/40">
-                      <td className="p-3 font-bold text-white max-w-xs truncate">{b.title}</td>
+                    <tr key={b._id} className="hover:bg-slate-50 transition-colors">
+                      <td className="p-3 font-bold text-slate-900 max-w-xs truncate">{b.title}</td>
                       <td className="p-3">{b.category}</td>
                       <td className="p-3">{b.author}</td>
                       <td className="p-3">
-                        <span className={`px-2 py-0.5 rounded font-bold uppercase text-[10px] ${b.isPublished ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-slate-850 text-slate-500 border border-slate-800'}`}>
+                        <span className={`px-2 py-0.5 rounded font-bold uppercase text-[10px] ${b.isPublished ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-slate-850 text-slate-500 border border-slate-200'}`}>
                           {b.isPublished ? 'Published' : 'Draft'}
                         </span>
                       </td>
                       <td className="p-3 text-right space-x-2">
                         <button
                           onClick={() => handleOpenEdit(b)}
-                          className="p-1.5 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors"
+                          className="p-1.5 bg-slate-50 text-slate-600 rounded hover:bg-slate-700 hover:text-white transition-colors"
                           title="Edit Blog Post"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
@@ -157,8 +157,8 @@ export default function AdminBlogsPage() {
 
           {showModal && (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-lg space-y-4 text-xs">
-                <h3 className="font-bold text-white text-base">
+              <div className="bg-white shadow-sm border border-slate-200 rounded-2xl p-6 w-full max-w-lg space-y-4 text-xs">
+                <h3 className="font-bold text-slate-800 text-base">
                   {editingId ? 'Edit Blog Post' : 'Create Blog Post'}
                 </h3>
                 {errorMessage && (
@@ -175,7 +175,7 @@ export default function AdminBlogsPage() {
                       placeholder="Blog Title"
                       value={formData.title}
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-3">
@@ -187,7 +187,7 @@ export default function AdminBlogsPage() {
                         placeholder="Author"
                         value={formData.author}
                         onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       />
                     </div>
                     <div>
@@ -198,7 +198,7 @@ export default function AdminBlogsPage() {
                         placeholder="Category"
                         value={formData.category}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       />
                     </div>
                   </div>
@@ -210,7 +210,7 @@ export default function AdminBlogsPage() {
                       placeholder="Short Excerpt"
                       value={formData.excerpt}
                       onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                     />
                   </div>
                   <div>
@@ -221,7 +221,7 @@ export default function AdminBlogsPage() {
                       placeholder="Full Content"
                       value={formData.content}
                       onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                     />
                   </div>
                   <div className="flex items-center gap-2 pt-1">
@@ -230,14 +230,14 @@ export default function AdminBlogsPage() {
                       id="isPublished"
                       checked={formData.isPublished}
                       onChange={(e) => setFormData({ ...formData, isPublished: e.target.checked })}
-                      className="w-4 h-4 rounded bg-slate-800 accent-orange-600 cursor-pointer"
+                      className="w-4 h-4 rounded bg-slate-50 accent-orange-600 cursor-pointer"
                     />
-                    <label htmlFor="isPublished" className="text-slate-300 font-medium cursor-pointer">
+                    <label htmlFor="isPublished" className="text-slate-600 font-medium cursor-pointer">
                       Publish Immediately on Website
                     </label>
                   </div>
                   <div className="flex justify-end space-x-2 pt-2">
-                    <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold transition-colors">
+                    <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-slate-50 hover:bg-slate-700 text-slate-600 rounded-xl font-bold transition-colors">
                       Cancel
                     </button>
                     <button type="submit" className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold rounded-xl shadow transition-colors">

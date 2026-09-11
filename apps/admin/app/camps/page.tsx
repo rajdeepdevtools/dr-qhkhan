@@ -8,6 +8,7 @@ import { Plus, Trash2, Calendar, MapPin, Edit3, Image as ImageIcon, Link as Link
 
 export default function AdminCampsPage() {
   const [camps, setCamps] = useState<any[]>([]);
+  const [doctorsList, setDoctorsList] = useState<any[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
@@ -33,8 +34,14 @@ export default function AdminCampsPage() {
     if (res.success && res.data) setCamps(res.data);
   };
 
+  const fetchDoctors = async () => {
+    const res = await adminApiClient('/doctors');
+    if (res.success && res.data) setDoctorsList(res.data);
+  };
+
   useEffect(() => {
     fetchCamps();
+    fetchDoctors();
   }, []);
 
   const validateAndProcessFile = (file: File) => {
@@ -202,6 +209,16 @@ export default function AdminCampsPage() {
     return `${backendOrigin}${path.startsWith('/') ? path : `/${path}`}`;
   };
 
+  const handleDoctorToggle = (docName: string) => {
+    let currentDoctors = formData.doctor.split(',').map(d => d.trim()).filter(Boolean);
+    if (currentDoctors.includes(docName)) {
+      currentDoctors = currentDoctors.filter(d => d !== docName);
+    } else {
+      currentDoctors.push(docName);
+    }
+    setFormData({ ...formData, doctor: currentDoctors.join(', ') });
+  };
+
   return (
     <div className="flex min-h-screen bg-slate-50 text-[#1A0706]">
       <AdminSidebar />
@@ -210,7 +227,7 @@ export default function AdminCampsPage() {
         <main className="p-6 space-y-6 flex-1 overflow-y-auto">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h1 className="text-2xl font-black text-[#1A0706] flex items-center gap-2">
+              <h1 className="text-2xl font-black text-slate-800 flex items-center gap-2">
                 Medical Camps & Shivir (Samaj Seva)
                 <span className="px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold border border-amber-300 flex items-center gap-1.5 shadow-sm">
                   <Megaphone className="w-3.5 h-3.5 text-amber-600" /> Website Announcement Popups
@@ -350,7 +367,7 @@ export default function AdminCampsPage() {
 
           {/* Modal Popup for Add / Edit Shivir */}
           {showModal && (
-            <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fadeIn">
+            <div className="fixed inset-0 bg-white shadow-sm/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fadeIn">
               <div className="bg-white border border-slate-200 rounded-2xl shadow-2xl p-6 w-full max-w-lg space-y-4 text-xs max-h-[90vh] overflow-y-auto">
                 <div className="flex justify-between items-center border-b border-slate-100 pb-3">
                   <h3 className="font-bold text-slate-900 text-base">
@@ -433,28 +450,33 @@ export default function AdminCampsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-[10px] text-slate-700 uppercase font-bold mb-1">
-                      Chief Doctor / अटेंडिंग चिकित्सक
+                    <label className="block text-[10px] text-slate-700 uppercase font-bold mb-2">
+                      Chief Doctors / अटेंडिंग चिकित्सक
                     </label>
-                    <div className="flex gap-2">
-                      <select
-                        value={formData.doctor}
-                        onChange={(e) => setFormData({ ...formData, doctor: e.target.value })}
-                        className="w-1/2 p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 font-semibold text-xs"
-                      >
-                        <option value="Dr. I. Khan">Dr. I. Khan</option>
-                        <option value="Dr. Q.H. Khan">Dr. Q.H. Khan</option>
-                        <option value="Dr. Adeeba Farheen">Dr. Adeeba Farheen</option>
-                        <option value="Dr. Q.H. Khan & Medical Team">Dr. Q.H. Khan & Medical Team</option>
-                      </select>
-                      <input
-                        type="text"
-                        required
-                        placeholder="or type doctor name..."
-                        value={formData.doctor}
-                        onChange={(e) => setFormData({ ...formData, doctor: e.target.value })}
-                        className="w-1/2 p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 font-semibold text-xs"
-                      />
+                    <div className="space-y-2 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {doctorsList.map((doc) => (
+                          <label key={doc._id} className="flex items-center gap-2 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={formData.doctor.split(',').map(d => d.trim()).includes(doc.name)}
+                              onChange={() => handleDoctorToggle(doc.name)}
+                              className="w-4 h-4 rounded text-orange-600 accent-orange-600"
+                            />
+                            <span className="text-xs font-bold text-slate-800">{doc.name}</span>
+                          </label>
+                        ))}
+                      </div>
+                      <div className="pt-2 border-t border-slate-200 mt-2">
+                        <label className="block text-[10px] text-slate-500 mb-1">Custom / Other Doctors (Comma separated)</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Dr. Team A, Medical Staff..."
+                          value={formData.doctor}
+                          onChange={(e) => setFormData({ ...formData, doctor: e.target.value })}
+                          className="w-full p-2 bg-white border border-slate-300 rounded-lg text-slate-900 outline-none focus:border-orange-500 font-semibold text-xs"
+                        />
+                      </div>
                     </div>
                   </div>
 

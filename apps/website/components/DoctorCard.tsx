@@ -11,7 +11,7 @@ export const DoctorCard: React.FC<{ doctor: Partial<IDoctorProfile> }> = ({ doct
   const { lang } = useLanguage();
 
   const getDoctorImageSrc = () => {
-    let rawImg = (doctor as any).image || (doctor as any).imageUrl || (doctor as any).photo;
+    let rawImg = (doctor as any).photoUrl || (doctor as any).image || (doctor as any).imageUrl || (doctor as any).photo;
 
     if (doctor.slug === 'dr-adeeba-farheen' || doctor.name?.includes('Adeeba') || doctor.name?.includes('अदीबा')) {
       return '/images/dr-adeeba-farheen.png';

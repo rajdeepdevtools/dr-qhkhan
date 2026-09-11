@@ -203,8 +203,8 @@ export default function AdminAppointmentsPage() {
           {/* Header & Actions */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-              <h1 className="text-2xl font-bold text-white">All Clinic Appointments</h1>
-              <p className="text-xs text-slate-400">Review patient bookings, assign doctors, update, and manage appointments</p>
+              <h1 className="text-2xl font-bold text-slate-800">All Clinic Appointments</h1>
+              <p className="text-xs text-slate-500">Review patient bookings, assign doctors, update, and manage appointments</p>
             </div>
             
             <div className="flex items-center gap-3">
@@ -216,7 +216,7 @@ export default function AdminAppointmentsPage() {
               </button>
 
               {/* View Mode Toggle */}
-              <div className="flex bg-slate-900 border border-slate-800 p-1 rounded-xl text-xs font-semibold">
+              <div className="flex bg-white shadow-sm border border-slate-200 p-1 rounded-xl text-xs font-semibold">
                 <button
                   onClick={() => setViewMode('table')}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
@@ -241,10 +241,10 @@ export default function AdminAppointmentsPage() {
 
           {/* TABLE VIEW */}
           {viewMode === 'table' ? (
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden text-xs">
+            <div className="bg-white shadow-sm border border-slate-200 rounded-2xl overflow-hidden text-xs">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-slate-800/60 text-slate-400 border-b border-slate-800 uppercase font-semibold">
+                  <tr className="bg-slate-50 text-slate-400 border-b border-slate-200 uppercase font-semibold">
                     <th className="p-3">Appointment ID</th>
                     <th className="p-3">Patient Name</th>
                     <th className="p-3">Department</th>
@@ -253,16 +253,16 @@ export default function AdminAppointmentsPage() {
                     <th className="p-3 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800 text-slate-300">
+                <tbody className="divide-y divide-slate-100 text-slate-600">
                   {appointments.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="p-4 text-center text-slate-500">No appointments scheduled.</td>
                     </tr>
                   ) : (
                     appointments.map((apt) => (
-                      <tr key={apt._id} className="hover:bg-slate-800/40">
+                      <tr key={apt._id} className="hover:bg-slate-50 transition-colors">
                         <td className="p-3 font-mono font-bold text-amber-400">{apt.appointmentId}</td>
-                        <td className="p-3 font-bold text-white">
+                        <td className="p-3 font-bold text-slate-900">
                           {apt.name} 
                           <span className="text-slate-500 block font-normal">{apt.phone}</span>
                         </td>
@@ -308,7 +308,7 @@ export default function AdminAppointmentsPage() {
                           )}
                           <button
                             onClick={() => handleOpenEdit(apt)}
-                            className="p-1 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white transition-colors"
+                            className="p-1 bg-slate-50 text-slate-600 rounded hover:bg-slate-700 hover:text-white transition-colors"
                             title="Edit Appointment"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
@@ -330,21 +330,21 @@ export default function AdminAppointmentsPage() {
           ) : (
             /* CALENDAR VIEW */
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start text-xs font-semibold">
-              <div className="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4">
-                <div className="flex justify-between items-center border-b border-slate-800 pb-3">
-                  <h3 className="text-sm font-bold text-white">
+              <div className="lg:col-span-8 bg-white shadow-sm border border-slate-200 rounded-2xl p-5 space-y-4">
+                <div className="flex justify-between items-center border-b border-slate-200 pb-3">
+                  <h3 className="text-sm font-bold text-slate-800">
                     {MONTHS[currentMonth]} {currentYear}
                   </h3>
                   <div className="flex gap-2">
                     <button
                       onClick={handlePrevMonth}
-                      className="p-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-colors"
+                      className="p-1 bg-slate-50 hover:bg-slate-700 text-white rounded-lg transition-colors"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
                     <button
                       onClick={handleNextMonth}
-                      className="p-1 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-colors"
+                      className="p-1 bg-slate-50 hover:bg-slate-700 text-white rounded-lg transition-colors"
                     >
                       <ChevronRight className="w-4 h-4" />
                     </button>
@@ -353,7 +353,7 @@ export default function AdminAppointmentsPage() {
 
                 <div className="grid grid-cols-7 gap-2 text-center">
                   {WEEKDAYS.map((day) => (
-                    <div key={day} className="text-slate-400 font-bold py-1 bg-slate-800/30 rounded">
+                    <div key={day} className="text-slate-400 font-bold py-1 bg-slate-50/30 rounded">
                       {day}
                     </div>
                   ))}
@@ -377,7 +377,7 @@ export default function AdminAppointmentsPage() {
                         className={`p-2 border rounded-xl flex flex-col justify-between items-center min-h-[64px] transition-all ${
                           isSelected
                             ? 'bg-clinic-crimson border-clinic-crimson text-white font-bold scale-[1.02] shadow-lg'
-                            : 'bg-slate-950 border-slate-850 text-slate-300 hover:border-slate-700'
+                            : 'bg-slate-950 border-slate-850 text-slate-600 hover:border-slate-300'
                         }`}
                       >
                         <span className="text-xs">{dayNum}</span>
@@ -405,9 +405,9 @@ export default function AdminAppointmentsPage() {
                 </div>
               </div>
 
-              <div className="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 self-start min-h-[300px]">
-                <div className="border-b border-slate-800 pb-2">
-                  <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+              <div className="lg:col-span-4 bg-white shadow-sm border border-slate-200 rounded-2xl p-5 space-y-4 self-start min-h-[300px]">
+                <div className="border-b border-slate-200 pb-2">
+                  <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
                     {selectedCalendarDate ? `Daily Schedule: ${selectedCalendarDate}` : 'Select Date to View'}
                   </h3>
                 </div>
@@ -444,7 +444,7 @@ export default function AdminAppointmentsPage() {
                             {apt.status}
                           </span>
                         </div>
-                        <p className="text-slate-350 text-[10px] bg-slate-900 p-1.5 rounded">
+                        <p className="text-slate-350 text-[10px] bg-white shadow-sm p-1.5 rounded">
                           <strong>Time:</strong> {apt.preferredTime} <br />
                           <strong>Department:</strong> {apt.department}
                         </p>
@@ -452,7 +452,7 @@ export default function AdminAppointmentsPage() {
                         <div className="flex justify-end gap-1.5 pt-2 border-t border-slate-858">
                           <button
                             onClick={() => handleOpenEdit(apt)}
-                            className="p-1 bg-slate-800 text-slate-300 rounded hover:bg-slate-700 hover:text-white"
+                            className="p-1 bg-slate-50 text-slate-600 rounded hover:bg-slate-700 hover:text-white"
                           >
                             <Edit3 className="w-3.5 h-3.5" />
                           </button>
@@ -474,8 +474,8 @@ export default function AdminAppointmentsPage() {
           {/* Modal */}
           {showModal && (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-lg space-y-4 text-xs">
-                <h3 className="font-bold text-white text-base">
+              <div className="bg-white shadow-sm border border-slate-200 rounded-2xl p-6 w-full max-w-lg space-y-4 text-xs">
+                <h3 className="font-bold text-slate-800 text-base">
                   {editingId ? 'Edit Appointment' : 'Book New Appointment'}
                 </h3>
                 {errorMessage && (
@@ -493,7 +493,7 @@ export default function AdminAppointmentsPage() {
                         placeholder="Patient Name"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       />
                     </div>
                     <div>
@@ -504,7 +504,7 @@ export default function AdminAppointmentsPage() {
                         placeholder="Phone Number"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       />
                     </div>
                   </div>
@@ -518,7 +518,7 @@ export default function AdminAppointmentsPage() {
                         placeholder="Email"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       />
                     </div>
                     <div>
@@ -528,7 +528,7 @@ export default function AdminAppointmentsPage() {
                         placeholder="Age"
                         value={formData.age}
                         onChange={(e) => setFormData({ ...formData, age: parseInt(e.target.value) || 0 })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       />
                     </div>
                     <div>
@@ -536,7 +536,7 @@ export default function AdminAppointmentsPage() {
                       <select
                         value={formData.gender}
                         onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       >
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
@@ -554,7 +554,7 @@ export default function AdminAppointmentsPage() {
                         placeholder="Department"
                         value={formData.department}
                         onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       />
                     </div>
                     <div>
@@ -562,7 +562,7 @@ export default function AdminAppointmentsPage() {
                       <select
                         value={formData.doctor}
                         onChange={(e) => setFormData({ ...formData, doctor: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       >
                         <option value="">Doctor (Optional)</option>
                         {doctors.map((d) => (
@@ -582,7 +582,7 @@ export default function AdminAppointmentsPage() {
                         required
                         value={formData.preferredDate}
                         onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       />
                     </div>
                     <div>
@@ -593,7 +593,7 @@ export default function AdminAppointmentsPage() {
                         placeholder="e.g. 10:00 AM"
                         value={formData.preferredTime}
                         onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       />
                     </div>
                     <div>
@@ -601,7 +601,7 @@ export default function AdminAppointmentsPage() {
                       <select
                         value={formData.status}
                         onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                        className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500"
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                       >
                         <option value="pending">Pending</option>
                         <option value="confirmed">Confirmed</option>
@@ -618,12 +618,12 @@ export default function AdminAppointmentsPage() {
                       placeholder="Symptoms or notes..."
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white outline-none focus:border-orange-500 resize-none"
+                      className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 resize-none"
                     />
                   </div>
 
                   <div className="flex justify-end space-x-2 pt-2">
-                    <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold transition-colors">
+                    <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-slate-50 hover:bg-slate-700 text-slate-600 rounded-xl font-bold transition-colors">
                       Cancel
                     </button>
                     <button type="submit" className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold rounded-xl shadow transition-colors">

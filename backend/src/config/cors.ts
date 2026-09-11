@@ -10,7 +10,7 @@ const allowedOrigins = [
   'http://localhost:3001',
   'http://127.0.0.1:3000',
   'http://127.0.0.1:3001',
-  'https://dr-qhkhan-website.vercel.app',
+  'https://www.theqhkhanclinic.com',
   'https://dr-qhkhan-admin.vercel.app',
   process.env.PROD_WEBSITE_URL,
   process.env.PROD_ADMIN_URL,
