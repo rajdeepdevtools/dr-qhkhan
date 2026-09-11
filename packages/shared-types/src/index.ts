@@ -69,6 +69,8 @@ export interface IAppointment {
   phone: string;
   age: number;
   gender: 'Male' | 'Female' | 'Other';
+  bloodGroup?: string;
+  address?: string;
   department: string;
   doctor?: string | IDoctorProfile;
   doctorName?: string;

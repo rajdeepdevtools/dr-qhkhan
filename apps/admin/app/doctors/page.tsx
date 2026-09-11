@@ -143,7 +143,7 @@ export default function AdminDoctorsPage() {
           <div className="bg-white shadow-sm border border-slate-200 rounded-2xl overflow-hidden text-xs">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-50 text-slate-400 border-b border-slate-200 uppercase font-semibold">
+                <tr className="bg-slate-50 text-slate-600 border-b border-slate-200 uppercase font-bold">
                   <th className="p-3">Doctor Name</th>
                   <th className="p-3">Designation</th>
                   <th className="p-3">Registration Number</th>
@@ -152,7 +152,7 @@ export default function AdminDoctorsPage() {
                   <th className="p-3 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-slate-600">
+              <tbody className="divide-y divide-slate-100 text-slate-800 font-medium">
                 {doctors.length === 0 ? (
                   <tr>
                     <td colSpan={6} className="p-4 text-center text-slate-500">No doctor profiles found.</td>
@@ -161,8 +161,8 @@ export default function AdminDoctorsPage() {
                   doctors.map((d) => (
                     <tr key={d._id} className="hover:bg-slate-50 transition-colors">
                       <td className="p-3 font-bold text-slate-900">{d.name}</td>
-                      <td className="p-3 font-semibold text-amber-400">{d.designation}</td>
-                      <td className="p-3 font-mono">{d.registrationNumber || 'None Assigned'}</td>
+                      <td className="p-3 font-bold text-amber-600">{d.designation}</td>
+                      <td className="p-3 font-mono font-semibold text-slate-700">{d.registrationNumber || 'None Assigned'}</td>
                       <td className="p-3">{d.specialization}</td>
                       <td className="p-3">{d.degrees?.join(', ')}</td>
                       <td className="p-3 text-right space-x-2">
@@ -302,29 +302,29 @@ export default function AdminDoctorsPage() {
                     />
                   </div>
 
-                  <div className="p-3 bg-slate-950 border border-slate-200 rounded-xl space-y-2">
-                    <span className="text-[10px] text-amber-400 uppercase font-bold block">OPD Schedule Config</span>
+                  <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                    <span className="text-[10px] text-amber-600 uppercase font-bold block">OPD Schedule Config</span>
                     <div className="grid grid-cols-3 gap-2">
                       <input
                         type="text"
                         placeholder="Days (e.g. Mon-Sat)"
                         value={formData.days}
                         onChange={(e) => setFormData({ ...formData, days: e.target.value })}
-                        className="p-2 bg-slate-50 border border-slate-300 rounded text-white text-[11px]"
+                        className="p-2 bg-white border border-slate-300 rounded text-slate-900 text-[11px]"
                       />
                       <input
                         type="text"
                         placeholder="Morning timing"
                         value={formData.morning}
                         onChange={(e) => setFormData({ ...formData, morning: e.target.value })}
-                        className="p-2 bg-slate-50 border border-slate-300 rounded text-white text-[11px]"
+                        className="p-2 bg-white border border-slate-300 rounded text-slate-900 text-[11px]"
                       />
                       <input
                         type="text"
                         placeholder="Evening timing"
                         value={formData.evening}
                         onChange={(e) => setFormData({ ...formData, evening: e.target.value })}
-                        className="p-2 bg-slate-50 border border-slate-300 rounded text-white text-[11px]"
+                        className="p-2 bg-white border border-slate-300 rounded text-slate-900 text-[11px]"
                       />
                     </div>
                   </div>

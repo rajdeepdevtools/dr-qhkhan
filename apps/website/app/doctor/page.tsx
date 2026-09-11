@@ -4,12 +4,13 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { apiClient } from '../../lib/api-client';
 import { useAuth } from '../../lib/auth-context';
-import { Calendar, Users, PlusCircle, CheckCircle2 } from 'lucide-react';
+import { Calendar, Users, PlusCircle, CheckCircle2, Eye, X, FileText } from 'lucide-react';
 
 export default function DoctorDashboard() {
   const { profile } = useAuth();
   const [appointments, setAppointments] = useState<any[]>([]);
   const [patients, setPatients] = useState<any[]>([]);
+  const [selectedApt, setSelectedApt] = useState<any>(null);
 
   useEffect(() => {
     apiClient('/doctors/portal/appointments').then((res) => {
@@ -83,14 +84,82 @@ export default function DoctorDashboard() {
                   <p className="font-bold text-slate-900">{apt.name} (Age: {apt.age}, {apt.gender})</p>
                   <p className="text-slate-500">{apt.department} • {apt.preferredDate} at {apt.preferredTime}</p>
                 </div>
-                <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-indigo-100 text-clinic-indigo uppercase">
-                  {apt.status}
-                </span>
+                <div className="flex items-center space-x-3">
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-indigo-100 text-clinic-indigo uppercase">
+                    {apt.status}
+                  </span>
+                  <button 
+                    onClick={() => setSelectedApt(apt)}
+                    className="p-1.5 bg-white border border-slate-200 text-slate-600 hover:text-clinic-indigo hover:border-clinic-indigo rounded-lg transition-colors shadow-sm"
+                    title="View Patient Details"
+                  >
+                    <Eye className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         )}
       </div>
+
+      {/* Details Modal */}
+      {selectedApt && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="bg-slate-50 border-b border-slate-100 px-5 py-4 flex justify-between items-center">
+              <h3 className="font-bold text-slate-800 flex items-center gap-2">
+                <FileText className="w-4 h-4 text-clinic-indigo" />
+                Patient Details
+              </h3>
+              <button onClick={() => setSelectedApt(null)} className="text-slate-400 hover:text-rose-500">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            <div className="p-5 space-y-4 text-xs">
+              <div className="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div>
+                  <p className="text-slate-500 font-semibold mb-0.5">Patient Name</p>
+                  <p className="font-bold text-slate-900">{selectedApt.name}</p>
+                </div>
+                <div>
+                  <p className="text-slate-500 font-semibold mb-0.5">Age & Gender</p>
+                  <p className="font-bold text-slate-900">{selectedApt.age} yrs, {selectedApt.gender}</p>
+                </div>
+                <div>
+                  <p className="text-slate-500 font-semibold mb-0.5">Phone Number</p>
+                  <p className="font-bold text-slate-900">{selectedApt.phone || 'N/A'}</p>
+                </div>
+                <div>
+                  <p className="text-slate-500 font-semibold mb-0.5">Email</p>
+                  <p className="font-bold text-slate-900 truncate" title={selectedApt.email}>{selectedApt.email || 'N/A'}</p>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-slate-500 font-bold mb-1.5 uppercase tracking-wider text-[10px]">Symptoms / Disease Note</p>
+                <div className="bg-amber-50 border border-amber-100 p-3.5 rounded-xl text-slate-700 leading-relaxed max-h-32 overflow-y-auto">
+                  {selectedApt.message ? (
+                    <p>{selectedApt.message}</p>
+                  ) : (
+                    <p className="italic text-slate-400">No symptoms or extra details provided by patient.</p>
+                  )}
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-slate-50 border-t border-slate-100 px-5 py-3 flex justify-end">
+              <button 
+                onClick={() => setSelectedApt(null)}
+                className="px-5 py-2 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-700 transition-colors shadow-sm"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

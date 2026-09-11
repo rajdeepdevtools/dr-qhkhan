@@ -14,6 +14,9 @@ import {
   Plus,
   Edit3,
   Trash2,
+  Eye,
+  FileText,
+  ClipboardList
 } from 'lucide-react';
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -32,12 +35,18 @@ export default function AdminAppointmentsPage() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Details Modal State
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [selectedAptDetails, setSelectedAptDetails] = useState<any>(null);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     age: 30,
     gender: 'Male',
+    bloodGroup: '',
+    address: '',
     department: 'Classical Homoeopathy',
     doctor: '',
     preferredDate: new Date().toISOString().slice(0, 10),
@@ -75,6 +84,8 @@ export default function AdminAppointmentsPage() {
       phone: '',
       age: 30,
       gender: 'Male',
+      bloodGroup: '',
+      address: '',
       department: 'Classical Homoeopathy',
       doctor: '',
       preferredDate: new Date().toISOString().slice(0, 10),
@@ -95,6 +106,8 @@ export default function AdminAppointmentsPage() {
       phone: apt.phone || '',
       age: apt.age || 30,
       gender: apt.gender || 'Male',
+      bloodGroup: apt.bloodGroup || (apt.patient && typeof apt.patient === 'object' ? apt.patient.bloodGroup : '') || '',
+      address: apt.address || (apt.patient && typeof apt.patient === 'object' ? apt.patient.address : '') || '',
       department: apt.department || 'Classical Homoeopathy',
       doctor: apt.doctor ? (typeof apt.doctor === 'object' ? apt.doctor._id : apt.doctor) : '',
       preferredDate: apt.preferredDate || new Date().toISOString().slice(0, 10),
@@ -105,6 +118,11 @@ export default function AdminAppointmentsPage() {
     });
     setErrorMessage('');
     setShowModal(true);
+  };
+
+  const handleViewDetails = (apt: any) => {
+    setSelectedAptDetails(apt);
+    setShowDetailsModal(true);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -136,11 +154,14 @@ export default function AdminAppointmentsPage() {
     }
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (apt: any) => {
     if (!confirm('Are you sure you want to cancel and delete this appointment?')) return;
-    const res = await adminApiClient(`/appointments/${id}`, { method: 'DELETE' });
+    const idToDelete = apt._id || apt.appointmentId || apt;
+    const res = await adminApiClient(`/appointments/${idToDelete}`, { method: 'DELETE' });
     if (res.success) {
       fetchAppointments();
+    } else {
+      alert(res.message || 'Error deleting appointment.');
     }
   };
 
@@ -188,11 +209,6 @@ export default function AdminAppointmentsPage() {
     (apt) => apt.preferredDate === selectedCalendarDate
   );
 
-  const triggerWhatsApp = (apt: any) => {
-    const message = `Hello ${apt.name}, your appointment at Dr. Q.H. Khan Clinic on ${apt.preferredDate} at ${apt.preferredTime} is confirmed. Please arrive 10 minutes prior to your slot.`;
-    const url = `https://wa.me/91${apt.phone}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
-  };
 
   return (
     <div className="flex min-h-screen">
@@ -220,7 +236,7 @@ export default function AdminAppointmentsPage() {
                 <button
                   onClick={() => setViewMode('table')}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
-                    viewMode === 'table' ? 'bg-clinic-crimson text-white font-bold' : 'text-slate-400 hover:text-white'
+                    viewMode === 'table' ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white font-bold' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
                   <List className="w-3.5 h-3.5" />
@@ -229,7 +245,7 @@ export default function AdminAppointmentsPage() {
                 <button
                   onClick={() => setViewMode('calendar')}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
-                    viewMode === 'calendar' ? 'bg-clinic-crimson text-white font-bold' : 'text-slate-400 hover:text-white'
+                    viewMode === 'calendar' ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white font-bold' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
                   <CalendarIcon className="w-3.5 h-3.5" />
@@ -265,6 +281,14 @@ export default function AdminAppointmentsPage() {
                         <td className="p-3 font-bold text-slate-900">
                           {apt.name} 
                           <span className="text-slate-500 block font-normal">{apt.phone}</span>
+                          {(apt.bloodGroup || (apt.patient && apt.patient.bloodGroup) || apt.address || (apt.patient && apt.patient.address)) && (
+                            <span className="text-[10px] text-slate-500 block font-normal mt-0.5">
+                              {(apt.bloodGroup || (apt.patient && apt.patient.bloodGroup)) && (
+                                <span className="bg-rose-50 text-rose-600 border border-rose-200 font-bold px-1 rounded mr-1.5">{apt.bloodGroup || (apt.patient && apt.patient.bloodGroup)}</span>
+                              )}
+                              {apt.address || (apt.patient && apt.patient.address)}
+                            </span>
+                          )}
                         </td>
                         <td className="p-3">{apt.department}</td>
                         <td className="p-3">{apt.preferredDate} ({apt.preferredTime})</td>
@@ -293,10 +317,10 @@ export default function AdminAppointmentsPage() {
                           {apt.status === 'confirmed' && (
                             <>
                               <button
-                                onClick={() => triggerWhatsApp(apt)}
-                                className="px-2 py-1 bg-teal-650 text-white rounded font-bold hover:bg-teal-600 transition-colors inline-flex items-center gap-1"
+                                onClick={() => handleViewDetails(apt)}
+                                className="px-2 py-1 bg-slate-100 text-slate-700 border border-slate-300 rounded font-bold hover:bg-slate-200 transition-colors inline-flex items-center gap-1"
                               >
-                                <MessageSquare className="w-3.5 h-3.5" /> WhatsApp
+                                <Eye className="w-3.5 h-3.5" /> Details
                               </button>
                               <button
                                 onClick={() => updateStatus(apt._id, 'completed')}
@@ -314,7 +338,7 @@ export default function AdminAppointmentsPage() {
                             <Edit3 className="w-3.5 h-3.5" />
                           </button>
                           <button
-                            onClick={() => handleDelete(apt._id)}
+                            onClick={() => handleDelete(apt)}
                             className="p-1 bg-rose-950/30 text-rose-400 rounded hover:bg-rose-900 hover:text-white transition-colors"
                             title="Delete Appointment"
                           >
@@ -376,23 +400,23 @@ export default function AdminAppointmentsPage() {
                         onClick={() => setSelectedCalendarDate(dateStr)}
                         className={`p-2 border rounded-xl flex flex-col justify-between items-center min-h-[64px] transition-all ${
                           isSelected
-                            ? 'bg-clinic-crimson border-clinic-crimson text-white font-bold scale-[1.02] shadow-lg'
-                            : 'bg-slate-950 border-slate-850 text-slate-600 hover:border-slate-300'
+                            ? 'bg-gradient-to-r from-orange-600 to-amber-600 border-orange-500 text-white font-bold scale-[1.02] shadow-lg'
+                            : 'bg-white border-slate-200 text-slate-700 hover:border-orange-400 hover:shadow-sm'
                         }`}
                       >
-                        <span className="text-xs">{dayNum}</span>
+                        <span className="text-xs font-bold">{dayNum}</span>
                         {dayApts.length > 0 && (
                           <div className="flex flex-col gap-0.5 mt-1 w-full text-[8px] font-bold">
                             {confirmedCount > 0 && (
                               <span className={`px-1 py-0.5 rounded text-center truncate ${
-                                isSelected ? 'bg-white/20 text-white' : 'bg-emerald-950/80 text-emerald-400 border border-emerald-900/30'
+                                isSelected ? 'bg-white/20 text-white' : 'bg-emerald-50 text-emerald-600 border border-emerald-200'
                               }`}>
                                 {confirmedCount} Conf
                               </span>
                             )}
                             {pendingCount > 0 && (
                               <span className={`px-1 py-0.5 rounded text-center truncate ${
-                                isSelected ? 'bg-white/20 text-white' : 'bg-amber-950/80 text-amber-400 border border-amber-900/30'
+                                isSelected ? 'bg-white/20 text-white' : 'bg-amber-50 text-amber-600 border border-amber-200'
                               }`}>
                                 {pendingCount} Pend
                               </span>
@@ -425,31 +449,31 @@ export default function AdminAppointmentsPage() {
                     {selectedDateAppointments.map((apt) => (
                       <div
                         key={apt._id}
-                        className="p-3 bg-slate-950 border border-slate-850 rounded-xl space-y-2.5"
+                        className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-2.5"
                       >
                         <div className="flex justify-between items-start">
                           <div>
-                            <h4 className="font-bold text-white text-xs">{apt.name}</h4>
+                            <h4 className="font-bold text-slate-900 text-xs">{apt.name}</h4>
                             <p className="text-[10px] text-slate-500 mt-0.5">
                               ID: {apt.appointmentId} • Phone: {apt.phone}
                             </p>
                           </div>
                           <span className={`px-2 py-0.5 rounded text-[8px] font-bold uppercase border ${
                             apt.status === 'confirmed'
-                              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                              ? 'bg-emerald-50 text-emerald-600 border-emerald-200'
                               : apt.status === 'completed'
-                              ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
-                              : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                              ? 'bg-indigo-50 text-indigo-600 border-indigo-200'
+                              : 'bg-amber-50 text-amber-600 border-amber-200'
                           }`}>
                             {apt.status}
                           </span>
                         </div>
-                        <p className="text-slate-350 text-[10px] bg-white shadow-sm p-1.5 rounded">
+                        <p className="text-slate-600 text-[10px] bg-white shadow-sm p-1.5 rounded border border-slate-100">
                           <strong>Time:</strong> {apt.preferredTime} <br />
                           <strong>Department:</strong> {apt.department}
                         </p>
                         
-                        <div className="flex justify-end gap-1.5 pt-2 border-t border-slate-858">
+                        <div className="flex justify-end gap-1.5 pt-2 border-t border-slate-200">
                           <button
                             onClick={() => handleOpenEdit(apt)}
                             className="p-1 bg-slate-50 text-slate-600 rounded hover:bg-slate-700 hover:text-white"
@@ -457,7 +481,7 @@ export default function AdminAppointmentsPage() {
                             <Edit3 className="w-3.5 h-3.5" />
                           </button>
                           <button
-                            onClick={() => handleDelete(apt._id)}
+                            onClick={() => handleDelete(apt)}
                             className="p-1 bg-rose-950/30 text-rose-400 rounded hover:bg-rose-900 hover:text-white"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -542,6 +566,37 @@ export default function AdminAppointmentsPage() {
                         <option value="Female">Female</option>
                         <option value="Other">Other</option>
                       </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2">
+                    <div>
+                      <label className="block text-[10px] text-slate-400 uppercase font-semibold mb-1">Blood Group (Optional)</label>
+                      <select
+                        value={formData.bloodGroup}
+                        onChange={(e) => setFormData({ ...formData, bloodGroup: e.target.value })}
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                      >
+                        <option value="">Blood Group (Optional)</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                      </select>
+                    </div>
+                    <div className="col-span-2">
+                      <label className="block text-[10px] text-slate-400 uppercase font-semibold mb-1">Address</label>
+                      <input
+                        type="text"
+                        placeholder="Full Address"
+                        value={formData.address}
+                        onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                        className="w-full p-2.5 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                      />
                     </div>
                   </div>
 
@@ -631,6 +686,72 @@ export default function AdminAppointmentsPage() {
                     </button>
                   </div>
                 </form>
+              </div>
+            </div>
+          )}
+
+          {/* Patient Details Modal */}
+          {showDetailsModal && selectedAptDetails && (
+            <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
+              <div className="bg-white shadow-sm border border-slate-200 rounded-2xl p-6 w-full max-w-2xl space-y-6 text-xs">
+                <div className="flex justify-between items-start border-b border-slate-200 pb-3">
+                  <div>
+                    <h3 className="font-bold text-slate-800 text-lg flex items-center gap-2">
+                      <ClipboardList className="w-5 h-5 text-clinic-crimson" />
+                      Patient Details & Slip
+                    </h3>
+                    <p className="text-slate-500 mt-1">Review full patient information and appointment context</p>
+                  </div>
+                  <button onClick={() => setShowDetailsModal(false)} className="p-1 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded">
+                    ✕
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Basic Info */}
+                  <div className="space-y-4">
+                    <h4 className="font-bold text-slate-900 border-b border-slate-100 pb-1 flex items-center gap-1.5">
+                      <FileText className="w-4 h-4 text-slate-400" /> Basic Information
+                    </h4>
+                    <div className="space-y-2 text-slate-700">
+                      <p><span className="text-slate-400 font-semibold w-24 inline-block">Name:</span> <strong>{selectedAptDetails.name}</strong></p>
+                      <p><span className="text-slate-400 font-semibold w-24 inline-block">Age/Gender:</span> {selectedAptDetails.age} Yrs, {selectedAptDetails.gender}</p>
+                      <p><span className="text-slate-400 font-semibold w-24 inline-block">Blood Group:</span> <span className="px-1.5 py-0.5 bg-rose-50 text-rose-600 font-bold border border-rose-200 rounded">{selectedAptDetails.bloodGroup || (selectedAptDetails.patient && selectedAptDetails.patient.bloodGroup) || 'N/A'}</span></p>
+                      <p><span className="text-slate-400 font-semibold w-24 inline-block">Address:</span> {selectedAptDetails.address || (selectedAptDetails.patient && selectedAptDetails.patient.address) || 'Not Provided'}</p>
+                      <p><span className="text-slate-400 font-semibold w-24 inline-block">Phone:</span> {selectedAptDetails.phone}</p>
+                      <p><span className="text-slate-400 font-semibold w-24 inline-block">Email:</span> {selectedAptDetails.email || 'N/A'}</p>
+                      <p><span className="text-slate-400 font-semibold w-24 inline-block">Patient ID:</span> {selectedAptDetails.patient?.patientId || 'Pending Creation'}</p>
+                    </div>
+                  </div>
+
+                  {/* Appointment Info */}
+                  <div className="space-y-4">
+                    <h4 className="font-bold text-slate-900 border-b border-slate-100 pb-1 flex items-center gap-1.5">
+                      <CalendarIcon className="w-4 h-4 text-slate-400" /> Appointment Context
+                    </h4>
+                    <div className="space-y-2 text-slate-700">
+                      <p><span className="text-slate-400 font-semibold w-24 inline-block">Appt ID:</span> <span className="font-mono text-amber-600 font-bold">{selectedAptDetails.appointmentId}</span></p>
+                      <p><span className="text-slate-400 font-semibold w-24 inline-block">Department:</span> {selectedAptDetails.department}</p>
+                      <p><span className="text-slate-400 font-semibold w-24 inline-block">Date/Time:</span> {selectedAptDetails.preferredDate} ({selectedAptDetails.preferredTime})</p>
+                      <p><span className="text-slate-400 font-semibold w-24 inline-block">Assigned Doc:</span> {selectedAptDetails.doctor?.name || selectedAptDetails.doctorName || 'None'}</p>
+                      <p><span className="text-slate-400 font-semibold w-24 inline-block">Status:</span> <span className="uppercase font-bold text-[10px] bg-slate-100 px-1.5 py-0.5 rounded">{selectedAptDetails.status}</span></p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Additional Context */}
+                <div className="space-y-2">
+                  <h4 className="font-bold text-slate-900 border-b border-slate-100 pb-1">Notes / Symptoms</h4>
+                  <div className="bg-slate-50 border border-slate-200 p-3 rounded-lg text-slate-600 italic min-h-[60px]">
+                    {selectedAptDetails.message || 'No additional notes or symptoms provided by the patient.'}
+                  </div>
+                </div>
+
+                <div className="flex justify-end pt-4 border-t border-slate-200">
+                  <button onClick={() => setShowDetailsModal(false)} className="px-5 py-2 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors">
+                    Close Details
+                  </button>
+                </div>
               </div>
             </div>
           )}

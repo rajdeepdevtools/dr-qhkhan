@@ -8,6 +8,8 @@ export interface IAppointmentDocument extends Document {
   phone: string;
   age: number;
   gender: 'Male' | 'Female' | 'Other';
+  bloodGroup?: string;
+  address?: string;
   department: string;
   doctor?: Types.ObjectId;
   doctorName?: string;
@@ -31,6 +33,8 @@ const appointmentSchema = new Schema<IAppointmentDocument>(
     phone: { type: String, required: true, index: true },
     age: { type: Number, required: true },
     gender: { type: String, enum: ['Male', 'Female', 'Other'], required: true },
+    bloodGroup: { type: String },
+    address: { type: String },
     department: { type: String, required: true },
     doctor: { type: Schema.Types.ObjectId, ref: 'DoctorProfile', index: true },
     doctorName: { type: String },

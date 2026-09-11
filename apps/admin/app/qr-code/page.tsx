@@ -41,8 +41,8 @@ export default function AdminQrCodePage() {
           {/* Controls section - hidden during print */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 print:hidden">
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">Patient Feedback QR Standee & Poster</h1>
-              <p className="text-xs text-slate-500">Generate & print premium light QR Standee (Patrick's Blue & American Yellow theme with Official Logo)</p>
+              <h1 className="text-2xl font-bold text-white">Patient Feedback QR Standee & Poster</h1>
+              <p className="text-xs text-slate-400">Generate & print premium light QR Standee (Patrick's Blue & American Yellow theme with Official Logo)</p>
             </div>
             <button
               onClick={handlePrint}
@@ -61,7 +61,7 @@ export default function AdminQrCodePage() {
               </h3>
               
               <div className="p-4 bg-slate-50 border border-slate-300/60 rounded-2xl text-slate-600 space-y-2 leading-relaxed">
-                <p className="flex items-center gap-1.5 font-bold text-white"><Info className="w-4 h-4 text-[#F4C430] shrink-0" /> Front Desk Standee Guide</p>
+                <p className="flex items-center gap-1.5 font-bold text-slate-900"><Info className="w-4 h-4 text-[#F4C430] shrink-0" /> Front Desk Standee Guide</p>
                 <p>
                   Print this light theme standee featuring the official website logo to place at your reception desk or consultation room.
                 </p>
@@ -71,13 +71,13 @@ export default function AdminQrCodePage() {
               </div>
 
               <div className="space-y-2">
-                <label className="block text-[10px] text-slate-400 uppercase font-extrabold tracking-wider">Target Review & Feedback URL</label>
+                <label className="block text-[10px] text-slate-600 uppercase font-extrabold tracking-wider">Target Review & Feedback URL</label>
                 <input
                   type="url"
                   value={targetUrl}
                   onChange={(e) => setTargetUrl(e.target.value)}
                   placeholder="e.g. https://www.theqhkhanclinic.com/feedback"
-                  className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-white outline-none focus:border-[#F4C430] font-semibold"
+                  className="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 outline-none focus:border-[#F4C430] font-semibold"
                 />
                 <span className="text-[10px] text-slate-500 block">
                   Scanned QR code links directly to your rate & feedback page (e.g. <code>https://www.theqhkhanclinic.com/feedback</code>).

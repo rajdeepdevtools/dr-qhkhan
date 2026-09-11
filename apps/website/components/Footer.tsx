@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { MapPin, Phone, MessageSquare, ShieldAlert, Award, FileText, ArrowRight } from 'lucide-react';
+import { MapPin, Phone, MessageSquare, ShieldAlert, Award, FileText, ArrowRight, Instagram, Youtube, Sparkles, Globe, ExternalLink } from 'lucide-react';
 import { clinicConfig } from '../lib/clinicConfig';
 import { useLanguage } from '../lib/language-context';
 
@@ -59,31 +59,51 @@ export const Footer: React.FC = () => {
                 : 'Established in 1958 in Gaya, Bihar. Preserving constitutional classical homoeopathic care for over six decades.'}
             </p>
 
-            <div className="flex gap-4">
+            <div className="flex flex-wrap items-center gap-3.5">
               <a
-                href="tel:9135404090"
-                className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-350 hover:text-white hover:bg-white/10 transition-colors shadow-sm"
-                title="Call Helpline"
+                href={clinicConfig.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 p-[1px] group transition-all duration-300 hover:scale-110 shadow-[0_0_15px_rgba(236,72,153,0.25)] hover:shadow-[0_0_25px_rgba(236,72,153,0.65)]"
+                title="Follow us on Instagram"
               >
-                <Phone className="w-4 h-4" />
+                <div className="w-full h-full bg-[#131314] rounded-[11px] flex items-center justify-center text-rose-400 group-hover:bg-transparent group-hover:text-white transition-colors">
+                  <Instagram className="w-4.5 h-4.5" />
+                </div>
+              </a>
+              <a
+                href={clinicConfig.youtubeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl bg-rose-500/15 border border-rose-500/35 flex items-center justify-center text-rose-400 hover:text-white hover:bg-rose-600 hover:border-rose-500 transition-all duration-300 shadow-[0_0_15px_rgba(244,63,94,0.2)] hover:shadow-[0_0_25px_rgba(244,63,94,0.6)] hover:scale-110"
+                title="Subscribe on YouTube"
+              >
+                <Youtube className="w-4.5 h-4.5" />
               </a>
               <a
                 href={`https://wa.me/91${clinicConfig.whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-350 hover:text-white hover:bg-white/10 transition-colors shadow-sm"
+                className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/35 flex items-center justify-center text-emerald-400 hover:text-white hover:bg-emerald-600 hover:border-emerald-500 transition-all duration-300 shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(16,185,129,0.6)] hover:scale-110"
                 title="WhatsApp Support"
               >
-                <MessageSquare className="w-4 h-4" />
+                <MessageSquare className="w-4.5 h-4.5" />
+              </a>
+              <a
+                href="tel:9135404090"
+                className="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/35 flex items-center justify-center text-sky-400 hover:text-white hover:bg-sky-500 hover:border-sky-400 transition-all duration-300 shadow-[0_0_15px_rgba(56,189,248,0.2)] hover:shadow-[0_0_25px_rgba(56,189,248,0.6)] hover:scale-110"
+                title="Call Helpline (+91 9135404090)"
+              >
+                <Phone className="w-4.5 h-4.5" />
               </a>
               <a
                 href={clinicConfig.googleMapsDirectionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-350 hover:text-white hover:bg-white/10 transition-colors shadow-sm"
-                title="Google Maps"
+                className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/35 flex items-center justify-center text-amber-400 hover:text-white hover:bg-amber-500 hover:border-amber-400 transition-all duration-300 shadow-[0_0_15px_rgba(245,158,11,0.2)] hover:shadow-[0_0_25px_rgba(245,158,11,0.6)] hover:scale-110"
+                title="Google Maps Clinic Directions"
               >
-                <MapPin className="w-4 h-4" />
+                <MapPin className="w-4.5 h-4.5" />
               </a>
             </div>
           </div>
@@ -188,10 +208,66 @@ export const Footer: React.FC = () => {
           <p>{lang === 'hi' ? 'सर्वाधिकार सुरक्षित।' : 'All rights reserved.'}</p>
         </div>
 
+        {/* Arrangeman Media Agency Credit Card */}
+        <div className="mt-8 bg-gradient-to-r from-slate-900/90 via-[#1a191b] to-slate-900/90 border border-amber-500/20 rounded-2xl p-4 sm:p-5 shadow-2xl backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-semibold">
+          <div className="flex items-center gap-3 text-center md:text-left">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 p-[1px] shrink-0 shadow-[0_0_15px_rgba(245,158,11,0.3)]">
+              <div className="w-full h-full bg-[#131314] rounded-[11px] flex items-center justify-center text-amber-400">
+                <Sparkles className="w-5 h-5" />
+              </div>
+            </div>
+            <div>
+              <p className="text-slate-400 text-[10px] uppercase tracking-widest font-bold">
+                Website Design & Digital Architecture
+              </p>
+              <h4 className="text-sm font-extrabold text-white tracking-tight flex items-center gap-1.5 justify-center md:justify-start">
+                Designed & Architected by <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-amber-200 font-black">Arrangeman Media</span>
+              </h4>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-2.5 text-[11px]">
+            {/* Phone */}
+            <a
+              href="tel:7301232069"
+              className="px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:border-amber-500/40 text-slate-300 hover:text-white transition-all flex items-center gap-1.5 hover:bg-white/10 shadow-sm"
+              title="Contact Arrangeman Media (+91 7301232069)"
+            >
+              <Phone className="w-3.5 h-3.5 text-amber-400" />
+              <span>7301232069</span>
+            </a>
+
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/arrangemanmedia"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3.5 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:border-rose-500/40 text-slate-300 hover:text-white transition-all flex items-center gap-1.5 hover:bg-white/10 shadow-sm"
+              title="Arrangeman Media Instagram"
+            >
+              <Instagram className="w-3.5 h-3.5 text-rose-400" />
+              <span>@arrangemanmedia</span>
+            </a>
+
+            {/* Website Link */}
+            <a
+              href="https://arrangeman.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-extrabold transition-all flex items-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.3)] hover:shadow-[0_0_20px_rgba(245,158,11,0.6)] hover:scale-105"
+              title="Visit arrangeman.com"
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span>arrangeman.com</span>
+              <ExternalLink className="w-3 h-3 opacity-80" />
+            </a>
+          </div>
+        </div>
+
         {/* Ambient Glow Branding Banner */}
-        <div className="relative mt-8 select-none">
+        <div className="relative mt-6 select-none">
           <div className="absolute inset-x-0 bottom-0 mx-auto w-full max-w-3xl h-full max-h-64 bg-white/5 rounded-full blur-[100px] pointer-events-none" />
-          <h3 className="text-center font-extrabold leading-[0.7] text-transparent text-[clamp(2rem,10vw,7.5rem)] [-webkit-text-stroke:1px_rgba(255,255,255,0.15)] mt-6 uppercase tracking-wider font-mono">
+          <h3 className="text-center font-extrabold leading-[0.7] text-transparent text-[clamp(2rem,10vw,7.5rem)] [-webkit-text-stroke:1px_rgba(255,255,255,0.15)] mt-4 uppercase tracking-wider font-mono">
             DR. Q.H. KHAN
           </h3>
         </div>

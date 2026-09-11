@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { adminApiClient } from '../../lib/api-client';
 import { AdminSidebar } from '../../components/AdminSidebar';
 import { AdminHeader } from '../../components/AdminHeader';
-import { Plus, Edit3, Trash2, FileText } from 'lucide-react';
+import { Plus, Edit3, Trash2, FileText, Printer, MessageCircle } from 'lucide-react';
 
 export default function AdminReportsPage() {
   const [reports, setReports] = useState<any[]>([]);
@@ -155,6 +155,50 @@ export default function AdminReportsPage() {
     }
   };
 
+  const handlePrint = (id: string) => {
+    window.open(`/reports/print/${id}`, '_blank');
+  };
+
+  const handleWhatsApp = (report: any) => {
+    const patientPhone = report.patient?.phone || report.patientPhone;
+    if (!patientPhone) {
+      alert('Patient phone number is not available.');
+      return;
+    }
+
+    const doctorName = report.doctor?.name || report.doctorName || 'Dr. Q.H. Khan';
+    const patientName = report.patient?.name || report.patientName || 'Patient';
+    
+    // Format a nice professional message
+    let message = `*Dr. Q.H. Khan Clinic - Medical Report*\n\n`;
+    message += `Dear ${patientName},\nHere is the summary of your consultation with ${doctorName} on ${report.dateOfVisit}.\n\n`;
+    message += `*Diagnosis:* ${report.diagnosis || 'N/A'}\n`;
+    if (report.vitals) {
+      message += `*Vitals:* BP ${report.vitals.bloodPressure || '-'}, Pulse ${report.vitals.pulseRate || '-'} bpm, Wt ${report.vitals.weightKg || '-'} kg\n`;
+    }
+    
+    if (report.prescription && report.prescription.length > 0) {
+      message += `\n*Prescription:*\n`;
+      report.prescription.forEach((rx: any) => {
+        message += `- ${rx.medicineName} (${rx.dosage}, ${rx.timing} for ${rx.durationDays} days)\n`;
+      });
+    }
+
+    if (report.doctorNotes) {
+      message += `\n*Doctor's Advice:* ${report.doctorNotes}\n`;
+    }
+
+    message += `\n_This is a system generated message. Please contact the clinic for further assistance._`;
+
+    const encodedMessage = encodeURIComponent(message);
+    
+    // Clean phone number: remove non-digits, ensure country code
+    let cleanedPhone = patientPhone.replace(/\D/g, '');
+    if (cleanedPhone.length === 10) cleanedPhone = '91' + cleanedPhone;
+
+    window.open(`https://wa.me/${cleanedPhone}?text=${encodedMessage}`, '_blank');
+  };
+
   return (
     <div className="flex min-h-screen">
       <AdminSidebar />
@@ -210,6 +254,20 @@ export default function AdminReportsPage() {
                         </span>
                       </td>
                       <td className="p-3 text-right space-x-2">
+                        <button
+                          onClick={() => handleWhatsApp(r)}
+                          className="p-1.5 bg-emerald-50 text-emerald-600 rounded hover:bg-emerald-600 hover:text-white transition-colors"
+                          title="Send to WhatsApp"
+                        >
+                          <MessageCircle className="w-3.5 h-3.5" />
+                        </button>
+                        <button
+                          onClick={() => handlePrint(r._id)}
+                          className="p-1.5 bg-indigo-50 text-indigo-600 rounded hover:bg-indigo-600 hover:text-white transition-colors"
+                          title="Save as PDF / Print"
+                        >
+                          <Printer className="w-3.5 h-3.5" />
+                        </button>
                         <button
                           onClick={() => handleOpenEdit(r)}
                           className="p-1.5 bg-slate-50 text-slate-600 rounded hover:bg-slate-700 hover:text-white transition-colors"

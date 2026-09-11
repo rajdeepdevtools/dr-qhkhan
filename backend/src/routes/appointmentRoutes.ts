@@ -24,7 +24,7 @@ router.put(
 router.delete(
   '/:id',
   authenticateJWT,
-  authorizeRoles('admin', 'super_admin'),
+  authorizeRoles('admin', 'super_admin', 'receptionist', 'doctor'),
   AppointmentController.deleteAppointment
 );
 

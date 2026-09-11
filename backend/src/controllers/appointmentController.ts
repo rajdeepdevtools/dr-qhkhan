@@ -8,7 +8,7 @@ import { AuthRequest } from '../middleware/auth';
 
 export class AppointmentController {
   static async createAppointment(req: Request, res: Response): Promise<void> {
-    const { name, email, phone, age, gender, department, doctor, preferredDate, preferredTime, message, consent, medicalDocuments, paymentScreenshot } = req.body;
+    const { name, email, phone, age, gender, bloodGroup, address, department, doctor, preferredDate, preferredTime, message, consent, medicalDocuments, paymentScreenshot } = req.body;
 
     const dateStr = (preferredDate || new Date().toISOString().slice(0, 10)).replace(/-/g, '');
     const randNum = Math.floor(1000 + Math.random() * 9000);
@@ -25,9 +25,37 @@ export class AppointmentController {
     }
 
     let patientRef: any = null;
-    const existingPatient = await Patient.findOne({ $or: [{ email }, { phone }] });
+    const queryParts = [];
+    if (email && email.trim() !== '') queryParts.push({ email });
+    if (phone && phone.trim() !== '') queryParts.push({ phone });
+    
+    let existingPatient = null;
+    if (queryParts.length > 0) {
+      existingPatient = await Patient.findOne({ $or: queryParts });
+    }
+
     if (existingPatient) {
       patientRef = existingPatient._id;
+      let updated = false;
+      if (bloodGroup && !existingPatient.bloodGroup) { existingPatient.bloodGroup = bloodGroup; updated = true; }
+      if (address && !existingPatient.address) { existingPatient.address = address; updated = true; }
+      if (doctorId && !existingPatient.primaryDoctor) { existingPatient.primaryDoctor = doctorId; updated = true; }
+      if (updated) await existingPatient.save();
+    } else {
+      // Auto-create patient immediately so doctor can see them
+      const newPatientId = `HOSP-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+      const newPatient = await Patient.create({
+        patientId: newPatientId,
+        name,
+        email: email || `no-email-${Date.now()}@clinic.com`,
+        phone,
+        age: Number(age) || 30,
+        gender,
+        bloodGroup: bloodGroup || undefined,
+        address: address || undefined,
+        primaryDoctor: doctorId || undefined,
+      });
+      patientRef = newPatient._id;
     }
 
     const appointment = await Appointment.create({
@@ -37,6 +65,8 @@ export class AppointmentController {
       phone,
       age: Number(age) || 30,
       gender,
+      bloodGroup,
+      address,
       department,
       doctor: doctorId,
       doctorName,
@@ -88,6 +118,36 @@ export class AppointmentController {
       }
     }
 
+    // Auto-create and link patient when confirmed
+    if (status === 'confirmed' || status === 'completed') {
+      const queryParts = [];
+      if (appointment.email && appointment.email.trim() !== '') queryParts.push({ email: appointment.email });
+      if (appointment.phone && appointment.phone.trim() !== '') queryParts.push({ phone: appointment.phone });
+      
+      let patient = null;
+      if (queryParts.length > 0) {
+        patient = await Patient.findOne({ $or: queryParts });
+      }
+      
+      if (!patient) {
+        const patientId = `HOSP-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+        patient = await Patient.create({
+          patientId,
+          name: appointment.name,
+          email: appointment.email || `no-email-${Date.now()}@clinic.com`,
+          phone: appointment.phone,
+          age: appointment.age,
+          gender: appointment.gender,
+          primaryDoctor: appointment.doctor,
+        });
+      } else if (appointment.doctor && !patient.primaryDoctor) {
+        patient.primaryDoctor = appointment.doctor;
+        await patient.save();
+      }
+      
+      appointment.patient = patient._id as any;
+    }
+
     await appointment.save();
 
     await AuditService.logAction({
@@ -106,7 +166,7 @@ export class AppointmentController {
 
   static async updateAppointment(req: AuthRequest, res: Response): Promise<void> {
     const { id } = req.params;
-    const { name, email, phone, age, gender, department, doctor, preferredDate, preferredTime, status, message } = req.body;
+    const { name, email, phone, age, gender, bloodGroup, address, department, doctor, preferredDate, preferredTime, status, message } = req.body;
 
     const appointment = await Appointment.findById(id);
     if (!appointment) {
@@ -119,6 +179,8 @@ export class AppointmentController {
     appointment.phone = phone ?? appointment.phone;
     appointment.age = age !== undefined ? Number(age) : appointment.age;
     appointment.gender = gender ?? appointment.gender;
+    appointment.bloodGroup = bloodGroup ?? appointment.bloodGroup;
+    appointment.address = address ?? appointment.address;
     appointment.department = department ?? appointment.department;
     appointment.preferredDate = preferredDate ?? appointment.preferredDate;
     appointment.preferredTime = preferredTime ?? appointment.preferredTime;
@@ -134,6 +196,36 @@ export class AppointmentController {
     } else if (doctor === '' || doctor === null) {
       appointment.doctor = undefined;
       appointment.doctorName = undefined;
+    }
+
+    // Auto-create and link patient when confirmed
+    if (appointment.status === 'confirmed' || appointment.status === 'completed') {
+      const queryParts = [];
+      if (appointment.email && appointment.email.trim() !== '') queryParts.push({ email: appointment.email });
+      if (appointment.phone && appointment.phone.trim() !== '') queryParts.push({ phone: appointment.phone });
+      
+      let patient = null;
+      if (queryParts.length > 0) {
+        patient = await Patient.findOne({ $or: queryParts });
+      }
+      
+      if (!patient) {
+        const patientId = `HOSP-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+        patient = await Patient.create({
+          patientId,
+          name: appointment.name,
+          email: appointment.email || `no-email-${Date.now()}@clinic.com`,
+          phone: appointment.phone,
+          age: appointment.age,
+          gender: appointment.gender,
+          primaryDoctor: appointment.doctor,
+        });
+      } else if (appointment.doctor && !patient.primaryDoctor) {
+        patient.primaryDoctor = appointment.doctor;
+        await patient.save();
+      }
+      
+      appointment.patient = patient._id as any;
     }
 
     await appointment.save();
@@ -153,7 +245,11 @@ export class AppointmentController {
 
   static async deleteAppointment(req: AuthRequest, res: Response): Promise<void> {
     const { id } = req.params;
-    const appointment = await Appointment.findByIdAndDelete(id);
+    const filter = mongoose.isValidObjectId(id)
+      ? { $or: [{ _id: id }, { appointmentId: id }] }
+      : { appointmentId: id };
+
+    const appointment = await Appointment.findOneAndDelete(filter);
     if (!appointment) {
       res.status(404).json({ success: false, message: 'Appointment not found' });
       return;

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { apiClient } from '../lib/api-client';
 import { CheckCircle2, AlertCircle, Calendar, UploadCloud, ShieldAlert, CreditCard } from 'lucide-react';
 
@@ -11,13 +11,27 @@ export const AppointmentForm: React.FC = () => {
     phone: '',
     age: 30,
     gender: 'Male',
+    bloodGroup: '',
+    address: '',
     department: 'General Homoeopathy',
     preferredDate: new Date().toISOString().split('T')[0],
     preferredTime: '8:00 AM - 10:00 AM',
     paymentMode: 'clinic', // 'clinic' | 'online'
     message: '',
     consent: true,
+    doctor: '',
   });
+
+  const [doctors, setDoctors] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Fetch available doctors
+    apiClient('/doctors').then((res) => {
+      if (res.success && res.data) {
+        setDoctors(res.data);
+      }
+    });
+  }, []);
 
   const [customDepartment, setCustomDepartment] = useState('');
   const [reportBase64, setReportBase64] = useState<string>('');
@@ -136,8 +150,20 @@ export const AppointmentForm: React.FC = () => {
     }
 
     const payload: Record<string, any> = {
-      ...formData,
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      age: formData.age,
+      gender: formData.gender,
+      bloodGroup: formData.bloodGroup || undefined,
+      address: formData.address || undefined,
       department: formData.department === 'Other' ? customDepartment.trim() : formData.department,
+      doctor: formData.doctor || undefined,
+      preferredDate: formData.preferredDate,
+      preferredTime: formData.preferredTime,
+      paymentMode: formData.paymentMode,
+      message: formData.message,
+      consent: formData.consent,
       medicalDocuments: reportBase64 ? [reportBase64] : [],
     };
 
@@ -187,12 +213,15 @@ export const AppointmentForm: React.FC = () => {
                 phone: '',
                 age: 30,
                 gender: 'Male',
+                bloodGroup: '',
+                address: '',
                 department: 'General Homoeopathy',
                 preferredDate: '',
                 preferredTime: '8:00 AM - 10:00 AM',
                 paymentMode: 'clinic',
                 message: '',
                 consent: true,
+                doctor: '',
               });
               setCustomDepartment('');
               setReportBase64('');
@@ -295,6 +324,40 @@ export const AppointmentForm: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
+              <label className="block text-slate-700 mb-1">Blood Group (Optional)</label>
+              <select
+                name="bloodGroup"
+                value={formData.bloodGroup}
+                onChange={handleChange}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-slate-350"
+              >
+                <option value="">Select Blood Group (Optional)</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-slate-700 mb-1">Full Address</label>
+              <input
+                type="text"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                placeholder="e.g. House No, Street, City, State"
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-slate-350"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
               <label className="block text-slate-700 mb-1">Department / Health Concern *</label>
               <select
                 name="department"
@@ -348,6 +411,21 @@ export const AppointmentForm: React.FC = () => {
                 <option value="10:00 AM - 12:00 PM">Morning (10:00 AM – 12:00 PM)</option>
                 <option value="2:00 PM - 5:00 PM">Evening (2:00 PM – 5:00 PM)</option>
                 <option value="5:00 PM - 8:00 PM">Evening (5:00 PM – 8:00 PM)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-slate-700 mb-1">Doctor (Optional)</label>
+              <select
+                name="doctor"
+                value={formData.doctor}
+                onChange={handleChange}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:bg-white focus:border-slate-350"
+              >
+                <option value="">Any Available Doctor</option>
+                {doctors.map(d => (
+                  <option key={d._id} value={d._id}>{d.name} - {d.specialization}</option>
+                ))}
               </select>
             </div>
           </div>

@@ -26,6 +26,8 @@ export const clinicConfig = {
     { number: '9097211989', isWhatsapp: false, label: 'Helpline 3' },
   ],
   whatsappNumber: '9135404090',
+  instagramUrl: 'https://www.instagram.com/theqhkhanclinic',
+  youtubeUrl: 'https://www.youtube.com/@theqhkhanclinic',
   googleMapsDirectionsUrl:
     'https://www.google.com/maps/search/?api=1&query=Nagmatia+Road+Gaya+Bihar',
   slogans: [

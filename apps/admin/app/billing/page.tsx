@@ -199,7 +199,7 @@ export default function AdminBillingPage() {
               </div>
               <button
                 onClick={handleOpenCreate}
-                className="px-4 py-2 bg-clinic-crimson text-white font-bold text-xs rounded-xl shadow hover:bg-amber-700 transition-colors flex items-center gap-1.5"
+                className="px-4 py-2 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-xs rounded-xl shadow flex items-center gap-1.5 transition-all"
               >
                 <Plus className="w-4 h-4" /> Create Invoice
               </button>
@@ -214,7 +214,7 @@ export default function AdminBillingPage() {
                   placeholder="Search by Patient Name or Invoice ID..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-9 pr-4 py-1.5 bg-white shadow-sm border border-slate-200 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-slate-300"
+                  className="w-full pl-9 pr-4 py-1.5 bg-white shadow-sm border border-slate-200 rounded-xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                 />
               </div>
             </div>
@@ -223,14 +223,14 @@ export default function AdminBillingPage() {
             {loading ? (
               <p className="text-xs text-slate-500 text-center py-12">Loading invoice logs...</p>
             ) : invoices.length === 0 ? (
-              <div className="text-center p-12 bg-white shadow-sm border border-slate-200 rounded-2xl text-slate-500 font-medium text-xs">
+              <div className="text-center p-12 bg-white shadow-sm border border-slate-200 rounded-2xl text-slate-600 font-bold text-xs">
                 No billing records found.
               </div>
             ) : (
               <div className="bg-white shadow-sm border border-slate-200 rounded-2xl overflow-hidden text-xs">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="bg-slate-50 text-slate-400 border-b border-slate-200 uppercase font-semibold">
+                    <tr className="bg-slate-50 text-slate-600 border-b border-slate-200 uppercase font-bold">
                       <th className="p-3">Invoice ID</th>
                       <th className="p-3">Patient Name</th>
                       <th className="p-3">Date</th>
@@ -240,7 +240,7 @@ export default function AdminBillingPage() {
                       <th className="p-3 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-100 text-slate-600">
+                  <tbody className="divide-y divide-slate-100 text-slate-800 font-medium">
                     {invoices.map((inv) => (
                       <tr key={inv._id} className="hover:bg-slate-50 transition-colors">
                         <td className="p-3 font-mono font-bold text-amber-400">{inv.invoiceId}</td>
@@ -299,32 +299,45 @@ export default function AdminBillingPage() {
 
       {/* 2. Create Invoice Modal (hidden when printing) */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50 no-print text-xs font-semibold">
-          <div className="bg-white shadow-sm border border-slate-200 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 space-y-4 text-slate-600">
-            <div className="flex justify-between items-center border-b border-slate-200 pb-3">
-              <h3 className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
-                <Receipt className="w-4 h-4 text-clinic-indigo" /> {editingId ? 'Edit Patient Invoice' : 'Create Patient Invoice'}
-              </h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-white">
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 no-print text-xs font-semibold">
+          <div className="bg-white shadow-2xl border border-slate-200 rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-6 text-slate-700 relative">
+            <div className="flex justify-between items-center border-b border-slate-100 pb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-orange-50 border border-orange-200/60 text-orange-600">
+                  <Receipt className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-extrabold text-slate-900">
+                    {editingId ? 'Edit Patient Invoice' : 'Create Patient Invoice'}
+                  </h3>
+                  <p className="text-[11px] text-slate-500 font-medium">
+                    Generate clinical bill, apply discounts, and record payment
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
+              >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {errorMsg && (
-              <div className="p-3 bg-rose-950/40 border border-rose-900 text-rose-300 rounded-xl">
+              <div className="p-3.5 bg-rose-50 border border-rose-200 text-rose-700 rounded-2xl text-xs font-bold flex items-center gap-2">
                 {errorMsg}
               </div>
             )}
 
-            <form onSubmit={handleSaveInvoice} className="space-y-4">
+            <form onSubmit={handleSaveInvoice} className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Select Patient */}
                 <div>
-                  <label className="block text-slate-455 mb-1">Select Patient *</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Select Patient *</label>
                   <select
                     value={selectedPatientId}
                     onChange={(e) => setSelectedPatientId(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-medium text-xs outline-none focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all"
                   >
                     {patients.map((p) => (
                       <option key={p._id} value={p._id}>
@@ -336,81 +349,87 @@ export default function AdminBillingPage() {
 
                 {/* Date */}
                 <div>
-                  <label className="block text-slate-455 mb-1">Invoice Date *</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">Invoice Date *</label>
                   <input
                     type="date"
                     required
                     value={invoiceDate}
                     onChange={(e) => setInvoiceDate(e.target.value)}
-                    className="w-full px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300"
+                    className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-medium text-xs outline-none focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all"
                   />
                 </div>
               </div>
 
               {/* Items Section */}
-              <div className="space-y-2">
+              <div className="space-y-3 pt-2 border-t border-slate-100">
                 <div className="flex justify-between items-center">
-                  <h4 className="font-bold text-white">Billing Line Items</h4>
+                  <h4 className="font-extrabold text-slate-900 text-xs uppercase tracking-wider">Billing Line Items</h4>
                   <button
                     type="button"
                     onClick={handleAddItem}
-                    className="px-2 py-1 bg-slate-50 hover:bg-slate-700 text-white rounded-lg flex items-center gap-1 font-bold"
+                    className="px-3 py-1.5 bg-orange-50 hover:bg-orange-100 text-orange-700 border border-orange-200/80 rounded-xl flex items-center gap-1.5 font-bold text-xs transition-all active:scale-95"
                   >
-                    <Plus className="w-3.5 h-3.5" /> Add Line
+                    <Plus className="w-3.5 h-3.5" /> Add Line Item
                   </button>
                 </div>
 
-                {items.map((item, idx) => (
-                  <div key={idx} className="flex gap-2 items-center">
-                    <input
-                      type="text"
-                      placeholder="Item Description (e.g. Consult Fee, Medicine)"
-                      required
-                      value={item.description}
-                      onChange={(e) => handleItemChange(idx, 'description', e.target.value)}
-                      className="flex-1 px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300"
-                    />
-                    <input
-                      type="number"
-                      placeholder="Price"
-                      required
-                      min="0"
-                      value={item.price || ''}
-                      onChange={(e) => handleItemChange(idx, 'price', e.target.value)}
-                      className="w-24 px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300 text-center"
-                    />
-                    <input
-                      type="number"
-                      placeholder="Qty"
-                      required
-                      min="1"
-                      value={item.quantity || ''}
-                      onChange={(e) => handleItemChange(idx, 'quantity', e.target.value)}
-                      className="w-16 px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300 text-center"
-                    />
-                    {items.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveItem(idx)}
-                        className="text-rose-500 hover:text-rose-400 p-1"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                ))}
+                <div className="space-y-2.5">
+                  {items.map((item, idx) => (
+                    <div key={idx} className="flex gap-2.5 items-center bg-slate-50/60 p-2 rounded-2xl border border-slate-100">
+                      <input
+                        type="text"
+                        placeholder="Item Description (e.g. Consult Fee, Medicine)"
+                        required
+                        value={item.description}
+                        onChange={(e) => handleItemChange(idx, 'description', e.target.value)}
+                        className="flex-1 px-3 py-2 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 font-medium outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-xs transition-all"
+                      />
+                      <div className="relative w-28">
+                        <span className="absolute left-2.5 top-2 text-slate-400 font-bold text-xs">₹</span>
+                        <input
+                          type="number"
+                          placeholder="Price"
+                          required
+                          min="0"
+                          value={item.price || ''}
+                          onChange={(e) => handleItemChange(idx, 'price', e.target.value)}
+                          className="w-full pl-6 pr-2 py-2 bg-white border border-slate-200 rounded-xl text-slate-900 font-bold outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-xs text-right transition-all"
+                        />
+                      </div>
+                      <input
+                        type="number"
+                        placeholder="Qty"
+                        required
+                        min="1"
+                        value={item.quantity || ''}
+                        onChange={(e) => handleItemChange(idx, 'quantity', e.target.value)}
+                        className="w-16 px-2 py-2 bg-white border border-slate-200 rounded-xl text-slate-900 font-bold outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 text-xs text-center transition-all"
+                      />
+                      {items.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveItem(idx)}
+                          className="text-slate-400 hover:text-rose-600 hover:bg-rose-50 p-2 rounded-xl transition-all"
+                          title="Remove item"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Calculations & Methods */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-slate-200">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-3 border-t border-slate-100">
                 {/* Payment Fields */}
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-slate-455 mb-1">Payment Status</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">Payment Status</label>
                     <select
                       value={paymentStatus}
                       onChange={(e) => setPaymentStatus(e.target.value as any)}
-                      className="w-full px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-medium text-xs outline-none focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all"
                     >
                       <option value="paid">Paid</option>
                       <option value="partially_paid">Partially Paid</option>
@@ -419,11 +438,11 @@ export default function AdminBillingPage() {
                   </div>
 
                   <div>
-                    <label className="block text-slate-455 mb-1">Payment Method</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">Payment Method</label>
                     <select
                       value={paymentMethod}
                       onChange={(e) => setPaymentMethod(e.target.value as any)}
-                      className="w-full px-3 py-2 bg-slate-950 border border-slate-200 rounded-xl text-white outline-none focus:border-slate-300"
+                      className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-medium text-xs outline-none focus:bg-white focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all"
                     >
                       <option value="cash">Cash</option>
                       <option value="upi">UPI (GPay / PhonePe / Paytm)</option>
@@ -433,27 +452,29 @@ export default function AdminBillingPage() {
                   </div>
                 </div>
 
-                {/* Subtotals */}
-                <div className="bg-slate-950 p-4 border border-slate-200 rounded-2xl flex flex-col justify-center space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-slate-400">Subtotal Amount:</span>
-                    <strong className="text-white">₹{totalAmount}</strong>
+                {/* Subtotals Box */}
+                <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-4 rounded-2xl flex flex-col justify-between space-y-2.5 text-white shadow-md border border-slate-800">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 font-medium text-xs">Subtotal Amount:</span>
+                    <strong className="text-white text-sm font-extrabold">₹{totalAmount}</strong>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-slate-400">Discount (₹):</span>
-                    <input
-                      type="number"
-                      min="0"
-                      max={totalAmount}
-                      value={discountAmount || ''}
-                      onChange={(e) => setDiscountAmount(parseFloat(e.target.value) || 0)}
-                      className="w-20 px-2 py-1 bg-white shadow-sm border border-slate-200 rounded text-center text-white"
-                    />
+                    <span className="text-slate-400 font-medium text-xs">Discount (₹):</span>
+                    <div className="relative w-24">
+                      <span className="absolute left-2.5 top-1.5 text-slate-400 font-bold text-xs">₹</span>
+                      <input
+                        type="number"
+                        min="0"
+                        max={totalAmount}
+                        value={discountAmount || ''}
+                        onChange={(e) => setDiscountAmount(parseFloat(e.target.value) || 0)}
+                        className="w-full pl-6 pr-2 py-1 bg-slate-800 border border-slate-700 rounded-lg text-right text-amber-300 font-bold outline-none focus:border-orange-400 text-xs transition-all"
+                      />
+                    </div>
                   </div>
-                  <hr className="border-slate-850" />
-                  <div className="flex justify-between text-sm">
-                    <span className="text-slate-350">Final Payable:</span>
-                    <strong className="text-amber-400 font-extrabold text-base">₹{finalAmount}</strong>
+                  <div className="border-t border-slate-800 pt-2 flex justify-between items-center">
+                    <span className="text-slate-300 font-bold text-xs">Final Payable:</span>
+                    <strong className="text-amber-400 font-black text-lg">₹{finalAmount}</strong>
                   </div>
                 </div>
               </div>
@@ -461,7 +482,7 @@ export default function AdminBillingPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full py-3 bg-clinic-crimson text-white font-bold rounded-xl shadow hover:bg-amber-700 transition-colors disabled:opacity-50"
+                className="w-full py-3.5 bg-gradient-to-r from-orange-600 via-amber-600 to-orange-600 hover:from-orange-500 hover:to-amber-500 text-white font-extrabold rounded-xl shadow-md shadow-orange-600/20 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 text-xs uppercase tracking-wider"
               >
                 {submitting ? 'Saving Invoice...' : editingId ? 'Save Changes' : 'Save & Print Invoice'}
               </button>

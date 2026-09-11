@@ -295,7 +295,7 @@ const DEFAULT_VIDEOS = [
       registrationNumber: 'पंजीकरण संख्या 33454',
       specialization: 'जनरल फिजिशियन, क्रोनिक एवं गंभीर रोग विशेषज्ञ',
       designation: 'प्रबंध निदेशक एवं जनरल फिजिशियन',
-      bio: 'क्लिनिक के प्रबंध निदेशक एवं जनरल फिजिशियन, जो क्लासिकल होम्योपैथी में व्यापक अनुभव के साथ क्रोनिक बीमारियों, जटिल दीर्घकालिक रोगों, त्वचा विकारों, विटिलिगो और गुप्त रोगों के उपचार में विशेषज्ञ हैं।',
+      bio: 'क्लासिकल होम्योपैथी में व्यापक अनुभव के साथ प्रबंध निदेशक एवं जनरल फिजिशियन, जो क्रोनिक बीमारियों, गंभीर दीर्घकालिक बीमारियों, त्वचा विकारों, विटिलिगो और व्यक्तिगत संवैधानिक शिकायतों में विशेषज्ञ हैं।',
       image: '/images/dr-i-khan.png',
     },
     {
@@ -303,70 +303,29 @@ const DEFAULT_VIDEOS = [
       name: 'डॉ. अदीबा फरहीन',
       degrees: ['बी.एच.एम.एस. (बी.यू.)', 'एम.डी. (फिजिशियन)', 'जी.डी.एम.सी., कटिहार, पटना'],
       registrationNumber: 'पंजीकरण संख्या 31319',
-      specialization: 'सामान्य फिजिशियन, महिला स्वास्थ्य (PCOD, स्तन गांठ/ट्यूमर) एवं सामान्य प्रसव परामर्श',
-      designation: 'कंसल्टेंट फिजिशियन एवं महिला स्वास्थ्य विशेषज्ञ',
-      bio: 'सामान्य फिजिशियन एवं महिला स्वास्थ्य परामर्शदाता, जो PCOD/PCOS, स्तन गांठ व ट्यूमर, महिला रोगों, सामान्य प्रसव मार्गदर्शन एवं सभी सामान्य बीमारियों के उपचार में अनुभवी हैं।',
+      specialization: 'जनरल फिजिशियन, महिला रोग (PCOD, ब्रेस्ट लम्प्स) एवं नॉर्मल डिलीवरी केयर',
+      designation: 'परामर्शदाता फिजिशियन एवं महिला स्वास्थ्य विशेषज्ञ',
+      bio: 'PCOD/PCOS, ब्रेस्ट ट्यूमर/लम्प्स, महिला स्वास्थ्य विकारों, सामान्य प्रसव परामर्श और सामान्य चिकित्सा स्थितियों में अनुभवी जनरल फिजिशियन एवं महिला स्वास्थ्य परामर्शदाता।',
       image: '/images/dr-adeeba-farheen.png',
     },
   ];
 
-  const doctorsList = dynamicDoctors || (lang === 'hi' ? doctorsListHi : doctorsListEn);
+  const fallbackDoctors = lang === 'hi' ? doctorsListHi : doctorsListEn;
+  const doctorsList = dynamicDoctors || fallbackDoctors;
 
-  const filteredVideos = videoFilter === 'all'
-    ? videos
-    : videos.filter(v => v.category === videoFilter);
+  const filteredVideos = videos.filter((v: any) => {
+    if (videoFilter === 'all') return true;
+    return v.category === videoFilter;
+  });
 
   return (
-    <div className="space-y-12 pb-12">
-      {/* 1. HERO SECTION */}
+    <div className="min-h-screen bg-[#FAF6F0] space-y-12 sm:space-y-16 pb-16">
+      {/* 1. HERO BANNER */}
       <Hero />
-
-
-      {/* CLINICAL METRICS GRID */}
-      <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          {[
-            {
-              count: '68+',
-              labelEn: 'Years of Service',
-              labelHi: 'वर्षों की सेवा',
-              descEn: 'Trust since 1958',
-              descHi: '1958 से अटूट विश्वास'
-            },
-            {
-              count: '10,000+',
-              labelEn: 'Treated Cases',
-              labelHi: 'सफल उपचारित केस',
-              descEn: 'Skin & chronic ailments',
-              descHi: 'त्वचा एवं क्रोनिक रोग'
-            },
-            {
-              count: '3+',
-              labelEn: 'Registered Specialists',
-              labelHi: 'पंजीकृत विशेषज्ञ',
-              descEn: 'Qualified physicians',
-              descHi: 'योग्य चिकित्सक टीम'
-            },
-            {
-              count: '2+',
-              labelEn: 'Free Camps Monthly',
-              labelHi: 'मासिक मुफ्त शिविर',
-              descEn: 'Social health service',
-              descHi: 'सामाजिक स्वास्थ्य सेवा'
-            }
-          ].map((item, idx) => (
-            <div key={idx} className="bg-white border border-[#D9D9D9] rounded-2xl p-6 hover:border-[#55100D]/50 hover:shadow-md transition-all duration-300 shadow-sm">
-              <p className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#55100D] to-[#DD0200]">{item.count}</p>
-              <p className="text-xs font-black text-[#1A0706] mt-1.5">{lang === 'hi' ? item.labelHi : item.labelEn}</p>
-              <p className="text-[10px] text-slate-500 mt-0.5 font-bold">{lang === 'hi' ? item.descHi : item.descEn}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* 3. FOUNDER'S MEMORIAL & LEGACY TIMELINE */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-br from-[#FFFDF9] via-[#FAF4ED] to-[#F5ECE2] text-[#1A0706] rounded-3xl p-6 sm:p-10 lg:p-12 border border-[#E0D0C0] shadow-xl relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#FFFDF9] via-[#FAF4ED] to-[#F5ECE2] text-[#1A0706] rounded-[36px] p-6 sm:p-10 lg:p-12 border border-[#E0D0C0] shadow-2xl relative overflow-hidden">
           
           {/* Subtle Royal Accent Lighting Orbs */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#DD0200]/10 via-amber-400/15 to-transparent rounded-full blur-3xl pointer-events-none" />
@@ -377,13 +336,13 @@ const DEFAULT_VIDEOS = [
             {/* Header Title Row */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border-b border-[#E6D8C8] pb-8">
               
-              <div className="lg:col-span-8 space-y-4">
+              <div className="lg:col-span-8 space-y-5">
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#55100D]/5 border border-[#55100D]/20 text-[#55100D] text-xs font-black uppercase tracking-wider shadow-xs">
                   <Award className="w-4 h-4 text-[#DD0200]" />
                   <span>
                     {lang === 'hi'
                       ? '31 दिसंबर 1934 – 3 जून • 1958 से मगध प्रमंडल की अटूट धरोहर'
-                      : '31st DEC 1934 – 3rd JUNE • 68+ YEARS OF HERITAGE & TRUST'}
+                      : '31ST DEC 1934 – 3RD JUNE • 68+ YEARS OF HERITAGE & TRUST'}
                   </span>
                 </div>
 
@@ -416,9 +375,9 @@ const DEFAULT_VIDEOS = [
                 <div className="pt-2">
                   <Link
                     href="/doctors/dr-q-h-khan"
-                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white text-xs font-black shadow-lg transition-all hover:-translate-y-0.5 tracking-wider uppercase"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#55100D] via-[#7F120D] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white text-xs font-black shadow-lg shadow-red-900/20 transition-all hover:scale-[1.02] active:scale-[0.98] tracking-wider uppercase"
                   >
-                    <span>{lang === 'hi' ? 'संस्थापक की संपूर्ण जीवनी (Biography) पढ़ें' : 'Read Full Founder Biography'}</span>
+                    <span>{lang === 'hi' ? 'संस्थापक की संपूर्ण जीवनी (BIOGRAPHY) पढ़ें' : 'READ FULL FOUNDER BIOGRAPHY'}</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
@@ -426,7 +385,7 @@ const DEFAULT_VIDEOS = [
 
               {/* Founder Portrait & Memorial Card */}
               <div className="lg:col-span-4 flex flex-col items-center justify-center">
-                <div className="bg-white border border-[#E5D5C5] p-6 rounded-3xl shadow-xl text-center space-y-3 w-full max-w-sm relative overflow-hidden">
+                <div className="bg-white border border-[#E5D5C5] p-6 rounded-[28px] shadow-2xl text-center space-y-3.5 w-full max-w-sm relative overflow-hidden">
                   
                   {/* Decorative Gold Header Bar */}
                   <div className="h-1.5 bg-gradient-to-r from-[#55100D] via-amber-400 to-[#DD0200] absolute top-0 left-0 right-0" />
@@ -447,13 +406,13 @@ const DEFAULT_VIDEOS = [
                   </div>
 
                   <div>
-                    <h3 className="font-black text-[#1A0706] text-base sm:text-lg">
+                    <h3 className="font-black text-[#1A0706] text-lg sm:text-xl">
                       {lang === 'hi' ? 'स्वर्गीय डॉ. क्यू. एच. खान' : 'Late Dr. Q.H. Khan'}
                     </h3>
                     <p className="text-[#55100D] text-xs font-black mt-0.5">
                       {lang === 'hi' ? 'कोलकाता मेडिसिन • संस्थापक (1958)' : 'Kolkata Graduate • Founder (1958)'}
                     </p>
-                    <p className="text-[#5A4543] text-[11px] font-semibold italic mt-2.5 bg-[#FAF3EC] p-3 rounded-xl border border-[#E8DCD0]">
+                    <p className="text-[#5A4543] text-[11px] font-semibold italic mt-3 bg-[#FAF3EC] p-3.5 rounded-2xl border border-[#E8DCD0] shadow-xs">
                       {lang === 'hi'
                         ? '"चिकित्सा केवल आजीविका नहीं, बल्कि पीड़ित मानवता एवं अनाथ बच्चों की निस्वार्थ सेवा है।"'
                         : '"Medical treatment is not a commercial enterprise; it is a sacred duty to relieve human suffering."'}
@@ -473,76 +432,76 @@ const DEFAULT_VIDEOS = [
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 
-                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
+                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5">
                   <div className="flex items-center justify-between">
                     <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black text-xs flex items-center justify-center shadow-xs">
                       1934
                     </span>
-                    <span className="text-[10px] font-black text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200 uppercase tracking-wider">
-                      {lang === 'hi' ? 'जन्म एवं शिक्षा' : 'Birth & Studies'}
+                    <span className="text-[10px] font-black text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-md border border-amber-200 uppercase tracking-wider">
+                      {lang === 'hi' ? 'जन्म एवं शिक्षा' : 'BIRTH & STUDIES'}
                     </span>
                   </div>
                   <h4 className="font-black text-[#1A0706] text-sm">
                     {lang === 'hi' ? 'कालवाना (गया) से कोलकाता' : 'Kalwana to Kolkata'}
                   </h4>
-                  <p className="text-[#5A4543] text-xs font-medium leading-relaxed">
+                  <p className="text-[#5A4543] text-xs font-semibold leading-relaxed">
                     {lang === 'hi'
                       ? '31 दिसंबर 1934 को जन्म। कोलकाता से होम्योपैथिक डॉक्टर की उच्च शिक्षा हासिल की।'
                       : 'Born 31st Dec 1934. Earned Homoeopathic doctor degree from Kolkata.'}
                   </p>
                 </div>
 
-                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
+                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5">
                   <div className="flex items-center justify-between">
                     <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black text-xs flex items-center justify-center shadow-xs">
                       1958
                     </span>
-                    <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 uppercase tracking-wider">
-                      {lang === 'hi' ? 'क्लिनिक स्थापना' : 'Clinic Est.'}
+                    <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-200 uppercase tracking-wider">
+                      {lang === 'hi' ? 'क्लिनिक स्थापना' : 'CLINIC EST.'}
                     </span>
                   </div>
                   <h4 className="font-black text-[#1A0706] text-sm">
                     {lang === 'hi' ? 'नगमटिया रोड क्लिनिक' : 'Nagmatia Road Clinic'}
                   </h4>
-                  <p className="text-[#5A4543] text-xs font-medium leading-relaxed">
+                  <p className="text-[#5A4543] text-xs font-semibold leading-relaxed">
                     {lang === 'hi'
                       ? 'गया में क्लासिकल होम्योपैथी एवं निशुल्क ग्रामीण चिकित्सा शिविरों की ऐतिहासिक शुरुआत।'
                       : 'Established the historic classical homoeopathy clinic at Nagmatia Road, Gaya.'}
                   </p>
                 </div>
 
-                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
+                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5">
                   <div className="flex items-center justify-between">
                     <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black text-xs flex items-center justify-center shadow-xs">
                       Orphan
                     </span>
-                    <span className="text-[10px] font-black text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200 uppercase tracking-wider">
-                      {lang === 'hi' ? 'समाज सुधार' : 'Social Welfare'}
+                    <span className="text-[10px] font-black text-sky-700 bg-sky-50 px-2.5 py-0.5 rounded-md border border-sky-200 uppercase tracking-wider">
+                      {lang === 'hi' ? 'समाज सुधार' : 'SOCIAL WELFARE'}
                     </span>
                   </div>
                   <h4 className="font-black text-[#1A0706] text-sm">
                     {lang === 'hi' ? 'Gaya Muslim Girls Orphanage' : 'Girls Orphanage Founder'}
                   </h4>
-                  <p className="text-[#5A4543] text-xs font-medium leading-relaxed">
+                  <p className="text-[#5A4543] text-xs font-semibold leading-relaxed">
                     {lang === 'hi'
                       ? 'अनाथ बच्चियों के आश्रय व शिक्षा हेतु कालवाना (चेरकी, गया) में अनाथालय की स्थापना।'
                       : 'Founded The Gaya Muslim Girls Orphanage at Kalwana (Cherki, Gaya).'}
                   </p>
                 </div>
 
-                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md">
+                <div className="bg-white border border-[#EADED2] hover:border-[#DD0200]/40 p-5 rounded-2xl space-y-3 transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5">
                   <div className="flex items-center justify-between">
                     <span className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#55100D] to-[#DD0200] text-white font-black text-xs flex items-center justify-center shadow-xs">
                       Today
                     </span>
-                    <span className="text-[10px] font-black text-rose-700 bg-rose-50 px-2 py-0.5 rounded border border-rose-200 uppercase tracking-wider">
-                      {lang === 'hi' ? 'अमर धरोहर' : 'Living Legacy'}
+                    <span className="text-[10px] font-black text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-md border border-rose-200 uppercase tracking-wider">
+                      {lang === 'hi' ? 'अमर धरोहर' : 'LIVING LEGACY'}
                     </span>
                   </div>
                   <h4 className="font-black text-[#1A0706] text-sm">
                     {lang === 'hi' ? 'डॉ. आई. खान (प्रबंध निदेशक)' : 'Dr. I. Khan (MD)'}
                   </h4>
-                  <p className="text-[#5A4543] text-xs font-medium leading-relaxed">
+                  <p className="text-[#5A4543] text-xs font-semibold leading-relaxed">
                     {lang === 'hi'
                       ? '70 वर्ष की आयु में 3 जून को दुर्घटना उपरांत निधन के बाद सुपुत्र डॉ. आई. खान द्वारा संस्था का सफल संचालन।'
                       : 'MD Dr. I. Khan continuing the legacy after his father’s tragic demise on 3rd June at age 70.'}
@@ -553,7 +512,7 @@ const DEFAULT_VIDEOS = [
             </div>
 
             {/* Bottom Legacy Quote & MD Message Card */}
-            <div className="bg-gradient-to-r from-[#55100D] via-[#701511] to-[#DD0200] text-white border border-[#55100D]/30 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-lg">
+            <div className="bg-gradient-to-r from-[#55100D] via-[#75130F] to-[#DD0200] text-white border border-[#55100D]/30 rounded-2xl p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
               <div className="space-y-1">
                 <span className="text-[10px] font-black text-amber-300 uppercase tracking-wider block">
                   {lang === 'hi' ? 'प्रबंध निदेशक का संकल्प संदेश' : 'MANAGING DIRECTOR’S LEGACY COMMITMENT'}
@@ -565,7 +524,7 @@ const DEFAULT_VIDEOS = [
                 </p>
               </div>
               <div className="shrink-0 text-right">
-                <strong className="block text-white font-black text-sm">Dr. I. Khan</strong>
+                <strong className="block text-white font-black text-sm sm:text-base">Dr. I. Khan</strong>
                 <span className="text-[11px] font-bold text-amber-300">
                   {lang === 'hi' ? 'प्रबंध निदेशक एवं जनरल फिजिशियन' : 'Managing Director & General Physician'}
                 </span>
@@ -748,7 +707,7 @@ const DEFAULT_VIDEOS = [
             camps.map((camp) => (
               <div
                 key={camp._id}
-                className="bg-white border border-[#E2D5C7] hover:border-[#55100D]/50 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                className="bg-white border border-[#E2D5C7] hover:border-[#55100D]/50 rounded-[32px] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 flex flex-col justify-between group relative"
               >
                 
                 {/* Top Image Container with Badges */}
@@ -756,29 +715,29 @@ const DEFAULT_VIDEOS = [
                   <img
                     src={getFullImageUrl(camp.imageUrl)}
                     alt={camp.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {
                       (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=800';
                     }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
 
-                  {/* Location Pin Badge Over Image */}
-                  <div className="absolute top-4 left-4 bg-[#1A0706]/85 backdrop-blur-md border border-amber-400/40 text-amber-300 text-xs font-black px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
-                    <MapPin className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+                  {/* Location Pin Badge Over Image (Top Left) */}
+                  <div className="absolute top-4 left-4 bg-black/75 backdrop-blur-md border border-amber-400/40 text-amber-300 text-xs font-black px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg shadow-black/40">
+                    <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                     <span>{camp.location}</span>
                   </div>
 
-                  {/* Date Badge Over Image */}
-                  <div className="absolute top-4 right-4 bg-[#DD0200] text-white text-xs font-black px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
+                  {/* Date Badge Over Image (Top Right) */}
+                  <div className="absolute top-4 right-4 bg-[#DD0200] text-white text-xs font-black px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg shadow-red-900/40">
                     <Calendar className="w-3.5 h-3.5 shrink-0" />
                     <span>{camp.date}</span>
                   </div>
 
                   {/* Title Overlay over Image Bottom */}
-                  <div className="absolute bottom-4 left-4 right-4 text-white space-y-1">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 bg-[#55100D]/80 px-2 py-0.5 rounded border border-amber-400/30 inline-block">
-                      {lang === 'hi' ? 'निःशुल्क दवा एवं जांच शिविर' : 'Free Medical Shivir'}
+                  <div className="absolute bottom-4 left-4 right-4 text-white space-y-1.5">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 bg-[#55100D]/90 px-2.5 py-0.5 rounded-md border border-amber-400/30 inline-block backdrop-blur-xs">
+                      {lang === 'hi' ? 'निःशुल्क दवा एवं जांच शिविर' : 'FREE MEDICAL SHIVIR'}
                     </span>
                     <h3 className="font-black text-lg sm:text-xl leading-snug drop-shadow-md text-white">
                       {camp.title}
@@ -791,20 +750,20 @@ const DEFAULT_VIDEOS = [
                   <div className="space-y-3">
                     
                     {/* Location Highlight Box */}
-                    <div className="bg-[#FAF3EC] border border-[#EADBCC] p-3 rounded-2xl flex items-center gap-2 text-xs font-bold text-[#55100D]">
+                    <div className="bg-[#FAF3EC] border border-[#EADBCC] p-3.5 rounded-2xl flex items-center gap-2.5 text-xs font-bold text-[#55100D] shadow-xs">
                       <MapPin className="w-4 h-4 text-[#DD0200] shrink-0" />
                       <span>
                         <strong className="text-[#1A0706]">{lang === 'hi' ? 'शिविर स्थल:' : 'Camp Venue Location:'}</strong> {camp.location}
                       </span>
                     </div>
 
-                    <p className="text-slate-700 text-xs sm:text-sm leading-relaxed font-medium">
+                    <p className="text-slate-700 text-xs sm:text-sm leading-relaxed font-semibold">
                       {camp.description}
                     </p>
                   </div>
 
                   {/* Footer Highlights & Action */}
-                  <div className="pt-3 border-t border-slate-100 flex flex-wrap justify-between items-center gap-3 text-xs">
+                  <div className="pt-4 border-t border-slate-100 flex flex-wrap justify-between items-center gap-3 text-xs">
                     <div className="flex items-center gap-1.5 text-emerald-700 font-extrabold">
                       <ThumbsUp className="w-4 h-4 text-emerald-600" />
                       <span>{lang === 'hi' ? '100% निःशुल्क परामर्श एवं होमियोपैथिक दवा वितरण' : 'Free Consultations & Medicines Delivered'}</span>
@@ -814,9 +773,9 @@ const DEFAULT_VIDEOS = [
                       href={`https://wa.me/919135404090?text=I%20want%20information%20about%20medical%20camp%20at%20${encodeURIComponent(camp.location)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 bg-gradient-to-r from-[#55100D] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white font-extrabold text-[11px] rounded-xl shadow transition-all flex items-center gap-1 uppercase tracking-wider"
+                      className="px-5 py-2.5 bg-gradient-to-r from-[#55100D] via-[#7A130F] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white font-black text-xs rounded-full shadow-lg shadow-red-900/20 hover:shadow-xl transition-all flex items-center gap-1.5 uppercase tracking-wider hover:scale-105 active:scale-95"
                     >
-                      <span>{lang === 'hi' ? 'शिविर पूछताछ करें' : 'Camp Inquiry'}</span>
+                      <span>{lang === 'hi' ? 'शिविर पूछताछ करें' : 'CAMP INQUIRY'}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </a>
                   </div>
@@ -1078,12 +1037,12 @@ const DEFAULT_VIDEOS = [
 
       {/* 10. WRITE A REVIEW / SUBMIT FEEDBACK FORM */}
       <section id="review-form" className="max-w-xl mx-auto px-4 sm:px-6 scroll-mt-24">
-        <div className="bg-white border border-[#D9D9D9] rounded-3xl p-6 sm:p-8 shadow-xl space-y-4">
-          <div className="text-center space-y-1">
-            <h3 className="text-xl font-black text-[#1A0706]">
+        <div className="bg-white border border-[#E2D5C7] rounded-[32px] p-8 sm:p-10 shadow-2xl space-y-6 backdrop-blur-xl relative overflow-hidden">
+          <div className="text-center space-y-1.5">
+            <h3 className="text-2xl sm:text-3xl font-black text-[#1A0706] tracking-tight">
               {lang === 'hi' ? 'अपना अनुभव साझा करें' : 'Share Your Experience'}
             </h3>
-            <p className="text-xs text-slate-600 font-semibold">
+            <p className="text-xs sm:text-sm text-slate-600 font-semibold leading-relaxed max-w-md mx-auto">
               {lang === 'hi'
                 ? 'आपका फीडबैक गुणवत्तापूर्ण होम्योपैथिक उपचार की तलाश कर रहे हजारों लोगों की मदद करता है।'
                 : 'Your feedback helps thousands of people seeking quality homoeopathic healing.'}
@@ -1091,7 +1050,7 @@ const DEFAULT_VIDEOS = [
           </div>
 
           {formSuccess ? (
-            <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-800 text-xs text-center space-y-2 font-bold">
+            <div className="p-5 bg-emerald-50 border border-emerald-200 rounded-2xl text-emerald-800 text-xs text-center space-y-2 font-bold shadow-sm">
               <span className="font-black block text-sm">
                 {lang === 'hi' ? 'समीक्षा सफलतापूर्वक सबमिट की गई!' : 'Review Submitted Successfully!'}
               </span>
@@ -1108,15 +1067,16 @@ const DEFAULT_VIDEOS = [
               </button>
             </div>
           ) : (
-            <form onSubmit={handleReviewSubmit} className="space-y-4 text-xs">
+            <form onSubmit={handleReviewSubmit} className="space-y-5 text-xs">
               {formError && (
-                <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs font-semibold">
+                <div className="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs font-bold">
                   {lang === 'hi' ? 'कृपया थोड़ा लंबा फीडबैक संदेश दर्ज करें।' : formError}
                 </div>
               )}
+              
               <div>
-                <label className="block text-[10px] uppercase font-black text-[#1A0706] mb-1">
-                  {lang === 'hi' ? 'आपका पूरा नाम' : 'Your Full Name'}
+                <label className="block text-[10px] sm:text-[11px] uppercase font-black tracking-wider text-[#1A0706] mb-1.5">
+                  {lang === 'hi' ? 'आपका पूरा नाम' : 'YOUR FULL NAME'}
                 </label>
                 <input
                   type="text"
@@ -1124,35 +1084,35 @@ const DEFAULT_VIDEOS = [
                   placeholder="e.g. Rahul Kumar"
                   value={reviewForm.patientName}
                   onChange={(e) => setReviewForm({ ...reviewForm, patientName: e.target.value })}
-                  className="w-full p-3 bg-slate-50 border border-[#D9D9D9] rounded-xl text-[#1A0706] placeholder-slate-400 focus:outline-none focus:border-[#DD0200] focus:ring-1 focus:ring-[#DD0200]/25 transition-all font-bold"
+                  className="w-full p-4 bg-[#F8FAFC] border border-[#E2E8F0] focus:border-[#DD0200] focus:bg-white rounded-2xl text-[#1A0706] placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-[#DD0200]/10 transition-all font-bold text-xs sm:text-sm shadow-inner"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase font-black text-[#1A0706] mb-1">
-                  {lang === 'hi' ? 'रेटिंग (अंक)' : 'Rating'}
+                <label className="block text-[10px] sm:text-[11px] uppercase font-black tracking-wider text-[#1A0706] mb-1.5">
+                  {lang === 'hi' ? 'रेटिंग (स्टार)' : 'RATING'}
                 </label>
-                <div className="flex gap-1.5">
+                <div className="flex gap-2">
                   {[1, 2, 3, 4, 5].map((stars) => (
                     <button
                       key={stars}
                       type="button"
                       onClick={() => setReviewForm({ ...reviewForm, rating: stars })}
-                      className="text-amber-400 focus:outline-none"
+                      className="focus:outline-none transition-transform hover:scale-125 active:scale-95"
                     >
-                      <Star className={`w-6 h-6 ${reviewForm.rating >= stars ? 'fill-amber-400' : 'text-slate-350'}`} />
+                      <Star className={`w-7 h-7 sm:w-8 sm:h-8 transition-colors ${reviewForm.rating >= stars ? 'fill-amber-400 text-amber-400 drop-shadow-sm' : 'text-slate-300 hover:text-amber-300'}`} />
                     </button>
                   ))}
                 </div>
               </div>
 
               <div>
-                <label className="block text-[10px] uppercase font-black text-[#1A0706] mb-1">
-                  {lang === 'hi' ? 'फीडबैक संदेश' : 'Feedback Message'}
+                <label className="block text-[10px] sm:text-[11px] uppercase font-black tracking-wider text-[#1A0706] mb-1.5">
+                  {lang === 'hi' ? 'फीडबैक संदेश' : 'FEEDBACK MESSAGE'}
                 </label>
                 <textarea
                   required
-                  rows={3}
+                  rows={4}
                   placeholder={
                     lang === 'hi'
                       ? 'अपनी रिकवरी यात्रा या क्लिनिक परामर्श का अनुभव लिखें...'
@@ -1160,18 +1120,18 @@ const DEFAULT_VIDEOS = [
                   }
                   value={reviewForm.message}
                   onChange={(e) => setReviewForm({ ...reviewForm, message: e.target.value })}
-                  className="w-full p-3 bg-slate-50 border border-[#D9D9D9] rounded-xl text-[#1A0706] placeholder-slate-400 focus:outline-none focus:border-[#DD0200] focus:ring-1 focus:ring-[#DD0200]/25 transition-all font-bold resize-none"
+                  className="w-full p-4 bg-[#F8FAFC] border border-[#E2E8F0] focus:border-[#DD0200] focus:bg-white rounded-2xl text-[#1A0706] placeholder-slate-400 focus:outline-none focus:ring-4 focus:ring-[#DD0200]/10 transition-all font-bold text-xs sm:text-sm shadow-inner min-h-[110px] resize-none"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-3 bg-gradient-to-r from-[#55100D] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white font-black text-xs rounded-xl shadow transition-all uppercase tracking-wider disabled:opacity-50"
+                className="w-full py-4 bg-gradient-to-r from-[#55100D] via-[#85140F] to-[#DD0200] hover:from-[#DD0200] hover:to-[#55100D] text-white font-black text-xs sm:text-sm rounded-2xl shadow-xl shadow-red-900/30 transition-all uppercase tracking-wider flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
               >
                 {isSubmitting 
-                  ? (lang === 'hi' ? 'समीक्षा सबमिट की जा रही है...' : 'Submitting review...') 
-                  : (lang === 'hi' ? 'समीक्षा सबमिट करें' : 'Submit Review')}
+                  ? (lang === 'hi' ? 'समीक्षा सबमिट की जा रही है...' : 'SUBMITTING REVIEW...') 
+                  : (lang === 'hi' ? 'फीडबैक सबमिट करें' : 'SUBMIT REVIEW')}
               </button>
             </form>
           )}

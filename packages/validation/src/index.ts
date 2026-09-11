@@ -20,6 +20,8 @@ export const appointmentSchema = z.object({
   phone: z.string().min(10, 'Valid phone number required'),
   age: z.number().int().min(1).max(120),
   gender: z.enum(['Male', 'Female', 'Other']),
+  bloodGroup: z.string().optional(),
+  address: z.string().optional(),
   department: z.string().min(2, 'Department is required'),
   doctor: z.string().optional(),
   preferredDate: z.string().min(1, 'Date is required'),

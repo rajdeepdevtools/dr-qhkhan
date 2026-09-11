@@ -2,7 +2,24 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, AlertTriangle, Shield, Sparkles, Activity, Stethoscope, HeartPulse, Dna, Wind, Brain } from 'lucide-react';
+import { 
+  ArrowRight, 
+  AlertTriangle, 
+  ShieldCheck, 
+  Sparkles, 
+  Activity, 
+  Stethoscope, 
+  HeartPulse, 
+  Dna, 
+  Wind, 
+  Brain,
+  Zap,
+  ShieldAlert,
+  Flame,
+  Baby,
+  UserCheck,
+  ChevronRight
+} from 'lucide-react';
 import { TreatmentItem } from '../lib/clinicConfig';
 import { useLanguage } from '../lib/language-context';
 
@@ -10,7 +27,6 @@ export const TreatmentCard: React.FC<{ treatment: TreatmentItem }> = ({ treatmen
   const { lang } = useLanguage();
 
   const getCategoryName = (cat: string) => {
-    // Simplify category strings so badges never overflow card borders
     const cleanCat = cat
       .replace("Men's Health / ", "")
       .replace("Women's Health / ", "")
@@ -46,30 +62,31 @@ export const TreatmentCard: React.FC<{ treatment: TreatmentItem }> = ({ treatmen
     switch (slug) {
       case 'mental-health':
       case 'migraine-brain':
-        return <Brain className="w-5 h-5 text-[#DD0200]" />;
+        return <Brain className="w-5 h-5 text-clinic-crimson group-hover:scale-110 transition-transform duration-300" />;
       case 'psoriasis':
-        return <Shield className="w-5 h-5 text-[#DD0200]" />;
+        return <ShieldCheck className="w-5 h-5 text-clinic-crimson group-hover:scale-110 transition-transform duration-300" />;
       case 'gray-hair':
       case 'gray-hair-premature-greying':
-        return <Sparkles className="w-5 h-5 text-[#DD0200]" />;
+        return <Sparkles className="w-5 h-5 text-amber-600 group-hover:scale-110 transition-transform duration-300" />;
       case 'eczema':
-        return <Activity className="w-5 h-5 text-[#DD0200]" />;
+        return <Activity className="w-5 h-5 text-clinic-crimson group-hover:scale-110 transition-transform duration-300" />;
       case 'stricture':
       case 'stricture-urethral-oesophageal':
-        return <Stethoscope className="w-5 h-5 text-[#DD0200]" />;
+      case 'prostate-gland':
+        return <Stethoscope className="w-5 h-5 text-clinic-crimson group-hover:scale-110 transition-transform duration-300" />;
       case 'piles':
       case 'piles-haemorrhoids':
-        return <HeartPulse className="w-5 h-5 text-[#DD0200]" />;
+        return <HeartPulse className="w-5 h-5 text-clinic-crimson group-hover:scale-110 transition-transform duration-300" />;
       case 'gland':
       case 'glandular-swelling':
-        return <Dna className="w-5 h-5 text-[#DD0200]" />;
+        return <Dna className="w-5 h-5 text-purple-600 group-hover:scale-110 transition-transform duration-300" />;
       case 'adenoids':
-        return <Wind className="w-5 h-5 text-[#DD0200]" />;
+        return <Wind className="w-5 h-5 text-sky-600 group-hover:scale-110 transition-transform duration-300" />;
       case 'appendicitis':
       case 'appendicitis-consultation-support':
-        return <AlertTriangle className="w-5 h-5 text-[#DD0200]" />;
+        return <Flame className="w-5 h-5 text-amber-600 group-hover:scale-110 transition-transform duration-300" />;
       default:
-        return <Stethoscope className="w-5 h-5 text-[#DD0200]" />;
+        return <Stethoscope className="w-5 h-5 text-clinic-crimson group-hover:scale-110 transition-transform duration-300" />;
     }
   };
 
@@ -77,28 +94,28 @@ export const TreatmentCard: React.FC<{ treatment: TreatmentItem }> = ({ treatmen
     if (!target || target === 'General') return null;
     if (target === 'Male') {
       return (
-        <span className="text-[9px] font-extrabold uppercase tracking-wider text-blue-800 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full shrink-0">
-          {lang === 'hi' ? 'पुरुष रोग' : 'Male Health'}
+        <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/80 px-2.5 py-0.5 rounded-full shadow-2xs">
+          {lang === 'hi' ? 'पुरुष स्वास्थ्य' : 'Male Health'}
         </span>
       );
     }
     if (target === 'Female') {
       return (
-        <span className="text-[9px] font-extrabold uppercase tracking-wider text-rose-800 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-full shrink-0">
-          {lang === 'hi' ? 'महिला रोग' : 'Women\'s Care'}
+        <span className="text-[10px] font-black uppercase tracking-wider text-rose-700 bg-rose-50 border border-rose-200/80 px-2.5 py-0.5 rounded-full shadow-2xs">
+          {lang === 'hi' ? 'महिला देखरेख' : 'Women\'s Care'}
         </span>
       );
     }
     if (target === 'Children') {
       return (
-        <span className="text-[9px] font-extrabold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full shrink-0">
-          {lang === 'hi' ? 'बाल रोग' : 'Pediatric Care'}
+        <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2.5 py-0.5 rounded-full shadow-2xs">
+          {lang === 'hi' ? 'बाल स्वास्थ्य' : 'Pediatric Care'}
         </span>
       );
     }
     if (target === 'Mental') {
       return (
-        <span className="text-[9px] font-extrabold uppercase tracking-wider text-purple-800 bg-purple-50 border border-purple-200 px-2 py-0.5 rounded-full shrink-0">
+        <span className="text-[10px] font-black uppercase tracking-wider text-purple-700 bg-purple-50 border border-purple-200/80 px-2.5 py-0.5 rounded-full shadow-2xs">
           {lang === 'hi' ? 'मानसिक रोग' : 'Mental & Brain'}
         </span>
       );
@@ -107,25 +124,29 @@ export const TreatmentCard: React.FC<{ treatment: TreatmentItem }> = ({ treatmen
   };
 
   return (
-    <div className="group bg-white rounded-2xl p-5 border border-[#D9D9D9] hover:border-[#55100D]/50 hover:shadow-lg transition-all duration-300 flex flex-col justify-between space-y-4 w-full overflow-hidden">
+    <div className="group relative bg-gradient-to-b from-white via-slate-50/40 to-slate-100/60 rounded-2xl p-6 border border-slate-200/90 hover:border-clinic-crimson/40 shadow-sm hover:shadow-xl hover:shadow-rose-950/5 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between space-y-4 w-full overflow-hidden before:absolute before:top-0 before:left-0 before:w-full before:h-1 before:bg-gradient-to-r before:from-clinic-crimson before:via-amber-500 before:to-clinic-crimson before:opacity-0 hover:before:opacity-100 before:transition-opacity">
       <div>
         
         {/* Top Header Row with Icon Frame & Tags */}
-        <div className="flex items-start justify-between gap-2 mb-3">
+        <div className="flex items-start justify-between gap-3 mb-4">
           
-          {/* Circular Icon Frame */}
-          <div className="w-10 h-10 rounded-xl bg-[#55100D]/5 border border-[#55100D]/10 flex items-center justify-center shrink-0">
+          {/* Luxury Circular Icon Emblem */}
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-clinic-crimson/10 via-rose-50 to-amber-50 border border-clinic-crimson/20 shadow-sm group-hover:scale-105 group-hover:shadow-md group-hover:border-clinic-crimson/40 transition-all duration-300 flex items-center justify-center shrink-0">
             {getTreatmentIcon(treatment.slug)}
           </div>
 
-          <div className="flex flex-col items-end gap-1 min-w-0 max-w-[65%] text-right overflow-hidden">
-            {getTargetBadge(treatment.targetGroup)}
-            <span className="text-[9px] font-extrabold uppercase tracking-wider text-[#55100D] bg-[#55100D]/5 border border-[#55100D]/10 px-2 py-0.5 rounded-full truncate max-w-full">
-              {getCategoryName(treatment.category)}
-            </span>
+          {/* Badges Container */}
+          <div className="flex flex-col items-end gap-1.5 min-w-0 max-w-[68%] text-right">
+            <div className="flex flex-wrap justify-end gap-1">
+              {getTargetBadge(treatment.targetGroup)}
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-700 bg-slate-100/90 border border-slate-200/80 px-2.5 py-0.5 rounded-full truncate max-w-full shadow-2xs">
+                {getCategoryName(treatment.category)}
+              </span>
+            </div>
+
             {treatment.isSeriousCondition && (
-              <span className="inline-flex items-center gap-1 text-[9px] font-extrabold text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded-full border border-amber-200 shrink-0">
-                <AlertTriangle className="w-2.5 h-2.5 text-amber-700" /> {lang === 'hi' ? 'चिकित्सा सूचना' : 'Medical Notice'}
+              <span className="inline-flex items-center gap-1 text-[9px] font-extrabold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200 shrink-0">
+                <AlertTriangle className="w-3 h-3 text-amber-600 shrink-0" /> {lang === 'hi' ? 'चिकित्सा सूचना' : 'Medical Notice'}
               </span>
             )}
           </div>
@@ -133,28 +154,31 @@ export const TreatmentCard: React.FC<{ treatment: TreatmentItem }> = ({ treatmen
         </div>
 
         {/* Headings */}
-        <h3 className="font-extrabold text-[#1A0706] text-base group-hover:text-[#55100D] transition-colors leading-snug">
+        <h3 className="font-black text-slate-900 text-lg group-hover:text-clinic-crimson transition-colors leading-snug tracking-tight">
           {lang === 'hi' ? treatment.nameHi : treatment.nameEn}
         </h3>
+        
         {lang !== 'hi' && (
-          <p className="text-[11px] font-bold text-[#55100D] mt-0.5">
+          <p className="text-xs font-extrabold text-amber-800/90 mt-1 tracking-wide">
             {treatment.nameHi}
           </p>
         )}
 
-        <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed mt-2 font-medium">
+        <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed mt-2.5 font-medium">
           {treatment.description}
         </p>
       </div>
 
-      {/* Footer Read Info link */}
-      <div className="pt-3 border-t border-slate-200/60 flex items-center justify-between text-xs font-bold">
+      {/* Footer Read Info CTA link */}
+      <div className="pt-4 border-t border-slate-200/70 flex items-center justify-between">
         <Link
           href={`/treatments/${treatment.slug}`}
-          className="text-[#55100D] hover:text-[#DD0200] inline-flex items-center gap-1.5 transition-colors"
+          className="group/btn inline-flex items-center gap-2 text-xs font-black text-clinic-crimson group-hover:text-clinic-crimson transition-all"
         >
-          <span>{lang === 'hi' ? 'जानकारी पढ़ें' : 'Read Information'}</span>
-          <ArrowRight className="w-4 h-4" />
+          <span>{lang === 'hi' ? 'सम्पूर्ण जानकारी देखें' : 'Read Full Information'}</span>
+          <div className="w-6 h-6 rounded-full bg-clinic-crimson/10 group-hover/btn:bg-clinic-crimson group-hover/btn:text-white flex items-center justify-center transition-all duration-300 transform group-hover/btn:translate-x-1 shadow-2xs">
+            <ChevronRight className="w-3.5 h-3.5" />
+          </div>
         </Link>
       </div>
     </div>
